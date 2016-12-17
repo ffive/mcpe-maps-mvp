@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/tools"
+        xmlns:i_url="http://schemas.android.com/tools"
+        >
+<data >
+        <variable
+            name="map"
+            type="com.sopa.mvvc.datamodel.Map"
+            />
+    </data>
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        card_view:cardCornerRadius="6dp"
+    card_view:cardElevation="6dp"
+    card_view:cardUseCompatPadding="true"
+
+
+>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/card_rel_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cardview_light_background">
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/imageView"
+
+                android:scaleType="centerCrop"
+                app:layout_conversion_absoluteX="8dp"
+                app:layout_conversion_absoluteY="10dp"
+                app:layout_conversion_absoluteWidth="395dp"
+                app:layout_conversion_absoluteHeight="158dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@{map.name}"
+                i_url:url="@{map}"
+
+                android:transitionName="transition_image"
+                app:targetApi="lollipop" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:text="Small Text"
+                android:id="@+id/map_name"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="#b7000000"
+                android:textColor="@android:color/white"
+                android:maxLines="1"
+                android:focusableInTouchMode="false"
+                app:layout_conversion_absoluteX="28dp"
+                app:layout_conversion_absoluteY="124dp"
+                app:layout_conversion_absoluteWidth="74dp"
+                app:layout_conversion_absoluteHeight="24dp"
+                card_view:layout_constraintLeft_toLeftOf="@+id/imageView"
+                card_view:layout_constraintTop_toTopOf="@+id/imageView"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.33" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_unlock"
+                android:id="@+id/button"
+
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" android:typeface="monospace"
+                card_view:layout_constraintRight_toRightOf="@+id/imageView"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</layout>
