@@ -209,18 +209,18 @@ public class MapDownloader {
         return buffer.array();
     }
 
-    public void writeBuffer(ByteBuffer buffer, OutputStream stream) throws IOException {
+    private void writeBuffer(ByteBuffer buffer, OutputStream stream) throws IOException {
         WritableByteChannel channel = Channels.newChannel(stream);
         channel.write(buffer);
     }
 
-    public void readBuffer(ByteBuffer buffer, InputStream inputStream) throws IOException {
+    private void readBuffer(ByteBuffer buffer, InputStream inputStream) throws IOException {
         ReadableByteChannel channel = Channels.newChannel(inputStream);
         channel.read(buffer);
 
     }
 
-    public final static String[] allowedContentTypes = new String[]{"application/octet-stream",
+    private final static String[] allowedContentTypes = new String[]{"application/octet-stream",
             "application/zip", "text/html; charset=ISO-8859-1", "image/png", "image/jpeg",
             "image/bmp", "application/pdf", "text/html; charset=UTF-8", "image/png;charset=UTF-8"};
 

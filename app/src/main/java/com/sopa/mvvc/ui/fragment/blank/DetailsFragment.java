@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,11 @@ import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.loopj.android.http.SyncHttpClient;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.FragmentDetailsBinding;
@@ -56,8 +59,10 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
       @InjectPresenter
     DetailsPresenter mDetailsPresenter;
-
-
+    @ProvidePresenter
+    DetailsPresenter getPresenter() {
+        return new DetailsPresenter(getArguments().getString("map"));
+    }
 
 
     private static final String TAG = "map";
@@ -70,17 +75,10 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     private ProgressDialog progress;
     private BackendlessApiREST service;
     private FragmentDetailsBinding binding;
-
-
-
+    Realm realm = Realm.getDefaultInstance();
 
     public static DetailsFragment newInstance() {
         DetailsFragment fragment = new DetailsFragment();
-
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -91,23 +89,23 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
         service = ServiceGenerator.createService(BackendlessApiREST.class);
 
-        map = Realm.getDefaultInstance().where(Map.class).equalTo("objectId", getArguments().getString(TAG)).findFirst();    //todo realm read
-        realm.beginTransaction();
-        map.setCached(isZipCached(map));
-        realm.commitTransaction();
+       // map = Realm.getDefaultInstance().where(Map.class).equalTo("objectId", getArguments().getString("map")).findFirst();    //todo realm read
+       // realm.beginTransaction();
+      //  map.setCached(isZipCached(map));
+      //  realm.commitTransaction();
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, root, false);
         binding.setPresenter(mDetailsPresenter);
 
-        binding.ratingBar2.setRating(map.getRating().floatValue());
+        //binding.ratingBar2.setRating(map.getRating().floatValue());
 
 
-        if (!map.isRated()) {
-            binding.ratingBar2.setRating(0);
-            binding.rateBtn.setVisibility(View.VISIBLE);
-        }
+       // if (!map.isRated()) {
+         //   binding.ratingBar2.setRating(0);
+           // binding.rateBtn.setVisibility(View.VISIBLE);
+        //}
 
-        binding.setMap(map);
+        //binding.setMap(map);
         isStoragePermissionGranted();
 
 
@@ -115,9 +113,19 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
             tryRate((int) binding.ratingBar2.getRating());
         });
 
-        binding.ratingBar2.setOnRatingBarChangeListener((simpleRatingBar, rating, fromUser) -> {
-            int color = generateColor(rating);
-            simpleRatingBar.setFillColor(color);
+        binding.ratingBar2.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
+                int color = DetailsFragment.this.generateColor(rating);
+                simpleRatingBar.setFillColor(color);
+            }
+        });
+
+        binding.ratingBar2.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                return false;
+            }
         });
 
 
@@ -125,11 +133,11 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progress.setMax(100);
 
-
+/*
         Intent shareIntent = new Intent(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_TEXT, "Try the  " + map.getName() + " Minecraft PE map from" )//+ getString(R.string.market_url, getActivity().getPackageName())) todo:  link
                 .setType("text/plain");
-
+*/
         //((MainActivity) getActivity()).setShareIntent(shareIntent);  TODO:
 
 
@@ -249,7 +257,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         return new File(mcpe_dir + URLUtil.guessFileName(map.getMap_url(), null, "application/zip")).exists();
     }
 
-    Realm realm = Realm.getDefaultInstance();
+
 
     private void tryRate(int rating)  {
 
@@ -418,5 +426,10 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     @Override
     public void setCached() {
 
+    }
+
+    @Override
+    public void bindMap(Map map) {
+        binding.setMap(map);
     }
 }

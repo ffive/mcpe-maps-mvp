@@ -45,11 +45,11 @@ public class Migration_v1 implements RealmMigration {
         // }
         if (newVersion == 1) {
             // schema.get("UserConfig").addField("id", long.class, FieldAttribute.PRIMARY_KEY);
-            realm.beginTransaction();
+
             DynamicRealmObject dynamicRealmObject = realm.createObject("UserConfig", userId);
             dynamicRealmObject.set("lastTab",0);
             dynamicRealmObject.set("recyclerPosition",0f);
-            realm.commitTransaction();
+
         }
 
         //

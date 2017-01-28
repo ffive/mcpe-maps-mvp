@@ -5,10 +5,14 @@
         xmlns:i_url="http://schemas.android.com/tools"
         >
 <data >
+    <import type="android.view.View" alias="View"/>
         <variable
             name="map"
             type="com.sopa.mvvc.datamodel.Map"
             />
+    <variable
+        name="presenter"
+        type="com.sopa.mvvc.presentation.presenter.blank.CategoryListPresenter"/>
     </data>
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -53,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="Small Text"
+                android:text="@{map.name}"
                 android:id="@+id/map_name"
                 android:gravity="center_vertical|center_horizontal"
                 android:background="#b7000000"
@@ -75,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btn_unlock"
                 android:id="@+id/button"
-
+android:visibility="@{map.locked?View.VISIBLE:View.GONE}"
+                android:onClick="@{(view)->presenter.unlock(map)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" android:typeface="monospace"
                 card_view:layout_constraintRight_toRightOf="@+id/imageView"
                 card_view:layout_constraintBottom_toBottomOf="parent"

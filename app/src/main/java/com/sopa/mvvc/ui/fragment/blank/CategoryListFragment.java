@@ -1,6 +1,7 @@
 package com.sopa.mvvc.ui.fragment.blank;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,17 +16,20 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.minimize.android.rxrecycleradapter.RxDataSource;
+import com.minimize.android.rxrecycleradapter.SimpleViewHolder;
 import com.sopa.mvvc.DetailsTransition;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.FragmentCategoryListBinding;
 import com.sopa.mvvc.databinding.ListItemCardBinding;
+import com.sopa.mvvc.datamodel.Category;
 import com.sopa.mvvc.datamodel.Map;
 import com.sopa.mvvc.presentation.presenter.blank.CategoryListPresenter;
 import com.sopa.mvvc.presentation.view.blank.CategoryListView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.functions.Action1;
 
 
 /**
@@ -40,7 +44,7 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
 
     @ProvidePresenter
     CategoryListPresenter getPresenter() {
-        return new CategoryListPresenter(getArguments().getString("objectId"));
+        return new CategoryListPresenter((Category)getArguments().getSerializable("objectId"));
     }
 
 
@@ -58,25 +62,14 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         binding.myRecyclerView.setLayoutManager(mLayoutManager);
 
+
+
+        //todo refactor , move everything except update to presenter somehow
         dataSource = new RxDataSource<Map>(new ArrayList<>());
         dataSource.bindRecyclerView(binding.myRecyclerView, R.layout.list_item_card)
-                .subscribe(mapHolder -> {
-                    ListItemCardBinding b = (ListItemCardBinding) mapHolder.getViewDataBinding();
-                    Map map = mapHolder.getItem();
-                    if (b != null) {
-                        b.getRoot().setOnClickListener(view -> {
-                            if (map.isLocked()) {
-                                mCategoryListPresenter.unlock(map);
-                            } else {
-                                openDetailsWithTransition(map, b.imageView);
-                            }
-                        });
-                        b.mapName.setText(map.getName());
-                        b.button.setText(R.string.btn_unlock);
-                        Picasso.with(b.getRoot().getContext()).load(map.getI_url()).fit().into(b.imageView);
-                        b.button.setVisibility(map.isLocked() ? View.VISIBLE : View.GONE);
-                    }
-                });
+                .subscribe(
+                        onNext
+                );
 
         return binding.getRoot();
     }
@@ -93,9 +86,33 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
 
     }
 
+    private Action1<SimpleViewHolder<Map, ViewDataBinding>> onNext = new Action1<SimpleViewHolder<Map, ViewDataBinding>>() {
+        @Override
+        public void call(SimpleViewHolder<Map, ViewDataBinding> mapHolder) {
+            ListItemCardBinding b = (ListItemCardBinding) mapHolder.getViewDataBinding();
+            Map map = mapHolder.getItem();
+            if (b != null) {
+                b.getRoot().setOnClickListener(view -> {
+                    if (map.isLocked()) {
+                        mCategoryListPresenter.unlock(map);
+                    } else {
+                        CategoryListFragment.this.openDetailsWithTransition(map, b.imageView);
+                    }
+                });
+                b.setMap(map);
+
+                //b.mapName.setText(map.getName());
+                //b.button.setText(R.string.btn_unlock);
+                //Picasso.with(b.getRoot().getContext()).load(map.getI_url()).fit().into(b.imageView);
+                //b.button.setVisibility(map.isLocked() ? View.VISIBLE : View.GONE);
+            }
+        }
+    };
 
     private void openDetailsWithTransition(Map map, final ImageView sharedView) {
 
+
+        mCategoryListPresenter.onMapCardClicked(map);
 
         Fragment details = DetailsFragment.newInstance();
         //details.getArguments().putString("map",map.getObjectId());
@@ -109,7 +126,7 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
 
 
         Bundle args = new Bundle();
-        args.putSerializable("map", map.getObjectId());
+        args.putString("map", map.getObjectId());
         details.setArguments(args);
 
         getActivity().getSupportFragmentManager()
@@ -121,6 +138,7 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
                 .commit();
 
 
+       // (getActivity().
     }
 
 

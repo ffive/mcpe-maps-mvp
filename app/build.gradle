@@ -7,14 +7,10 @@ buildscript {
             url = 'https://jitpack.io'
             url "http://dl.bintray.com/ahmedrizwan/maven"
         }
-
-
-
     }
     dependencies {
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
     }
-
 }
 apply plugin: 'com.android.application'
 apply plugin: "me.tatarka.retrolambda"
@@ -34,7 +30,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
-
 
     buildTypes {
         release {
@@ -67,6 +62,8 @@ dependencies {
 
 
     compile 'com.minimize.android:rxrecycler-adapter:1.2.2'
+
+
     compile 'com.jakewharton.rxbinding:rxbinding:1.0.0'
 
 
@@ -79,8 +76,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
-    compile 'com.minimize.android:rxrecycler-adapter:1.2.2'
-    compile 'com.jakewharton.rxbinding:rxbinding:1.0.0'
+
 
     compile 'ru.terrakok.cicerone:cicerone:1.0'
     compile 'com.andkulikov:transitionseverywhere:1.7.0'
