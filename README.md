@@ -30,12 +30,12 @@
 #### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
-`model` - is literally _anything_ where we can **read/write/get/set/download/upload/configure/change** any **digital data**:
+`model` - is literally _anything_ where we can _read/write/get/set/download/upload/configure/change_ any digital **data**:
   
 - online data input/output/storage:
-   - retrofit
-   - backendless
-   - rest api's
+  - retrofit
+  - backendless
+  - rest api's
 - offline storage create/read/update/delete (**CRUD**):
   - realm
   - SQLite
@@ -60,7 +60,7 @@
 
 ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
-end of story.
+
 
 Steps to construct a View part of Moxy- MVP:
   
@@ -90,6 +90,7 @@ Steps to construct a View part of Moxy- MVP:
 			...
 		}
 		
+end of story.
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
 
