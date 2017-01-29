@@ -8,7 +8,7 @@
 - **retrolambda** - for adding Java8 lambdas compatible with 1.6, 1.7.
 
 ### Detailed review of implementation can be found here:\
-####  - [Project Wiki]...
+####  - [Project Wiki]()
 ####  - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
 ####  - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
 
