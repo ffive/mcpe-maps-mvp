@@ -7,10 +7,10 @@
 - **backendless** - also `model-layer` _(hosted **remotely** on backendless server as set of tables)._
 - **retrolambda** - for adding Java8 lambdas compatible with 1.6, 1.7.
 
-### Detailed review of implementation can be found here:        
-#### - [Project Wiki]...
-#### - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
-#### - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
+### Detailed review of implementation can be found here:\
+####  - [Project Wiki]...
+####  - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
+####  - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
 
 ## This project uses moxy library as MVP basis.
 ### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`.
