@@ -21,7 +21,7 @@
 ###  The main aspect to keep in mind all the time - it is up to you to decide
 #### what part of your app will be considered a `model` and `view` 
 #### and whether some part of app should be fitted to mvp at all; Mixing *is ok*, while moving more code to MVP arch is even better.
-##### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them (**Best practices**)[https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices]
+##### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
 `Model-layer` literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
