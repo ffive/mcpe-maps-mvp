@@ -53,21 +53,37 @@
 ```
 
 ## ViewState
-  Firstly, it **_is generated automatically by Moxy_** and it works.
-  ViewState is a class which :
-    - holds the current state of `view` and also history of _change ui_ commands from presenter.
-    - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
+Firstly, it **_is generated automatically by Moxy_** and it works.
+ViewState is a class which :
+  - holds the current state of `view` and also history of _change ui_ commands from presenter.
+  - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
 
 ## Presenter
   Presenter is a single java class, holding methods of 2 kinds:
-  1. methods defining how smth is talking to:
-    - http calls code
-    - database code
-    - deivce services
-    - speech recognition
-    - xml parsing
-    - sensors code, etc...
-  2. methods (callbacks) for a view - here we write how presenter reacts to events happened in view.
+#### 1.Methods defining how smth is talking to:
+  - online data input/output/storage
+    - retrofit, backendles, rest api's
+  - offline storage create/read/update/delete (**CRUD**)
+    - realm
+    - SQLite
+    - SharedPreferences, etc...
+  - deivce services
+    - intents
+    - services
+    - geo
+    - display
+    - audio
+    - camera, etc...
+  - sensors
+    - gyroscope
+    - light sensor
+    - accelerometer
+    - microphone
+    - compass
+    - EMV sensor
+    - wifi, Bluetooth, connected gadgets etc
+#### 2. Manipulates the data (so-called business logic of the app) 
+#### 3. Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).
 	```
 	//pseudo-code:
 	/** model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
