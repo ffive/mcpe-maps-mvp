@@ -32,29 +32,29 @@
 ## Model
 `model` - is literally _anything_ where we can **read/write/get/set/download/upload/configure/change** any **digital data**:
   
-  - online data input/output/storage:
-     - retrofit
-     - backendless
-     - rest api's
-   - offline storage create/read/update/delete (**CRUD**):
-     - realm
-     - SQLite
-     - SharedPreferences, etc...
-   - deivce services:
-     - intents
-     - services
-     - geo
-     - display
-     - audio
-     - camera, etc...
-   - sensors:
-     - gyroscope
-     - light sensor
-     - accelerometer
-     - microphone
-     - compass
-     - EMV sensor
-     - wifi, Bluetooth, connected gadgets etc.
+- online data input/output/storage:
+   - retrofit
+   - backendless
+   - rest api's
+- offline storage create/read/update/delete (**CRUD**):
+  - realm
+  - SQLite
+  - SharedPreferences, etc...
+- deivce services:
+  - intents
+  - services
+  - geo
+  - display
+  - audio
+  - camera, etc...
+- sensors:
+  - gyroscope
+  - light sensor
+  - accelerometer
+  - microphone
+  - compass
+  - EMV sensor
+  - wifi, Bluetooth, connected gadgets etc.
 
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
 
