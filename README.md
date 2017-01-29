@@ -74,12 +74,12 @@ Presenter is a single java class, holding methods of 2 kinds:
 
 1. **Methods defining how smth is talking to:**
 
-- online data input/output/storage:
- - retrofit, backendles, rest api's  
- - offline storage create/read/update/delete (**CRUD**)
- - realm
- - SQLite
- - SharedPreferences, etc...
+ - online data input/output/storage:
+ 	- retrofit, backendles, rest api's  
+ 	- offline storage create/read/update/delete (**CRUD**)
+ 	- realm
+ 	- SQLite
+ 	- SharedPreferences, etc...
       
 - deivce services
 - intents
