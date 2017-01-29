@@ -24,15 +24,17 @@
 ##### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
-`Model-layer` literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
-- server
-- database
-- file
-- camera
-- sensors
-- screen
-if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture)
-## View
+`model` - is literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
+  - server
+  - database
+  - file
+  - camera
+  - sensors
+  - screen
+ >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
+ 
+ 
+ ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice it is 
 ```
 public interface MyView extends MVPView
