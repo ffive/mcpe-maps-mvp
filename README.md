@@ -31,13 +31,30 @@
 
 ## Model
 `model` - is literally _anything_ where we can **read/write/get/set/download/upload/configure/change** any **digital data**:
-
-- server
-- database
-- file
-- camera
-- sensors
-- screen
+  
+  - online data input/output/storage:
+     - retrofit
+     - backendless
+     - rest api's
+   - offline storage create/read/update/delete (**CRUD**):
+     - realm
+     - SQLite
+     - SharedPreferences, etc...
+   - deivce services:
+     - intents
+     - services
+     - geo
+     - display
+     - audio
+     - camera, etc...
+   - sensors:
+     - gyroscope
+     - light sensor
+     - accelerometer
+     - microphone
+     - compass
+     - EMV sensor
+     - wifi, Bluetooth, connected gadgets etc.
 
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
 
@@ -73,32 +90,16 @@ ViewState is a class which :
 ## Presenter
 Presenter is a single java class, holding methods of 2 kinds:
 
-1. **Methods defining how smth is talking to `model`:** 
-   - online data input/output/storage:
-     - retrofit
-     - backendless
-     - rest api's
-   - offline storage create/read/update/delete (**CRUD**):
-     - realm
-     - SQLite
-     - SharedPreferences, etc...
-   - deivce services:
-     - intents
-     - services
-     - geo
-     - display
-     - audio
-     - camera, etc...
-   - sensors:
-     - gyroscope
-     - light sensor
-     - accelerometer
-     - microphone
-     - compass
-     - EMV sensor
-     - wifi, Bluetooth, connected gadgets etc.
+1. **Methods defining how smth is talking to `model` which can be:** 
+
+- server
+- database
+- file
+- camera
+- sensors
+- screen
       
-2. **Manipulates the data (so-called business logic of the app)** 
+2. **Methods to manipulate the data (so-called business logic of the app)** 
   
 3. **Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).***
 	```
