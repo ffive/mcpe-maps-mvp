@@ -23,19 +23,28 @@ Don't be scared of this squares. Imagine yourself in automatic-order Cafe.
 Then:
 
 - The fridge and the coffee-machine become our `Models`
-- CustomerView is a `interface CustomerView implements MvpView`
-  - Every customer including you implement a `CustomerView`
-  - Customer usually is a human(Activity) who has some visible state (emotion and look), is going to react to cafe events(await, sit,  eat, drink, be happy) - change UI and perform (continuous too) generalized and defined in ``
-  ```
-  public interface CustomerView implements MvpView {
-
-  void welcome();
-  void assignSeat(int tableNumber);
-  void 
+- `interface CustomerView` is a simple short java interface  
+	
+		
+ 	 	public interface CustomerView implements MvpView {
+		
+  			void welcome(String greetingsPhrase);
+  			void assignSeat (int tableNumber);
+  			void presentMenu (List<MenuItems> menu);
+			void orderReady(MenuItem cookedItem);
+			void showBill(Map<MenuItem,String> chequeBiu);
+			void auRevoir();
   
-  }
-  ```
-actions (order-wait-receiveOrder-thank-eat-burp-pay-leave) 
+  		}
+  
+  - Every customer including you `implements CustomerView` - defines its reactions to events which might happen in cafe defined above^
+  - Customer usually is a human(Activity) who has some visible state (emotion and look), is going to react(behave) to cafe events
+    - attach itself (enter cafe)
+    - await (might be not the only one in cafe queue)
+    - change face view(emote) and position(sit,walk,leave)
+    - eat, drink
+    - disappear to toilet, hang not responding to waiter while  on phone
+ 
 - iPadMenu is a `Presenter` and handles data processing between 
   - `Views` - customers
   - `models` - kitchen,fridge,coffee machine,billing system, vip members list, etc...
