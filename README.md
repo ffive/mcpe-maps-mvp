@@ -88,9 +88,10 @@ ViewState is a class which :
 - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
   
 ## Presenter
-Presenter is a single java class, holding methods of 2 kinds:
+Presenter is a java class which `implements MvpPresenter`
+Usually we write methods of 3 types there:
 
-1. **Methods defining how smth is talking to `model` which can be:** 
+1. Methods defining how smth is talking to `model` which can be: 
   - server
   - database
   - file
@@ -98,9 +99,9 @@ Presenter is a single java class, holding methods of 2 kinds:
   - sensors
   - screen
       
-2. **Methods to manipulate the data (so-called business logic of the app)** 
+2. Methods to manipulate the data (so-called business logic of the app)
   
-3. **Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).***
+3. Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).
 	```
 	//pseudo-code:
 	/** model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
