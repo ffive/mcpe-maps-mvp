@@ -45,12 +45,15 @@
 end of story.
 
 	public interface MyView extends MVPView{
-		showLoadingProgress();
-		beginIntroAnimation();
-		updateList(List<E> newList);
-		setVolume(float volumeDb);
-		etc...
+		void showLoadingProgress();
+		void beginIntroAnimation();
+		void updateList(List<E> newList);
+		void setVolume(float volumeDb);
+		//well that's all - View is ready
+
 	}
+Now you write `Activity` or `Fragment` or any `CustomView` to `implement MyView` scan implement it and become a complete MVP
+>**Important** : V of MVP ( View) has no connection to android View. At all. Totally different kind of stuff. 
 
 
 ## ViewState
