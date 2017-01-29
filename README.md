@@ -40,18 +40,18 @@
  
 ## View
 
- `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice it is 
+ `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice loioks like: 
+ ```
+public interface MyView extends MVPView
+{
+showLoadingProgress();
+beginIntroAnimation();
+updateList(List<E> newList);
+setVolume(float volumeDb);
+etc...
+}
 ```
-  public interface MyView extends MVPView
-	{
-		showLoadingProgress();
-		beginIntroAnimation();
-		updateList(List<E> newList);
-		setVolume(float volumeDb);
-		etc...
-	}
-```
-
+end of story.
 ## ViewState
 Firstly, it **_is generated automatically by Moxy_** and it works.
 ViewState is a class which :
