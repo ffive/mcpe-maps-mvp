@@ -42,7 +42,7 @@
  
  
 ## View
-`view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice loioks like: 
+`view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice looks like: 
 end of story.
 
 Steps
@@ -74,22 +74,22 @@ ViewState is a class which :
 ## Presenter
 Presenter is a single java class, holding methods of 2 kinds:
 
-  1. **Methods defining how smth is talking to:**
-    - online data input/output/storage:
+1. **Methods defining how smth is talking to:**
+  - online data input/output/storage:
       - retrofit, backendles, rest api's  
       - offline storage create/read/update/delete (**CRUD**)
       - realm
       - SQLite
       - SharedPreferences, etc...
-    - deivce services
+  - deivce services
       - intents
       - services
       - geo
       - display
       - audio
       - camera, etc...
-    - sensors
-      - gyroscope
+  - sensors
+    - gyroscope
       - light sensor
       - accelerometer
       - microphone
@@ -97,9 +97,9 @@ Presenter is a single java class, holding methods of 2 kinds:
       - EMV sensor
       - wifi, Bluetooth, connected gadgets etc
       
-  2. **Manipulates the data (so-called business logic of the app)** 
+2. **Manipulates the data (so-called business logic of the app)** 
   
-  3. **Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).***
+3. **Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).***
 	```
 	//pseudo-code:
 	/** model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
