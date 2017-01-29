@@ -18,6 +18,26 @@
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
+Don't be scared of this squares. Imagine yourself in the coffe-shop with donuts:
+Then:
+  The fridge and the coffee-machine become our `Models`
+  You are a User and some kind of `ViewState`; ( your face state changes  during the process, details later)
+  Menu is a `View` interface (between you and presenter)
+  The salesman is a `Presenter`
+  
+  Let's look at your typical actions through the prism of Moxy-MVP
+  
+  You have some initial state, your eyes render hungry, your whole body is running `long process wait animation`
+  
+  Presenter has some callbacks he can react to - (view callbacks) So he hears:
+    - menu_item_4 - coffee
+    - menu_item_2 - donut
+    
+  - `onOrderReceived(List<MenuItem> orderedItems )`! -> get item from `model:coffeemachine`, get item from `model:fridge`
+  - presenter begins `asyncTask - ask barista to make latte`, and syncTask - fridge.retrieveDonut() , meanwhile sending command to yoUI -> relax and take your seat waiting for results:  faceView State changes to happiness  and you take a seat( Your)
+  -presenter also listens to `model:barista` events - so when barista tells presenter coffee is ready - presenter takes coffee and issues a View command (implemented by you )   `send coffee to View`
+  - In response - you are rendered even more happy - and perform EatingAnimation. When eating ends - you call back to presenter to ask a bill.
+  
 >more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
 ### The main aspect to keep in mind all the time - it is up to you to decide:
