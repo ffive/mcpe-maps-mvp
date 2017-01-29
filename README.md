@@ -7,14 +7,24 @@
 
 more info can be found in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-### The main aspect to keep in mind all the time - there is no rule what part of your app should be a model or presenter!
-Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules (**Best practices**)[https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices]
->(e.g. I'm going to make this activity a view and this fragment a view, backendless will be one of my models, sharedprefs - one more model, realm database - yet another model.   Now i need a presenter which will:
-1. talk to models to get data
-2. process data _(parse,sort,load more specific data)_ received from `model-layer`
-3. (optional) send some commands to view ( set new text, change visibility of an item, begin animation, show progress)
+### The main aspect to keep in mind all the time - there is no rule what part of your app should be a `model` or `view`. And you write presenter from scratch and structure it's code as you want;
 
-### Model
+####Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them (**Best practices**)[https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices]
+>(e.g. I'm going to make:
+- `View`s:
+	-this activity will be a view
+	-this fragment also a view
+	-every item of this RecyclerView is also a good one to be considered a `View`
+- `Model`s:
+	- backendless will be one of my models,
+	- sharedprefs - one more model,
+	- realm database - yet another model.
+- Now i need a `Presenter` which will:
+	1. talk to models to get data
+	2. process data _(parse,sort,load more specific data)_ received from `model-layer`
+	3. (optional) send some commands to view ( set new text, change visibility of an item, begin animation, show progress)
+
+## Model
 `Model-layer` literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
 - server
 - database
@@ -24,7 +34,7 @@ Nevertheless there are some tactics which allow to drastically reduce the volume
 - screen
 if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture)
 
-### Presenter
+## Presenter
 Presenter is a single java class, holding methods of 2 kinds;
 1. methods defining how smth is talking to.
 		- http calls code
