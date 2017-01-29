@@ -89,56 +89,61 @@ ViewState is a class which :
   
 ## Presenter
 Presenter is a java class which `implements MvpPresenter`
-Usually we write methods of 3 types there:
+Generally you'll find yourself writing  4 types of methods here:
 
-1. Methods defining how smth is talking to `model` which can be: 
+1. Methods defining how you retrieve/save cata from `model` which can be code talking to: 
   - server
   - database
   - file
   - camera
   - sensors
-  - screen
+  - touchscreen
       
 2. Methods to manipulate the data (so-called business logic of the app)
+
+3. Methods to manipulate the data (so-called business logic of the app)
+
+		fdgdfg	
   
-3. Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).
-	```
-	//pseudo-code:
-	/** model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
-	*	getViewState() - a handle for our View( activity, fragment, view, layout, list item, etc.)		
-	*/	
-
-	onLikeButtonClicked(int mapId){			//type 1: this method is called from activity,(like btn ClickListener)
-		
-		getViewState().runLikeAnimation();		//ui commands
-		getViewState().showBackgroundProgress();	//ui commands
-		
-		Map map = model.getMap(mapId); 		 	//load from db by mapId from activity's `ListAdapter` click.
-		
-		int oldLikes = map.getLikes();			// data manipulations
-		map.setLikes( oldLikes + 1);
+4. Callbacks - write methods you will call from **View**, when events( eg. clicks, touches, end of animation)  happen there.
 	
-		model.saveToDatabase(map);    			//saving updated map to db 
+		//pseudo-code:
 		
-		getViewState().hideBackgroundProgress();	//ui command
-		
-	}
-
-	onSettingsClickedFromActivity(){
-		
-		UserConfig currentSettings = model.getConfigs(); //retrieve up-to-date configs from db
+		/* model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
+		getViewState() - a handle for our View( activity, fragment, view, layout, list item, etc.)
+		*/	
 	
-		//View(State) We send the configs object to view;
-		// View in it's turn has a databinded layout which takes userConfig 
-		// and displays it's variables we took from db - that's the job of presenter as designed;
-		getViewState().displaySettingsWindowUsingConfig(config); 	
-	}
-
-	onNewLevel(){
-		getViewState().showSuccessAnimation();
-		getViewState().displayAd();
-	}
+		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
+			
+			getViewState().runLikeAnimation();		// ui command ( View's method)
+			getViewState().showBackgroundProgress();	// ui command ( View's method)
+			
+			Map map = model.getMap(mapId); 		 	// type 1 load map from db by id (came from activity)
+			
+			int oldLikes = map.getLikes();			// type 2 data manipulations
+			map.setLikes( oldLikes + 1);
+		
+			model.saveToDatabase(map);    			// type 1 saving updated map to db 
+			
+			getViewState().hideBackgroundProgress();	// ui command ( View's method)
+			
+		}
 	
-	etc...
+		onSettingsClickedFromActivity(){
+			
+			UserConfig currentSettings = model.getConfigs(); //retrieve up-to-date configs from db
+		
+			//View(State) We send the configs object to view;
+			// View in it's turn has a databinded layout which takes userConfig 
+			// and displays it's variables we took from db - that's the job of presenter as designed;
+			getViewState().displaySettingsWindowUsingConfig(config); 	
+		}
+	
+		onNewLevel(){
+			getViewState().showSuccessAnimation();
+			getViewState().displayAd();
+		}
+		
+		etc...
 	```
 
