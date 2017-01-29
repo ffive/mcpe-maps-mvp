@@ -105,16 +105,16 @@ ViewState is a class which :
   
 ## Presenter
 Presenter is a java class which `implements MvpPresenter`
-Generally you'll find yourself writing  4 types of methods here:
+Generally you'll find yourself writing 3 types of methods here:
 
-1. Methods defining how you retrieve/save cata from `model` which can be code talking to: 
+1. Methods defining how you retrieve/save data from `model` (`model` == code talking to): 
   - [server](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L65-L77)
   - [database](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L36-L38)
-  - file
+  - files
   - camera
   - sensors
   - touchscreen
-  [examples]
+
       
 2. Methods to manipulate the data (so-called business logic of the app)
  
