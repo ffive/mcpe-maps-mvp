@@ -1,32 +1,35 @@
 # Map collection for MCPE(Android)
 
 ### This project uses moxy library as MVP basis.
-####MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` , `Presenter`
+### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`.
 
-- **Model**. Under`model` we mind anything(literally) where we can **get/put any data** (server,database,file,camera,sensors,screen - if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture)
+![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
-- **View** - is an interface defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice it is 
-```
-public interface MyView extends MVPView
-{
-	showLoadingProgress();
-	beginIntroAnimation();
-	updateList(List<E> newList);
-	setVolume(float volumeDb);
-	etc...
-}
-```
+more info can be found in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-- `presenter`  is a single java class, holding methods of 2 kinds:
-  ##### 1. methods defining how smth is talking to `model-layer` 
-	- http calls code
-	- database code
-	- deivce services
-	- speech recognition
-	- xml parsing
-	- sensors code, etc...
-  ##### 2. methods (callbacks) for a view - here we write how presenter reacts to events happened in view.
 
+#### Model
+`Model-layer` literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
+- server
+- database
+- file
+- camera
+- sensors
+- screen
+if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture)
+
+#### Presenter
+Presenter is a single java class, holding methods of 2 kinds;
+1. methods defining how smth is talking to.
+		- http calls code
+		- database code
+		- deivce services
+		- speech recognition
+		- xml parsing
+		- sensors code, etc...
+2. methods (callbacks) for a view - here we write how presenter reacts to events happened in view.
+.
+.
 ```
 //pseudo-code:
 
@@ -56,8 +59,7 @@ etc
 ```
 
 - `view state` - ViewState is a class which controls communications between M,V and P  and **_is generated automatically by Moxy_**
-![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
-more info can be found in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
+
 
 - **_Rx_** - for handling parrallel and async tasks ( server calls and database operations)._  
 - **realm** - as a database `model-layer` _(hosted **locally** on device as a set of tables in text files)._
