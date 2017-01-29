@@ -18,9 +18,13 @@
 
 >more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-###  The main aspect to keep in mind all the time - it is up to you to decide:
->what part of your app will be considered a `model` and `view` 
->whether some code should be fitted to MVP _**at all**_; Mixing *is ok*, while moving more code to MVP arch is even better.
+##  The main aspect to keep in mind all the time - it is up to you to decide:
+- What part of your to consider `model`s and `view`s
+- Whether to fit particular code pieces to MVP _**at all**_;
+  
+>Mixing MVP and non-MVP *is already good*, while moving more code to MVP is even better.
+
+
 ##### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
@@ -34,10 +38,11 @@
  >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
  
  
- ## View
-`view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice it is 
+## View
+
+ `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice it is 
 ```
-public interface MyView extends MVPView
+  public interface MyView extends MVPView
 	{
 		showLoadingProgress();
 		beginIntroAnimation();
@@ -48,10 +53,10 @@ public interface MyView extends MVPView
 ```
 
 ## ViewState
-Firstly, it **_is generated automatically by Moxy_** and it works.
-ViewState is a class which :
-  - holds the current state of `view` and also history of _change ui_ commands from presenter.
-  - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
+  Firstly, it **_is generated automatically by Moxy_** and it works.
+  ViewState is a class which :
+    - holds the current state of `view` and also history of _change ui_ commands from presenter.
+    - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
 
 ## Presenter
   Presenter is a single java class, holding methods of 2 kinds:
