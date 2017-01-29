@@ -74,17 +74,17 @@ ViewState is a class which :
 Presenter is a single java class, holding methods of 2 kinds:
 
 1. **Methods defining how smth is talking to:** model
-   - online data input/output/storage:
-     - retrofit
-     - backendless
-     -  rest api's
+  - online data input/output/storage:
+    - retrofit
+    - backendless
+    - rest api's
     
-   - offline storage create/read/update/delete (**CRUD**):
-     - realm
-     - SQLite
-     - SharedPreferences, etc...
-    
-   - deivce services:
+  - offline storage create/read/update/delete (**CRUD**):
+    - realm
+    - SQLite
+    - SharedPreferences, etc...
+
+  - deivce services:
      - intents
      - services
      - geo
