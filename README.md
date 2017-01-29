@@ -1,7 +1,7 @@
 # Map collection for MCPE(Android)
 
-#### This project uses moxy library as MVP basis.
-##### Technologies used:
+
+#### Technologies used:
 - **Rx** - for handling parrallel and async tasks ( server calls and database operations)._  
 - **realm** - as a database `model-layer` _(hosted **locally** on device as a set of tables in text files)._
 - **backendless** - also `model-layer` _(hosted **remotely** on backendless server as set of tables)._
@@ -12,6 +12,7 @@
 ##### - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
 ##### - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
 
+#### This project uses moxy library as MVP basis.
 #### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`.
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
