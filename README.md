@@ -74,7 +74,8 @@ Steps to construct a View part of Moxy- MVP:
 			//well that's all - View is ready
 		}
 		
-2. Now you [write](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L65-L77) `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
+2. Now you  `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
+>[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
 
 		
 
