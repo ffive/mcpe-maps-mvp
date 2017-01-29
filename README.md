@@ -10,7 +10,7 @@
 ### Detailed review of implementation can be found here:
 - [Project Wiki]()
 - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
-- [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
+- [Project Page on GitHub Pages](https://ffive.github.io/mcpe-maps-mvp)
 
 ## This project uses moxy library as MVP basis.
 
