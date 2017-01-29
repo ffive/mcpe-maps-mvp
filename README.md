@@ -74,7 +74,9 @@ Steps to construct a View part of Moxy- MVP:
 			//well that's all - View is ready
 		}
 		
-2. Now you write `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
+2. Now you [write](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L65-L77) `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
+
+		
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
 
@@ -92,21 +94,17 @@ Presenter is a java class which `implements MvpPresenter`
 Generally you'll find yourself writing  4 types of methods here:
 
 1. Methods defining how you retrieve/save cata from `model` which can be code talking to: 
-  - server
-  - database
+  - [server](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L65-L77)
+  - [database](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L36-L38)
   - file
   - camera
   - sensors
   - touchscreen
-  [examples](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L36-L38)
+  [examples]
       
 2. Methods to manipulate the data (so-called business logic of the app)
-
-3. Methods to manipulate the data (so-called business logic of the app)
-
-		fdgdfg	
-  
-4. Callbacks - write methods you will call from **View**, when events( eg. clicks, touches, end of animation)  happen there.
+ 
+3. Callbacks - write methods you will call from **View**, when events( eg. clicks, touches, end of animation)  happen there.
 	
 		//pseudo-code:
 		
