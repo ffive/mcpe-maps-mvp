@@ -20,7 +20,7 @@
 
 >more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-###  The main aspect to keep in mind all the time - it is up to you to decide:
+### The main aspect to keep in mind all the time - it is up to you to decide:
 - What part of your to consider `model`s and `view`s
 - Whether to fit particular code pieces to MVP _**at all**_;
   
@@ -39,26 +39,23 @@
 - sensors
 - screen
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
- 
- 
+
 ## View
-`view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice looks like: 
+`view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
 end of story.
 
-Steps
+Steps to construct a View part of Moxy- MVP:
   
 1. define interface (make it `implement MvpView`)
-```
-	public interface MyMoxyV extends MvpView{
-		void showLoadingProgress();
-		void beginIntroAnimation();
-		void updateList(List<E> newList);
-		void setVolume(float volumeDb);
-		//well that's all - View is ready
 
-	}
-```
-
+		public interface MyMoxyV extends MvpView{
+			void showLoadingProgress();
+			void beginIntroAnimation();
+			void updateList(List<E> newList);
+			void setVolume(float volumeDb);
+			//well that's all - View is ready
+		}
+		
 2. Now you write `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
