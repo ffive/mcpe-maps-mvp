@@ -32,20 +32,24 @@
 ## Model
 `model` - is literally _anything_ where we can **read/write/get/set/download/upload/configure/change** any **digital data**:
 
-  - server
-  - database
-  - file
-  - camera
+- server
+- database
+- file
+- camera
 - sensors
 - screen
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
  
  
 ## View
-  `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice loioks like: 
+`view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice loioks like: 
 end of story.
+
+Steps
+  
+1. define interface (make it `implement MvpView`)
 ```
-	public interface MyView extends MVPView{
+	public interface MyMoxyV extends MvpView{
 		void showLoadingProgress();
 		void beginIntroAnimation();
 		void updateList(List<E> newList);
@@ -53,14 +57,16 @@ end of story.
 		//well that's all - View is ready
 
 	}
-```	
-Now you write `Activity` or `Fragment` or any `CustomView` to `implement MyView` scan implement it and become a complete MVP
+```
 
->**Important** : V of MVP ( View) has no connection to android View. At all. Totally different kind of stuff. 
+2. Now you write `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
+
+>**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
 
 ## ViewState
-  Firstly, it **_is generated automatically by Moxy_** and it works.
-  ViewState is a class which :
+Firstly, it **_is generated automatically by Moxy_** and it works.
+
+ViewState is a class which :
   
 - holds the current state of `view` and also history of _change ui_ commands from presenter.
 - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
