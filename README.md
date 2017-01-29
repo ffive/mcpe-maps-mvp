@@ -1,32 +1,32 @@
 # Map collection for MCPE(Android)
 
 
-#### Technologies used:
+## Technologies used:
 - **Rx** - for handling parrallel and async tasks ( server calls and database operations)._  
 - **realm** - as a database `model-layer` _(hosted **locally** on device as a set of tables in text files)._
 - **backendless** - also `model-layer` _(hosted **remotely** on backendless server as set of tables)._
 - **retrolambda** - for adding Java8 lambdas compatible with 1.6, 1.7.
 
-###### Detailed review of implementation can be found here:        
-##### - [Project Wiki]...
-##### - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
-##### - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
+### Detailed review of implementation can be found here:        
+#### - [Project Wiki]...
+#### - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
+#### - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
 
-#### This project uses moxy library as MVP basis.
-#### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`.
+## This project uses moxy library as MVP basis.
+### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`.
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
 >more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-##  The main aspect to keep in mind all the time - it is up to you to decide:
+###  The main aspect to keep in mind all the time - it is up to you to decide:
 - What part of your to consider `model`s and `view`s
 - Whether to fit particular code pieces to MVP _**at all**_;
   
 >Mixing MVP and non-MVP *is already good*, while moving more code to MVP is even better.
 
 
-##### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
+#### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
 `model` - is literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
