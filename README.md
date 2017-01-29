@@ -91,13 +91,12 @@ ViewState is a class which :
 Presenter is a single java class, holding methods of 2 kinds:
 
 1. **Methods defining how smth is talking to `model` which can be:** 
-
-- server
-- database
-- file
-- camera
-- sensors
-- screen
+  - server
+  - database
+  - file
+  - camera
+  - sensors
+  - screen
       
 2. **Methods to manipulate the data (so-called business logic of the app)** 
   
