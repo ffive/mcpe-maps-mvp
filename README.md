@@ -74,9 +74,21 @@ Steps to construct a View part of Moxy- MVP:
 			//well that's all - View is ready
 		}
 		
-2. Now you  `Activity`,`Fragment` or any `CustomView` to `implement MyMoxyV` to make them be a 100% _View_ of _MVP_
+2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements MyMoxyV` to make them be a 100% _View_ of _MVP_.   `@InjectPresenter    MvpPresenter myPresenterObjectInsideActivity;`
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
 
+		public class MyFragment extends MvpAppCompatFragment implements MyMoxyV {
+		
+			@InjectPresenter
+			MyMoxyPresenter myPresenterObject;
+			
+			@Override
+			public void onCreate{
+			...
+			}
+			
+			...
+		}
 		
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
