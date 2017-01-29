@@ -62,6 +62,7 @@ Steps to construct a View part of Moxy- MVP:
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
 
 ## ViewState
+
 Firstly, it **_is generated automatically by Moxy_** and it works.
 
 ViewState is a class which :
@@ -72,26 +73,24 @@ ViewState is a class which :
 ## Presenter
 Presenter is a single java class, holding methods of 2 kinds:
 
-1. **Methods defining how smth is talking to:**
-   
-- model
-  - online data input/output/storage:
-    - retrofit
-    - backendless
-    - rest api's
+1. **Methods defining how smth is talking to:** model
+   - online data input/output/storage:
+     - retrofit
+     - backendless
+     -  rest api's
     
-  - offline storage create/read/update/delete (**CRUD**):
-    - realm
-    - SQLite
-    - SharedPreferences, etc...
+   - offline storage create/read/update/delete (**CRUD**):
+     - realm
+     - SQLite
+     - SharedPreferences, etc...
     
-  - deivce services:
-    - intents
-    - services
-    - geo
-    - display
-    - audio
-    - camera, etc...
+   - deivce services:
+     - intents
+     - services
+     - geo
+     - display
+     - audio
+     - camera, etc...
 
   - sensors
     - gyroscope
