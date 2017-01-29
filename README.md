@@ -31,12 +31,12 @@
 
 ## Model
 `model` - is literally _anything_ where we can _**read/write/get/set/download/upload/configure/change** any **digital data**_
-- server
-- database
-- file
-- camera
-- sensors
-- screen
+  - server
+  - database
+  - file
+  - camera
+  - sensors
+  - screen
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
  
  
