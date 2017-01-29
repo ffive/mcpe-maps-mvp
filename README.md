@@ -22,9 +22,8 @@ Don't be scared of this squares. Imagine yourself in automatic-order Cafe.
 
 Then:
 
-- The fridge and the coffee-machine become our `Models`
-- `interface CustomerView` is a simple short java interface  
-	
+- `Models` are kitchen,fridge,coffee machine,billing system, vip members list, etc...
+- `View` is a set of _all possible_ actions which are meant to be happen 0+ times for each Customer.	
 		
  	 	public interface CustomerView implements MvpView {
 		
@@ -37,7 +36,10 @@ Then:
   
   		}
   
-  - Every customer including you `implements CustomerView` - defines its reactions to events which might happen in cafe defined above^
+  - Every customer including you `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
+  
+>People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance.
+
   - Customer usually is a human(Activity) who has some visible state (emotion and look), is going to react(behave) to cafe events
     - attach itself (enter cafe)
     - await (might be not the only one in cafe queue)
