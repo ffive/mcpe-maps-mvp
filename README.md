@@ -43,16 +43,15 @@
 ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice loioks like: 
 end of story.
-```
-public interface MyView extends MVPView
-{
-	showLoadingProgress();
-	beginIntroAnimation();
-	updateList(List<E> newList);
-	setVolume(float volumeDb);
-	etc...
-}
-```
+
+	public interface MyView extends MVPView{
+		showLoadingProgress();
+		beginIntroAnimation();
+		updateList(List<E> newList);
+		setVolume(float volumeDb);
+		etc...
+	}
+
 
 ## ViewState
 Firstly, it **_is generated automatically by Moxy_** and it works.
@@ -63,7 +62,7 @@ ViewState is a class which :
 ## Presenter
 Presenter is a single java class, holding methods of 2 kinds:
 
-  1. **Methods defining how smth is talking to:
+  1. **Methods defining how smth is talking to:**
     - online data input/output/storage:
       - retrofit, backendles, rest api's  
       - offline storage create/read/update/delete (**CRUD**)
