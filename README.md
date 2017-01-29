@@ -7,8 +7,9 @@
 
 more info can be found in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-The main aspect to keep in mind all the time - there is no rule what part of your app should be a model or presenter!
-Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system, if and only if you define the roles of your classes (e.g. I'm going to make this activity a view and this fragment a view, backendless will be one of my models, sharedprefs - one more model, realm database - yet another model.   Now i need a presenter which will:
+### The main aspect to keep in mind all the time - there is no rule what part of your app should be a model or presenter!
+Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules (**Best practices**)[https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices]
+>(e.g. I'm going to make this activity a view and this fragment a view, backendless will be one of my models, sharedprefs - one more model, realm database - yet another model.   Now i need a presenter which will:
 1. talk to models to get data
 2. process data _(parse,sort,load more specific data)_ received from `model-layer`
 3. (optional) send some commands to view ( set new text, change visibility of an item, begin animation, show progress)
