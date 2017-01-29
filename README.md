@@ -42,25 +42,24 @@
  
 ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform. In practice loioks like: 
-
-  ```
-  public interface MyView extends MVPView
-  {
-  	showLoadingProgress();
-  	beginIntroAnimation();
-  	updateList(List<E> newList);
-  	setVolume(float volumeDb);
-  	etc...
-  }
-  ```
 end of story.
+```
+public interface MyView extends MVPView
+{
+	showLoadingProgress();
+	beginIntroAnimation();
+	updateList(List<E> newList);
+	setVolume(float volumeDb);
+	etc...
+}
+```
 
 ## ViewState
-  Firstly, it **_is generated automatically by Moxy_** and it works.
-  ViewState is a class which :
-- holds the current state of `view` and also history of _change ui_ commands from presenter.
-- manages the activity/fragments lifecycle mess for you - and makes it perfectly.
-
+Firstly, it **_is generated automatically by Moxy_** and it works.
+ViewState is a class which :
+  - holds the current state of `view` and also history of _change ui_ commands from presenter.
+  - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
+  
 ## Presenter
 Presenter is a single java class, holding methods of 2 kinds:
 
@@ -87,9 +86,9 @@ Presenter is a single java class, holding methods of 2 kinds:
       - EMV sensor
       - wifi, Bluetooth, connected gadgets etc
       
-  2. **Manipulates the data (so-called business logic of the app) 
+  2. **Manipulates the data (so-called business logic of the app)** 
   
-  3. **Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).
+  3. **Methods (callbacks) called from `view` - write how presenter reacts to events happened in view (clicks, touches).***
 	```
 	//pseudo-code:
 	/** model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
