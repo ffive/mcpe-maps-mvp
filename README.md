@@ -38,6 +38,7 @@
 - camera
 - sensors
 - screen
+
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
 
 ## View
