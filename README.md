@@ -8,19 +8,19 @@
 - **retrolambda** - for adding Java8 lambdas compatible with 1.6, 1.7.
 
 ###### Detailed review of implementation can be found here:        
- - [Project Wiki]...
- - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
- - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
+##### - [Project Wiki]...
+##### - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
+##### - [Project Page on GitHub Pages](https://ffive.github.com/mcpe-maps-mvp)
 
 #### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`.
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
->more info can be found in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
+>more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
 
-###  The main aspect to keep in mind all the time - it is up to you to decide
-#### what part of your app will be considered a `model` and `view` 
-#### and whether some part of app should be fitted to mvp at all; Mixing *is ok*, while moving more code to MVP arch is even better.
+###  The main aspect to keep in mind all the time - it is up to you to decide:
+>what part of your app will be considered a `model` and `view` 
+>whether some code should be fitted to MVP _**at all**_; Mixing *is ok*, while moving more code to MVP arch is even better.
 ##### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
@@ -63,18 +63,26 @@ ViewState is a class which :
     - xml parsing
     - sensors code, etc...
   2. methods (callbacks) for a view - here we write how presenter reacts to events happened in view.
-
-#### Examples in pseudo-code:
 	```
 	//pseudo-code:
 	/** model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
 	*	getViewState() - a handle for our View( activity, fragment, view, layout, list item, etc.)		
 	*/	
 
-	onLikeClickedInView(int mapId){
-
-		likesOld = model.getLikesCount(mapId);  //type 1
-		model.updateDatabase( likesOld + 1 );   //type 2
+	onLikeButtonClicked(int mapId){			//type 1: this method is called from activity,(like btn ClickListener)
+		
+		getViewState().runLikeAnimation();		//ui commands
+		getViewState().showBackgroundProgress();	//ui commands
+		
+		Map map = model.getMap(mapId); 		 	//load from db by mapId from activity's `ListAdapter` click.
+		
+		int oldLikes = map.getLikes();			// data manipulations
+		map.setLikes( oldLikes + 1);
+	
+		model.saveToDatabase(map);    			//saving updated map to db 
+		
+		getViewState().hideBackgroundProgress();	//ui command
+		
 	}
 
 	onSettingsClickedFromActivity(){
@@ -88,7 +96,6 @@ ViewState is a class which :
 	}
 
 	onNewLevel(){
-	
 		getViewState().showSuccessAnimation();
 		getViewState().displayAd();
 	}
