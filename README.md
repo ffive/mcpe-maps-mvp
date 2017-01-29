@@ -98,6 +98,7 @@ Generally you'll find yourself writing  4 types of methods here:
   - camera
   - sensors
   - touchscreen
+  [examples](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L36-L38)
       
 2. Methods to manipulate the data (so-called business logic of the app)
 
