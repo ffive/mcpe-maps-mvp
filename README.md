@@ -18,24 +18,44 @@
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
-Don't be scared of this squares. Imagine yourself in the coffe-shop with donuts:
+Don't be scared of this squares. Imagine yourself in automatic-order Cafe.
+
 Then:
-  The fridge and the coffee-machine become our `Models`
-  You are a User and some kind of `ViewState`; ( your face state changes  during the process, details later)
-  Menu is a `View` interface (between you and presenter)
-  The salesman is a `Presenter`
+
+- The fridge and the coffee-machine become our `Models`
+- CustomerView is a `interface CustomerView implements MvpView`
+  - Every customer including you implement a `CustomerView`
+  - Customer usually is a human(Activity) who has some visible state (emotion and look), is going to react to cafe events(await, sit,  eat, drink, be happy) - change UI and perform (continuous too) generalized and defined in ``
+  ```
+  public interface CustomerView implements MvpView {
+
+  void welcome();
+  void assignSeat(int tableNumber);
+  void 
   
-  Let's look at your typical actions through the prism of Moxy-MVP
+  }
+  ```
+actions (order-wait-receiveOrder-thank-eat-burp-pay-leave) 
+- iPadMenu is a `Presenter` and handles data processing between 
+  - `Views` - customers
+  - `models` - kitchen,fridge,coffee machine,billing system, vip members list, etc...
+- The waiter is a `ViewState`
+  - presenter deliveres results of cooking,counting etc to you via waiter.
   
-  You have some initial state, your eyes render hungry, your whole body is running `long process wait animation`
+- 
+
   
-  Presenter has some callbacks he can react to - (view callbacks) So he hears:
+Let's look at your typical actions through the prism of Moxy-MVP:
+  
+You have some _initial state_, your eyes render hungry, your whole body is running `performLongWaitAnimation()`
+`Presenter` defined some `callbacks` so he receives from `View`:
+
     - menu_item_4 - coffee
     - menu_item_2 - donut
-    
-  - `onOrderReceived(List<MenuItem> orderedItems )`! -> get item from `model:coffeemachine`, get item from `model:fridge`
-  - presenter begins `asyncTask - ask barista to make latte`, and syncTask - fridge.retrieveDonut() , meanwhile sending command to yoUI -> relax and take your seat waiting for results:  faceView State changes to happiness  and you take a seat( Your)
-  -presenter also listens to `model:barista` events - so when barista tells presenter coffee is ready - presenter takes coffee and issues a View command (implemented by you )   `send coffee to View`
+    `onOrderReceived(List<MenuItem> orderedItems )`! -> get item from `model:coffeemachine`, get item from `model:fridge`
+  
+ - `presenter` begins `new AsyncTask("ask barista to make latte")`, and syncTask - fridge.retrieveDonut() , meanwhile sending command to yoUI -> relax and take your seat waiting for results:  faceView State changes to happiness  and you take a seat( Your)
+  -`presenter` also listens to `model:barista` events - so when barista tells presenter coffee is ready - presenter takes coffee and issues a View command (implemented by you )   `send coffee to View`
   - In response - you are rendered even more happy - and perform EatingAnimation. When eating ends - you call back to presenter to ask a bill.
   
 >more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
