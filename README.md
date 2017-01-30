@@ -2,12 +2,12 @@
 
 
 ## Technologies used:
-- **Rx** - for handling parrallel and async tasks ( server calls and database operations)._  
-- **realm** - as a database `model-layer` _(hosted **locally** on device as a set of tables in text files)._
-- **backendless** - also `model-layer` _(hosted **remotely** on backendless server as set of tables)._
+- **Rx** - for handling complex parallel/async tasks _( server calls and database operations)_.  
+- **realm** - as a database `model-layer` 	hosted **locally** on device as a set of tables in text files).
+- **backendless** - also `model-layer` 		hosted **remotely** on backendless server as set of tables.
 - **retrolambda** - for adding Java8 lambdas compatible with 1.6, 1.7.
 
-### Detailed review of implementation can be found here:
+### Links for developers:
 - [Project Wiki]()
 - [GitHub Project](https://github.com/ffive/mcpe-maps-mvp/projects/1)
 - [Project Page on GitHub Pages](https://ffive.github.io/mcpe-maps-mvp)
@@ -22,13 +22,13 @@ Don't be scared of this squares. Imagine a Cafe, where you make your orders usin
 
 Then:
 
-- `Models` include kitchen,fridge,coffee machine,billing system, vip members list, etc...
+- `Models` include kitchen, fridge, coffee machine, billing system, vip members list, etc...
 - `ViewState` role goes to **Waiter**.
-- `View` is just a **set** of _all possible_ **interactions** cafe will perform 0+ times on each customer. 
-- `Presenter` is an iPad with menu,orders,billing - it handles data processing between: 
+- `View` is  a **set** of _all possible_ **interactions** that **Cafe** == `presenter` will perform 0+ times on each customer. 
+- `Presenter` is an iPad showing menu, taking orders, processing bills - it handles all data i/o between: 
   - customers (`View` == anyone who implements `CustomerView`'s methods)
   - waiter (`ViewState`);
-  - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
+  - kitchen, billing system, etc... (`Model`)
   
 >`presenter` delivers results of cooking (cafe commands) to **CustomerView** with the help of **Waiter** .
  
