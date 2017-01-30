@@ -85,9 +85,12 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
  - `presenter` begins `new Async( ()->launchCoffeeMachine("latte") )`,
  - `presenter` launches another  sync - `fridge.retrieveDonut()` ,
  - `presenter` listens to events:
-   - from `model:coffeemachine` -  when its ready- iPad issues a command - tells waiter coffee to move coffee from `model:machine` to Customer;
-   - from `CustomerView`callbacks - Customer performs Eating. When finished - CustomerView calls back to presenter to ask a bill:
-	`mPresenter.onEatFinished();`
+   - from `model:coffeemachine` -  when its ready- iPad issues a command - tells waiter coffee to move coffee from `model:machine` to **Customer**;
+   - from `CustomerView`callbacks 
+     - Customer performs Eating.
+     -  When finished - CustomerView calls back to presenter to ask a bill:
+					
+			mPresenter.onEatFinished();
  
 
 ### The main aspect to keep in mind all the time - it is up to you to decide:
