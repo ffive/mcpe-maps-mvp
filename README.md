@@ -66,10 +66,11 @@ subject's system independent actions 	| disappear in toilet, answer phone call, 
 
 >The main rule is to allow cafe see a Customer-like behaviour described in Cafe's vision (`View`)  of a typical visitor.
 
->Even more - when you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations second customer on the table independent of the fact that the customer reaction will differ from yours; And his age and gender differs from yours. That's just doesn't play any role in MVP angle of this process.
+### Multiple `views` attached to single `presenter`
+  When you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations for second customer on the same table, independent of the fact, that your friends reaction will differ from yours; And properties (_age, gender, appettite) usually differs from yours. That's just doesn't play any role in MVP angle of this process.
         
  
-Let's look at your typical actions through the prism of Moxy-MVP:
+  Let's look at your typical actions through the prism of Moxy-MVP:
   
 1. You have an _initial state_ : your eyes render hungry, your whole body is running `performLongWaitAnimation()`
 2. iPad (`presenter`) presents a menu: 
