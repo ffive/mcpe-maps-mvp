@@ -119,7 +119,7 @@ Let's look at your typical actions through the prism of Moxy-MVP:
   - wifi, Bluetooth, connected gadgets etc.
 
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
-
+No specific MVP code is needed to consider any data source  a `model`. Use the same code you would use if you write non-MVP. **The only rule here is to interact with `model` from presenter! This will make the magic of commands history in ViewState**
 ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
 
@@ -159,6 +159,8 @@ The above @InjectPresenter annotation tells moxy to generate `ViewState` class f
 ## ViewState
 
 First, it is **generated automatically by Moxy** and **it works perfect**.
+
+>@InjectsPresenter - generates ViewState.
 
 ViewState is a class which :
   
