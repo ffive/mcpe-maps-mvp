@@ -53,17 +53,22 @@ Then:
 
    - Let's define some more links between _cafe visit_ and _app usage_:
      - a cafe == MVP system (app+server+storage+users)
-     - a customer == App screen `Activity implements CustomerView` might:
-        - be a human, dog, organisation (activity,fragment,custom) etc. The only rule is to allow cafe see a Customer behaviour and communicate with that behaviour (call methods implemented in `Activity` from `View`).
-        - have different states we can describe - (waiting,placing an order,eating,paying) ==  UI changes (incl. text,images,sounds)
-	- change between these states and behave  on itself - walk,sit,order,eat,drink,leave,
-        - and will react(behave) to cafe events defined in `View` _(again - think of it in sense of Cafe Owner's view on the whole process)_
-       - disappear to toilet; hang on phone not responding to waiter (`ViewState`) - waiter remembers everything he wants to give you when you're back.
-       - Even more - when you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations second customer on the table independent of the fact that the customer reaction will differ from yours; And his age and gender differs from yours. That's just doesn't play any role in MVP angle of this process.
-       - 
-      
+     - a customer ==  might:
+     
 
-  
+Real Cafe | Activity connected to MVP system
+------------ | -------------
+Starbucks  | `? implements CustomerView`
+a person, group, organisation | fragment, activity, custom
+knows what to do in cafe | ~overrided~ implemented CustomerView and provided all it's methods impl
+changes between states `waiting,placing an order,eating,paying` | UI changes - displays text,images, plays sounds etc.
+Waiter waiting while you disappear to toilet or answering hpone call, messaging etc - not responding | System events,app switches, calls, power off, connectivity issues; 
+
+>The main rule is to allow cafe see a Customer-like behaviour described in Cafe's vision (`View`)  of a typical visitor.
+
+>Even more - when you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations second customer on the table independent of the fact that the customer reaction will differ from yours; And his age and gender differs from yours. That's just doesn't play any role in MVP angle of this process.
+        
+ 
 Let's look at your typical actions through the prism of Moxy-MVP:
   
 1. You have an _initial state_ : your eyes render hungry, your whole body is running `performLongWaitAnimation()`
