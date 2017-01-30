@@ -37,6 +37,7 @@ Then:
 >Please think of `View` it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 
 ### Implementation details:
+
 #### View:
 	public interface CustomerView implements MvpView {				
 		void welcome(String greetingsPhrase);
