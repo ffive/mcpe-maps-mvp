@@ -67,16 +67,17 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 3. iPad receives and onOrderReceived callback with data.
 
 		iPad's perspective:
-			-> onOrderReceived( List<MenuItem> orderedItems ) 
-			-> start retrieving coffee from `model`:coffeemachine
+			-> onOrderReceived( List<MenuItem> orderedItems); 
 			
- - `presenter` begins `new Async( ()->launchCoffeeMachine("latte") )`,
- 
-			-> get donut from `model.openFridge().getDonut(4,20)`
+4. `presenter` begins `new Async( ()->launchCoffeeMachine("latte") )`,
+
+ 			-> model.coffeemachine.makeEspresso()  //prepare coffee 
+			
 
 - `presenter` launches another  syncronous operation - `fridge.retrieveDonut()` ,
-
-			-> get waiter and send donut to Customer with him
+			
+			-> get donut from `model.openFridge().getDonut(4,20)`
+			-> send Waiter with donut to Customer
  
  - `presenter` listens to events:
  
