@@ -25,16 +25,15 @@ Then:
 - `Models` are kitchen,fridge,coffee machine,billing system, vip members list, etc...
 - `View` is a set of _all possible_ actions. _Please think of it in terms of **The system creator's vision of the process. That kind of meaning. Not the synonym of 'look' or 'widget'**_.	
 		
-		public interface CustomerView implements MvpView {
+			public interface CustomerView implements MvpView {
 		
-  			void welcome(String greetingsPhrase);
-  			void assignSeat (int tableNumber);
-  			void presentMenu (List<MenuItems> menu);
-			void orderReady(MenuItem cookedItem);
-			void showBill(Map<MenuItem,String> chequeBiu);
-			void auRevoir();
-  
-  		}
+  				void welcome(String greetingsPhrase);
+  				void assignSeat (int tableNumber);
+  				void presentMenu (List<MenuItems> menu);
+				void orderReady(MenuItem cookedItem);
+				void showBill(Map<MenuItem,String> chequeBiu);
+				void auRevoir();
+  			}
   
   - Every customer including you `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
   
