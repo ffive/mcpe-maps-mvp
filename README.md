@@ -22,8 +22,10 @@ Don't be scared of this squares. Imagine yourself in automatic-order Cafe.
 
 Then:
 
-- `Models` are kitchen,fridge,coffee machine,billing system, vip members list, etc...
-- `View` is a set of _all possible_ actions. _Please think of it in terms of **The system creator's vision of the process. That kind of meaning. Not the synonym of 'look' or 'widget'**_.	
+- `Models` include kitchen,fridge,coffee machine,billing system, vip members list, etc...
+- `ViewState` role goes to **Waiter**.
+  - presenter deliveres results of cooking,counting etc to you with the help of **Waiter** .
+- `View` is a **set** of _all possible_ **actions**. Please think of it **in terms of the system designer's vision** of the process. _That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 		
 			public interface CustomerView implements MvpView {
 		
@@ -36,6 +38,11 @@ Then:
 			}
   
   - Every customer including you `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
+  - `Presenter` is an iPad with menu,orders,etc -and handles data processing between 
+    - customers (`CustomerView implementators`)
+    - waiter (`ViewState`);
+    - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
+
   
 >People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance.
 
@@ -48,11 +55,7 @@ Then:
        - change state and behave walk,sit,order,eat,drinkleave,
        - disappear to toilet, hang not responding to waiter while  on phone
  
-- iPadMenu is a `Presenter` and handles data processing between 
-  - `Views` - customers
-  - `models` - kitchen,fridge,coffee machine,billing system, vip members list, etc...
-- The waiter is a `ViewState`
-  - presenter deliveres results of cooking,counting etc to you via waiter.
+
   
 - 
 
