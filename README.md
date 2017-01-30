@@ -30,11 +30,11 @@ Then:
   - waiter (`ViewState`);
   - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
   
->`presenter` deliveres results of cooking (cafe commands) to you with the help of **Waiter** .
+>`presenter` delivers results of cooking (cafe commands) to **CustomerView** with the help of **Waiter** .
  
     
 #### Important!
->Please think of `View` it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
+>Please think of `View`  **_in terms of_ the _system designer's_ vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 
 ### Implementation details:
 
