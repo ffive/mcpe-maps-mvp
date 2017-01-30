@@ -179,26 +179,33 @@ Generally you'll find yourself writing 3 types of methods here:
  
 3. Callbacks - write methods you will call from **View**, when events( eg. clicks, touches, end of animation)  happen there.
 	
-		//pseudo-code:
-		
-		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
-			
-			getViewState().runLikeAnimation();		// ui command ( View's method)
-			getViewState().showBackgroundProgress();	// ui command ( View's method)
-			
-			Map map = model.getMap(mapId); 		 	// type 1 load map from db by id (came from activity)
-			
-			int oldLikes = map.getLikes();			// type 2 data manipulations
-			map.setLikes( oldLikes + 1);
-		
-			model.saveToDatabase(map);    			// type 1 saving updated map to db 
-			
-			getViewState().hideBackgroundProgress();	// ui command ( View's method)
-			
-		}
-	
-or
+`Presenter` methods examples:
 
+- type 1
+
+		private List<Map> getLocalMaps(){
+		
+			Model model = getLocalRepository();
+			Map map = model.where(Map.class).findAllAsync();	 // type 1 
+	
+		}
+
+		private refreshMaps(){
+		
+			Model model = Backendless.Persistence();
+			model.of(Map.class)
+				.where("objectId",map.id)
+				.find( results -> { getLocalModel().copyOrupdate(results); });
+		}
+		  	
+- type 2
+
+		private Map incrementLikes(Map map){
+			int oldLikes = map.getLikes();			// inner data manipulations
+			map.setLikes( oldLikes + 1);
+			return map;
+		}
+		
 		onSettingsClickedFromActivity(){
 			
 			UserConfig currentSettings = model.getConfigs(); //retrieve up-to-date configs from db
@@ -208,14 +215,29 @@ or
 			// and displays it's variables we took from db - that's the job of presenter as designed;
 			getViewState().displaySettingsWindowUsingConfig(config); 	
 		}
+
+- type 3
+		
+		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
+			
+			getViewState().runLikeAnimation();		// ui command ( View's method)
+			getViewState().showBackgroundProgress();	// ui command ( View's method)
+			
+			incrementLikes(map);
+		
+			model.saveToDatabase(map);    			// type 1 saving updated map to db 
+			
+			getViewState().hideBackgroundProgress();	// ui command ( View's method)
+			
+		}
 	
-or
+ 
+simple type 3:	
 
 		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
 		
-		etc...
-	```
+to be continued...
 
