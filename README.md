@@ -53,11 +53,11 @@ Then:
 >People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance. Both visitor and organisation can use cafe : use menu, place an order, pay bill. And to succeed the process there is no difference for cafe how old is the organisation or what annual income the visitor has.
 
    - Let's define some more links between _cafe visit_ and _app usage_:
-     - a cafe == MVP system (app+server+storage+users)
-     - a customer ==  might:
+     - a cafe == MVP system built to simulate cafe
+     - a customer ==  application part:
      
 
-Property	 	| 		Real Cafe 		| Activity connected to MVP system
+Property	 	| 		Real Cafe 		| Android app part using Moxy-MVP
 	------------ 	|		------------		| -------------
 Entity we use with MVP	| Customer  				| `? implements CustomerView`
 subject			| A person, group, organisation 	| `Fragment`, `Activity`, `CustomView+MvpDelegate`
