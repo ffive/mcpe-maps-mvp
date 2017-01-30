@@ -64,6 +64,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 		Customer places order on coffee.
 		Customer places order on donut.
 		Customer confirms the whole order.
+		
 3. iPad receives onOrderReceived callback with data.
 
 		iPad's perspective:
@@ -132,7 +133,14 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
   Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
  
- 		public interface CustomerView implements MvpView {				
+ 		
+
+
+### Steps to construct a View part of Moxy- MVP:
+  
+1. define interface (make it `implement MvpView`)
+
+		public interface CustomerView implements MvpView {				
 			void welcome(String greetingsPhrase);
 			void assignSeat (int tableNumber);
 			void presentMenu (List<MenuItems> menu);
@@ -140,34 +148,27 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			void showBill(Map<MenuItem,String> chequeBiu);
 			void auRevoir();
 		}
-
-
-### Steps to construct a View part of Moxy- MVP:
-  
-1. define interface (make it `implement MvpView`)
-
-		public interface MyMoxyV extends MvpView{
-			void showLoadingProgress();
-			void beginIntroAnimation();
-			void updateList(List<E> newList);
-			void setVolume(float volumeDb);
-			//well that's all - View is ready
-		}
 		
-2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements MyMoxyV` to make them be a 100% _View_ of _MVP_.   `@InjectPresenter   MvpPresenter myPresenterObjectInsideActivity;`
+2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements CustomerView` to make them be a 100% _View_ **V** of _MVP_.   `@InjectPresenter   MvpPresenter myCustomerPresenter;`
 
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
 
-		public class MyFragment extends MvpAppCompatFragment implements MyMoxyV {
+		public class MyFragment extends MvpAppCompatFragment implements CustomerView {
 		
 			@InjectPresenter
 			MyMoxyPresenter myPresenterObject;
 			
 			@Override
 			public void onCreate{
+	
 			...
 			}
 			
+			@Override
+			void welcome( String greetingsPhrase ){
+			
+				greet_tv.setText( greetingsPhrase )
+			}
 			...
 		}
 
