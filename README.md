@@ -97,7 +97,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 
 ### Implementation details:
 
-#### View:
+## View:
 
  Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
  
