@@ -89,8 +89,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
    - from `CustomerView`callbacks 
      - Customer performs Eating.
      -  When finished - CustomerView calls back to presenter to ask a bill:
-					
-			mPresenter.onEatFinished();
+`mPresenter.onEatFinished();`
  
 
 ### The main aspect to keep in mind all the time - it is up to you to decide:
