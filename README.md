@@ -122,7 +122,7 @@ Let's look at your typical actions through the prism of Moxy-MVP:
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
 
 
-Steps to construct a View part of Moxy- MVP:
+### Steps to construct a View part of Moxy- MVP:
   
 1. define interface (make it `implement MvpView`)
 
@@ -165,7 +165,7 @@ ViewState is a class which :
   
 ## Presenter
 Presenter is a java class which `implements MvpPresenter`
-Generally you'll find yourself writing 3 types of methods here:
+### Generally you'll find yourself writing 3 types of methods here:
 
 1. Methods defining how you retrieve/save data from `model` (`model` == code talking to): 
   - [server](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/presentation/presenter/blank/UploadMapPresenter.java#L65-L77)
@@ -181,15 +181,17 @@ Generally you'll find yourself writing 3 types of methods here:
 	
 `Presenter` methods examples:
 
-- type 1
-
+- Type 1 (CRUD)
+  - local
+  
 		private List<Map> getLocalMaps(){
 		
-			Model model = getLocalRepository();
-			Map map = model.where(Map.class).findAllAsync();	 // type 1 
+			Model model = getLocalRepository(); 
+			return model.where(Map.class).findAll();	 
 	
 		}
-
+  - remote
+  
 		private refreshMaps(){
 		
 			Model model = Backendless.Persistence();
@@ -198,7 +200,7 @@ Generally you'll find yourself writing 3 types of methods here:
 				.find( results -> { getLocalModel().copyOrupdate(results); });
 		}
 		  	
-- type 2
+- Type 2 (logic):
 
 		private Map incrementLikes(Map map){
 			int oldLikes = map.getLikes();			// inner data manipulations
@@ -216,28 +218,31 @@ Generally you'll find yourself writing 3 types of methods here:
 			getViewState().displaySettingsWindowUsingConfig(config); 	
 		}
 
-- type 3
+- type 3 (callbacks)
+  - simple:
+  
+		onNewLevel(){
+			getViewState().showSuccessAnimation();
+			getViewState().displayAd();
+		}
 		
+  - mixed: 
+  
 		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
 			
 			getViewState().runLikeAnimation();		// ui command ( View's method)
 			getViewState().showBackgroundProgress();	// ui command ( View's method)
 			
-			incrementLikes(map);
+			map = getLocalMaps().getById(mapId);		// type 1 - retrieving
+			incrementLikes(map);				// type 2 - logic
 		
-			model.saveToDatabase(map);    			// type 1 saving updated map to db 
+			model.saveToDatabase(map);    			// type 1 - saving updated map to db 
 			
 			getViewState().hideBackgroundProgress();	// ui command ( View's method)
 			
 		}
 	
- 
-simple type 3:	
-
-		onNewLevel(){
-			getViewState().showSuccessAnimation();
-			getViewState().displayAd();
-		}
+ 	
 		
 to be continued...
 
