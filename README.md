@@ -70,7 +70,7 @@ subject's system independent actions 	| disappear in toilet, answer phone call, 
   When you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations for second customer on the same table, independent of the fact, that your friends reaction will differ from yours; And properties (_age, gender, appettite) usually differs from yours. That's just doesn't play any role in MVP angle of this process.
         
  
-  Let's look at your typical actions through the prism of Moxy-MVP:
+## Let's look at your typical actions through the prism of Moxy-MVP:
   
 1. You have an _initial state_ : your eyes render hungry, your whole body is running `performLongWaitAnimation()`
 2. iPad (`presenter`) presents a menu: 
