@@ -24,8 +24,8 @@ Then:
 
 - `Models` include kitchen, fridge, coffee machine, billing system, vip members list, etc...
 - `ViewState` role goes to **Waiter**.
-- `View` is  a **set** of _all possible_ **interactions** that **Cafe** == `presenter` will perform 0+ times on each customer. 
-- `Presenter` is an iPad showing menu, taking orders, processing bills - it handles all data i/o between: 
+- `View` is  a **Cafe's Vision of a Customer** or in other words, a **set** of all possible **actions** that **Cafe** _wants_ to perform on customers (0+ times).
+- `Presenter` is an iPad : showing menu, taking orders, processing bills; it handles all data i/o between: 
   - customers (`View` == anyone who implements `CustomerView`'s methods)
   - waiter (`ViewState`);
   - kitchen, billing system, etc... (`Model`)
