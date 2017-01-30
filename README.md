@@ -248,7 +248,7 @@ Presenter is a java class which `implements MvpPresenter`
   		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
-		}
+			}
 		
   - mixed: 
   
@@ -263,8 +263,7 @@ Presenter is a java class which `implements MvpPresenter`
 			model.saveToDatabase(map);    			// type 1 - saving updated map to db 
 			
 			getViewState().hideBackgroundProgress();	// ui command ( View's method)
-			
-		}
+			}
 	
  	
 		
