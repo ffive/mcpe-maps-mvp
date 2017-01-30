@@ -244,13 +244,12 @@ Presenter is a java class which `implements MvpPresenter`
 		}
 
 - type 3 (callbacks)
-
   - simple:
   
-  		onNewLevel(){
-			getViewState().showSuccessAnimation();
-			getViewState().displayAd();
-		}
+  			onNewLevel(){
+				getViewState().showSuccessAnimation();
+				getViewState().displayAd();
+			}
 		
   - mixed: 
   
