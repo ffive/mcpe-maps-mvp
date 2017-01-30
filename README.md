@@ -115,22 +115,22 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 ## Model
 `model` - is literally _anything_ where we can _read/write/get/set/download/upload/configure/change_ any digital **data**:
   
-- **online data input/output/storage:
+- **online data input/output/storage:**
   - retrofit
   - backendless
   - rest api's
-- offline storage create/read/update/delete (**CRUD**):
+- offline storage **create/read/update/delete (CRUD)**:
   - realm
   - SQLite
   - SharedPreferences, etc...
-- deivce services:
+- **deivce services:**
   - intents
   - services
   - geo
   - display
   - audio
   - camera, etc...
-- sensors:
+- **device or 3rd-party sensors:**
   - gyroscope
   - light sensor
   - accelerometer
