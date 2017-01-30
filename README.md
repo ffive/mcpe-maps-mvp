@@ -83,6 +83,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 - Whether to fit particular code pieces to MVP _**at all**_;
   
 >Mixing MVP and non-MVP *is already good*, while moving more code to MVP is good x10.
+#### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ### Implementation details:
 
@@ -99,7 +100,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 			void auRevoir();
 		}
  
-#### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
+
 
 ## Model
 `model` - is literally _anything_ where we can _read/write/get/set/download/upload/configure/change_ any digital **data**:
