@@ -139,7 +139,7 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 ### Steps to construct a View part of Moxy- MVP:
   
 1. define interface (make it `implement MvpView`)
-
+```java
 		public interface CustomerView implements MvpView {				
 			void welcome(String greetingsPhrase);
 			void assignSeat (int tableNumber);
@@ -148,11 +148,12 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			void showBill(Map<MenuItem,String> chequeBiu);
 			void auRevoir();
 		}
+```
 		
 2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements CustomerView` to make them be a 100% _View_ **V** of _MVP_.   `@InjectPresenter   MvpPresenter myCustomerPresenter;`
 
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
-
+```java
 		public class MyFragment extends MvpAppCompatFragment implements CustomerView {
 		
 			@InjectPresenter
@@ -172,7 +173,7 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			...
 		}
 
-
+```
 The above @InjectPresenter annotation tells moxy to generate `ViewState` class for this `View` implementor.
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
@@ -208,24 +209,23 @@ Presenter is a java class which `implements MvpPresenter`
 
 - Type 1 (CRUD)
   - local
-  
-  		private List<Map> getLocalMaps(){
-		
-			Model model = getLocalRepository(); 
-			return model.where(Map.class).findAll();	 
-	
-		}
+```java
+	private List<Map> getLocalMaps(){	
+		Model model = getLocalRepository(); 
+		return model.where(Map.class).findAll();	 
+	}
+```
   - remote
-  
-		private refreshMaps(){
-		
-			Model model = Backendless.Persistence();
-			model.of(Map.class)
-				.where("objectId",map.id)
-				.find( results -> { getLocalModel().copyOrupdate(results); });
-		}		  	
+```java
+	private refreshMaps(){	
+		Model model = Backendless.Persistence();
+		model.of(Map.class)
+			.where("objectId",map.id)
+			.find( results -> { getLocalModel().copyOrupdate(results); });
+		}
+```
 - Type 2 (logic):
-
+```java
 		private Map incrementLikes(Map map){
 			int oldLikes = map.getLikes();			// inner data manipulations
 			map.setLikes( oldLikes + 1);
@@ -241,15 +241,17 @@ Presenter is a java class which `implements MvpPresenter`
 			// and displays it's variables we took from db - that's the job of presenter as designed;
 			getViewState().displaySettingsWindowUsingConfig(config); 	
 		}
+```
 - type 3 (callbacks)
   - simple:
-  
+  ```java
   		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
+```
   - mixed: 
-  
+  ```java
   		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
 			getViewState().runLikeAnimation();		// ui command ( View's method)
 			getViewState().showBackgroundProgress();	// ui command ( View's method)
@@ -261,6 +263,6 @@ Presenter is a java class which `implements MvpPresenter`
 			
 			getViewState().hideBackgroundProgress();	// ui command ( View's method)
 			}	
-		
+```
 to be continued...
 
