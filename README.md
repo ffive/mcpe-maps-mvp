@@ -68,7 +68,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 >The main rule is to allow cafe see a Customer-like behaviour described in Cafe's vision (`View`)  of a typical visitor.
 
 ### Multiple `views` attached to single `presenter`
-  When you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations for second customer on the same table, independent of the fact, that your friends reaction will differ from yours; And properties (_age, gender, appettite) usually differs from yours. That's just doesn't play any role in MVP angle of this process.
+  Imagine yourself in cafe with a friend. Think of it as a good place to attach another customer to same iPad; It will easily handle same operations for second customer on the same table, independent of the fact, that your friends reaction will differ from yours; And properties (_age, gender, appettite) usually differs from yours. That's just doesn't play any role in MVP angle of this process.
         
  
 ## Let's look at your typical actions through the prism of Moxy-MVP:
@@ -146,7 +146,7 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			//well that's all - View is ready
 		}
 		
-2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements MyMoxyV` to make them be a 100% _View_ of _MVP_.   `@InjectPresenter   MvpPresenter myPresenterObjectInsideActivity;
+2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements MyMoxyV` to make them be a 100% _View_ of _MVP_.   `@InjectPresenter   MvpPresenter myPresenterObjectInsideActivity;`
 
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
 
