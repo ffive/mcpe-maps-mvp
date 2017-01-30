@@ -25,8 +25,18 @@ Then:
 - `Models` include kitchen,fridge,coffee machine,billing system, vip members list, etc...
 - `ViewState` role goes to **Waiter**.
   - presenter deliveres results of cooking,counting etc to you with the help of **Waiter** .
-- `View` is a **set** of _all possible_ **actions**. Please think of it **in terms of the system designer's vision** of the process. _That kind of meaning. Not the synonym of 'look' or 'widget'_.	
-		
+- `View` is a **set** of _all possible_ **actions**. Please think of it **in terms of _the system designer's vision_** of the process.
+
+>_That kind of meaning. Not the synonym of 'look' or 'widget'_.	
+
+  - `Presenter` is an iPad with menu,orders,etc -and handles data processing between 
+    - customers (`CustomerView implementators`)
+    - waiter (`ViewState`);
+    - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
+
+
+### In detail
+  		
 			public interface CustomerView implements MvpView {
 		
   				void welcome(String greetingsPhrase);
@@ -37,20 +47,15 @@ Then:
 				void auRevoir();
 			}
   
-  - Every customer including you `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
-  - `Presenter` is an iPad with menu,orders,etc -and handles data processing between 
-    - customers (`CustomerView implementators`)
-    - waiter (`ViewState`);
-    - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
-
+  - Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
   
->People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance.
+>People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance. Both visitor and organisation can use cafe : use menu, place an order, pay bill. And to succeed the process there is no difference for cafe how old is the organisation or what annual income the visitor has.
 
    - Let's define some more links between _cafe visit_ and _app usage_:
      - a cafe == system (app+server+storage+users)
      - a customer == `Activity implements CustomerView` 
         - might be a human, dog, organisation etc. The only rule is be able to perform Customer behaviour.
-        - has some state we can describe - emotion and look == UI widgets, sound devices, [fleshlight]
+        - can be in some state we can describe - (waiting,placing an order,eating,paying) == app UI widgets change, sound devices play sounds,and [accidentially](http://knowyourmeme.com/memes/i-accidentally) a [fleshlight](http://i-fleshlight.blogspot.com.by/2008/09/i-accidentally-fleshlight-whole-thing.html?m=1) - the whole thing.
         - will react(behave) to cafe events defined in `View` _(again - think of it in sense of Cafe Owner's view on the whole process)_
        - change state and behave walk,sit,order,eat,drinkleave,
        - disappear to toilet, hang not responding to waiter while  on phone
