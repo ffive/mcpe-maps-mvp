@@ -209,7 +209,7 @@ Presenter is a java class which `implements MvpPresenter`
 - Type 1 (CRUD)
   - local
   
-		private List<Map> getLocalMaps(){
+  		private List<Map> getLocalMaps(){
 		
 			Model model = getLocalRepository(); 
 			return model.where(Map.class).findAll();	 
@@ -246,10 +246,10 @@ Presenter is a java class which `implements MvpPresenter`
 - type 3 (callbacks)
   - simple:
   
-  			onNewLevel(){
-				getViewState().showSuccessAnimation();
-				getViewState().displayAd();
-			}
+  		onNewLevel(){
+			getViewState().showSuccessAnimation();
+			getViewState().displayAd();
+		}
 		
   - mixed: 
   
