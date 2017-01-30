@@ -30,13 +30,13 @@ Then:
   - waiter (`ViewState`);
   - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
   
->`presenter` deliveres results of cooking,counting etc to you with the help of **Waiter** .
+>`presenter` deliveres results of cooking (cafe commands) to you with the help of **Waiter** .
  
     
 #### Important!
->Please think of it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
+>Please think of `View` it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 
-### In detail
+### Implementation details:
 #### View:
 	public interface CustomerView implements MvpView {				
 		void welcome(String greetingsPhrase);
@@ -67,26 +67,27 @@ Then:
 Let's look at your typical actions through the prism of Moxy-MVP:
   
 1. You have an _initial state_ : your eyes render hungry, your whole body is running `performLongWaitAnimation()`
-2. iPad is showing you a shiny menu (`Presenter` listens for UI  `callbacks` from some entity implementing `CustomerView`:
+2. iPad (`presenter`) presents a menu: 
 
 		//1. Customer chooses coffee and donut, iPad's perspective:
 		-> onOrderReceived( List<MenuItem> orderedItems ) 
 		-> start retrieving coffee from `model`:coffeemachine
 		-> get donut from `model:fridge`
-		-> get waiter and send donut to user with him
-		->
-  
- - `presenter` begins `new AsyncTask("ask barista to make latte")`, and syncTask - fridge.retrieveDonut() , meanwhile sending command to yoUI -> relax and take your seat waiting for results:  faceView State changes to happiness  and you take a seat( Your)
-  -`presenter` also listens to `model:coffeemachine` events - so when its ready- iPad shows tells presenter coffee is ready - presenter takes coffee and issues a View command (implemented by you )   `send coffee to View`
-  - In response - you are rendered even more happy - and perform EatingAnimation. When eating ends - you call back to presenter to ask a bill.
-  
->more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
+		-> get waiter and send donut to Customer with him
+ 
+ - `presenter` begins `new Async( ()->launchCoffeeMachine("latte") )`,
+ - `presenter` launches another  sync - `fridge.retrieveDonut()` ,
+ - `presenter` listens to events:
+   - from `model:coffeemachine` -  when its ready- iPad issues a command - tells waiter coffee to move coffee from `model:machine` to Customer;
+   - from `CustomerView`callbacks - Customer performs Eating. When finished - CustomerView calls back to presenter to ask a bill:
+	`mPresenter.onEatFinished();`
+ 
 
 ### The main aspect to keep in mind all the time - it is up to you to decide:
 - What part of your to consider `model`s and `view`s
 - Whether to fit particular code pieces to MVP _**at all**_;
   
->Mixing MVP and non-MVP *is already good*, while moving more code to MVP is even better.
+>Mixing MVP and non-MVP *is already good*, while moving more code to MVP is good x10.
 
 
 #### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
@@ -120,6 +121,8 @@ Let's look at your typical actions through the prism of Moxy-MVP:
 
 >if there is _something_ we can get data from - we want to use it as a `model-layer` in this architecture).
 No specific MVP code is needed to consider any data source  a `model`. Use the same code you would use if you write non-MVP. **The only rule here is to interact with `model` from presenter! This will make the magic of commands history in ViewState**
+
+
 ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
 
@@ -136,7 +139,8 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			//well that's all - View is ready
 		}
 		
-2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements MyMoxyV` to make them be a 100% _View_ of _MVP_.   `@InjectPresenter    MvpPresenter myPresenterObjectInsideActivity;`
+2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements MyMoxyV` to make them be a 100% _View_ of _MVP_.   `@InjectPresenter   MvpPresenter myPresenterObjectInsideActivity;
+
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
 
 		public class MyFragment extends MvpAppCompatFragment implements MyMoxyV {
@@ -151,7 +155,8 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			
 			...
 		}
-		
+
+
 The above @InjectPresenter annotation tells moxy to generate `ViewState` class for this `View` implementor.
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
