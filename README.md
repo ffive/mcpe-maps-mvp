@@ -79,10 +79,10 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
  
 
 ### The main aspect to keep in mind all the time - it is up to you to decide:
-- What part of your to consider `model`s and `view`s
-- Whether to fit particular code pieces to MVP _**at all**_;
+- What part of your code to consider `model`s and `view`s 
+- Whether to fit code to MVP _**at all**_;
   
->Mixing MVP and non-MVP *is already good*, while moving more code to MVP is good x10.
+>Mixing MVP and non-MVP *is already good*, while moving more code to MVP is still better.
 #### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ### Implementation details:
