@@ -57,13 +57,13 @@ Then:
      - a customer ==  might:
      
 
-? | Real Cafe | Activity connected to MVP system
------------- |	------------		| -------------
-where?			|Starbucks  				| `? implements CustomerView`
-subject			| a person, group, organisation 	| fragment, activity, custom
-subject qualifier	|knows what to do in cafe 		| ~overrided~ implemented CustomerView with all it's methods
-subject's reactions	| Changes of states `waiting,placing an order,eating,paying` | UI changes - displays text,images, 
-subject's system independent actions 	| disappear in toilet, answer phone call, browsing memes |  calls, power off, connectivity issues, system events, app switches 
+Property	 	| 		Real Cafe 		| Activity connected to MVP system
+	------------ 	|		------------		| -------------
+Entity we use with MVP	| Customer  				| `? implements CustomerView`
+subject			| A person, group, organisation 	| `Fragment`, `Activity`, `CustomView+MvpDelegate`
+subject qualifier	| Willing to use cafe's service 	| Implemented `CustomerView` with all it's methods
+MVP-important behaviour	| Can wait, order,smile, eat, pay, leave| Various UI changes on screen - display text,image, widget 
+MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls, power, no network, system update, app switch
 
 >The main rule is to allow cafe see a Customer-like behaviour described in Cafe's vision (`View`)  of a typical visitor.
 
