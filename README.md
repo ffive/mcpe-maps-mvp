@@ -153,6 +153,7 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 2. Now you take `Activity`,`Fragment` or any `CustomView+delegate` and add  `implements CustomerView` to make them be a 100% _View_ **V** of _MVP_.   `@InjectPresenter   MvpPresenter myCustomerPresenter;`
 
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
+
 ```java
 public class MyFragment extends MvpAppCompatFragment implements CustomerView {
 		
