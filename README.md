@@ -64,7 +64,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 		Customer places order on coffee.
 		Customer places order on donut.
 		Customer confirms the whole order.
-3. iPad receives and onOrderReceived callback with data.
+3. iPad receives onOrderReceived callback with data.
 
 		iPad's perspective:
 			-> onOrderReceived( List<MenuItem> orderedItems); 
@@ -74,14 +74,14 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
  			-> model.coffeemachine.makeEspresso()  //prepare coffee 
 			
 
-- `presenter` launches another  syncronous operation - `fridge.retrieveDonut()` ,
+5. `presenter` launches another  syncronous operation - `fridge.retrieveDonut()` ,
 			
 			-> get donut from `model.openFridge().getDonut(4,20)`
 			-> send Waiter with donut to Customer
  
- - `presenter` listens to events:
+6. `presenter` listens to events:
  
-   - from `model:coffeemachine` -  when its ready- iPad issues a command - tells waiter coffee to move coffee from `model:machine` to **Customer**;
+   - from `model.getCoffeeMachine()` -  when its ready- iPad issues a command (tells waiter coffee to move coffee from `model:machine` to **Customer**;
    - from `CustomerView`callbacks:
      - Customer performs Eating.
      -  When finished - CustomerView calls back to presenter to ask a bill:
