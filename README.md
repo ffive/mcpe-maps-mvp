@@ -35,33 +35,31 @@ Then:
 >Please think of it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 
 ### In detail
-  		
-			public interface CustomerView implements MvpView {
-				
-				void welcome(String greetingsPhrase);
-				void assignSeat (int tableNumber);
-				void presentMenu (List<MenuItems> menu);
-				void orderReady(MenuItem cookedItem);
-				void showBill(Map<MenuItem,String> chequeBiu);
-				void auRevoir();
-			}
+#### View:
+	public interface CustomerView implements MvpView {				
+		void welcome(String greetingsPhrase);
+		void assignSeat (int tableNumber);
+		void presentMenu (List<MenuItems> menu);
+		void orderReady(MenuItem cookedItem);
+		void showBill(Map<MenuItem,String> chequeBiu);
+		void auRevoir();
+	}
   
   - Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
   
 >People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance. Both visitor and organisation can use cafe : use menu, place an order, pay bill. And to succeed the process there is no difference for cafe how old is the organisation or what annual income the visitor has.
 
    - Let's define some more links between _cafe visit_ and _app usage_:
-     - a cafe == system (app+server+storage+users)
-     - a customer == `Activity implements CustomerView` 
-        - might be a human, dog, organisation etc. The only rule is be able to perform Customer behaviour.
-        - can be in some state we can describe - (waiting,placing an order,eating,paying) == app UI widgets change, sound devices play sounds,and [accidentially](http://knowyourmeme.com/memes/i-accidentally) a [fleshlight](http://i-fleshlight.blogspot.com.by/2008/09/i-accidentally-fleshlight-whole-thing.html?m=1) - the whole thing.
-        - will react(behave) to cafe events defined in `View` _(again - think of it in sense of Cafe Owner's view on the whole process)_
-       - change state and behave walk,sit,order,eat,drinkleave,
-       - disappear to toilet, hang not responding to waiter while  on phone
- 
-
-  
-- 
+     - a cafe == MVP system (app+server+storage+users)
+     - a customer == App screen `Activity implements CustomerView` might:
+        - be a human, dog, organisation (activity,fragment,custom) etc. The only rule is to allow cafe see a Customer behaviour and communicate with that behaviour (call methods implemented in `Activity` from `View`).
+        - have different states we can describe - (waiting,placing an order,eating,paying) ==  UI changes (incl. text,images,sounds)
+	- change between these states and behave  on itself - walk,sit,order,eat,drink,leave,
+        - and will react(behave) to cafe events defined in `View` _(again - think of it in sense of Cafe Owner's view on the whole process)_
+       - disappear to toilet; hang on phone not responding to waiter (`ViewState`) - waiter remembers everything he wants to give you when you're back.
+       - Even more - when you're not alone and came with a friend. Think of it as a perfect place to attach another customer to same iPad; It will easily handle same operations second customer on the table independent of the fact that the customer reaction will differ from yours; And his age and gender differs from yours. That's just doesn't play any role in MVP angle of this process.
+       - 
+      
 
   
 Let's look at your typical actions through the prism of Moxy-MVP:
