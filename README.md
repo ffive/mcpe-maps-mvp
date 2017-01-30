@@ -95,22 +95,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 >Mixing MVP and non-MVP *is already good*, while moving more code to MVP is still better.
 #### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
-### Implementation details:
-
-## View:
-
- Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
- 
- 		public interface CustomerView implements MvpView {				
-			void welcome(String greetingsPhrase);
-			void assignSeat (int tableNumber);
-			void presentMenu (List<MenuItems> menu);
-			void orderReady(MenuItem cookedItem);
-			void showBill(Map<MenuItem,String> chequeBiu);
-			void auRevoir();
-		}
- 
-
+### Details:
 
 ## Model
 `model` - is literally _anything_ where we can _read/write/get/set/download/upload/configure/change_ any digital **data**:
@@ -145,6 +130,16 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 
 ## View
 `view`- is an **`interface`** defining what action some entity (device screen, RelativeLayout, widget, sound device)  is meant to be able to perform.
+  Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
+ 
+ 		public interface CustomerView implements MvpView {				
+			void welcome(String greetingsPhrase);
+			void assignSeat (int tableNumber);
+			void presentMenu (List<MenuItems> menu);
+			void orderReady(MenuItem cookedItem);
+			void showBill(Map<MenuItem,String> chequeBiu);
+			void auRevoir();
+		}
 
 
 ### Steps to construct a View part of Moxy- MVP:
