@@ -50,8 +50,9 @@
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="2dp"
                     android:scaleType="fitXY"
-                    i_url:url="@{map.i_url}"
+                    i_url:url="@{map.getI_url}"
                     android:layout_alignParentTop="true"
+                    android:transitionName="transition_image"
                     android:translationZ="1dp" />
 
 
@@ -80,7 +81,7 @@
                     android:layout_below="@+id/ratingBar2" />
 
                 <TextView
-                    android:text="@{map.downloads.toString()}"
+                    android:text="@{String.valueOf(map.downloads)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView3"

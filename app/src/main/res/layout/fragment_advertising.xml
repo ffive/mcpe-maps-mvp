@@ -1,0 +1,26 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:i_url="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="ad"
+        type="com.sopa.mvvc.datamodel.HouseAd"/>
+</data>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/advertising_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.sopa.mvvc.ui.activity.blank.MoxActivity">
+
+
+        <ImageView
+            android:id="@+id/adImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@color/brand_primary"
+            i_url:url="@{ad.link}"
+            android:contentDescription="@string/advertising"/>
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

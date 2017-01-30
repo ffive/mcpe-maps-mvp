@@ -7,65 +7,93 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
-import com.backendless.async.callback.AsyncCallback;
+import com.backendless.async.callback.BackendlessCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.sopa.mvvc.datamodel.Category;
+import com.sopa.mvvc.datamodel.HouseAd;
 import com.sopa.mvvc.datamodel.Map;
 import com.sopa.mvvc.presentation.view.blank.CategoryListView;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 
 
 @InjectViewState
 public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
-    private RealmResults<Map> maps;
+
+    Category category;
+
+    RealmResults<Map> maps;
+
     private Realm realm;
     private String TAG = "categ presenter";
 
-    private int pageSize = 100, offset = 0;
-    private String iAmWorkingWithCategoryId;
-    private String category;
+    private int pageSize = 50, offset = 0;
 
-    public CategoryListPresenter(String categoryId) {
+    private rx.Subscription categoryCatcher, backendlessCatcher;
+
+    public CategoryListPresenter(Category categoryObj) {
         super();
         realm = Realm.getDefaultInstance();
-        iAmWorkingWithCategoryId = categoryId;
+        category = categoryObj;
 
-        categoryObservableFunction().subscribe(new Observer<Category>() {
+        //todo listen to tab's category from realm, not from constructor?
+        categoryCatcher = Observable.just(category).subscribe(new Observer<Category>() {
             @Override
             public void onCompleted() {
-
+                Log.d(TAG, "categoryObservableFunction::onCompleted: completed - NOT listening for any category changes in realm");
             }
 
             @Override
             public void onError(Throwable e) {
+
 //retry)
+                e.printStackTrace();
             }
 
             @Override
-            public void onNext(Category category) {
-                //merge?
-                Log.d(TAG, "onNext: I am categoryListFragment's presenter. Something changed Category  and triggered Rx to emit an updated Category obj. If interested I can show what changed " +
-                        "exactly.. ");
+            public void onNext(Category _category) {
+//начлаьная ок категория один раз триггерит загрузку потому что отличается от того что прилетело/ последующие разы стриггерит только если прилетевшее отличается
+
+                dataListenerFunction(category.getCategory())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(maps1 -> {
+                            Log.d(TAG, "dataListenerFunction Rx: updating " + maps1.size() + " maps from realm.where(Map.class).findAllAsync() and sent to CategFragment recycler");
+                            getViewState().updateList(maps1);
+                            getViewState().hideProgress();
+
+                        });
 
 
-                loadNext(pageSize, offset = 0);
-
-                dataListenerFunction(category.getCategory()).
+                backendlessCatcher = getListFromBackendless().
                         subscribeOn(AndroidSchedulers.mainThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(maps1 -> {
-
-                            getViewState().updateList(maps1);
+                            Realm.getDefaultInstance().executeTransactionAsync(realm1 -> {
+                                realm1.copyToRealmOrUpdate(maps1);
+                            }, () -> {
+                                Log.d(TAG, "handleResponse: Backendless received " + maps1.size() + " maps from Backendless and written them realm (background)");
+                            });
                         });
+
+
             }
+
+
+            //merge?
+
+
         });
     }
 
@@ -81,16 +109,58 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
     }
 
+/*
     private Observable<Category> categoryObservableFunction() {
         return realm.where(Category.class)
                 .equalTo("objectId", iAmWorkingWithCategoryId)
-                .findFirstAsync()
-                .<Category>asObservable()
-                .filter(realmObject -> realmObject.isLoaded())
-                .filter(realmObject -> realmObject.isValid())
+                .findAllAsync()
+                .<RealmResults<Category>>asObservable()
+                .filter(RealmResults::isLoaded)
+                .filter(RealmResults::isValid)
+                .map(RealmResults::first)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
 
+*/
+
+
+    public BehaviorSubject<List<Map>> getListFromBackendless() {
+
+        BehaviorSubject<List<Map>> myInviteFriendsBS = BehaviorSubject.create();
+        myInviteFriendsBS.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+
+        Backendless.Persistence.of(Map.class).find(createQuery(pageSize, offset), new BackendlessCallback<BackendlessCollection<Map>>() {
+            @Override
+            public void handleResponse(BackendlessCollection<Map> response) {
+                offset += pageSize;
+                if (response.getCurrentPage().size() == 0) {
+                    myInviteFriendsBS.onCompleted();
+                } else {
+                    myInviteFriendsBS.onNext(response.getCurrentPage());
+                    Log.d(TAG,"backendlessRxSubject triggers __onNext__:  going to load next "+pageSize +" with offset = "+offset+"  in "+ category.getCategory());
+                    response.nextPage(this);
+                }
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                myInviteFriendsBS.onError(new Throwable(fault.getMessage()));
+                super.handleFault(fault);
+            }
+
+        });
+
+        return myInviteFriendsBS;
+    }
+
+
+    private BackendlessDataQuery createQuery(int pageSize, int offset) {
+
+        BackendlessDataQuery query = new BackendlessDataQuery(new QueryOptions(pageSize, offset));
+        query.setWhereClause("category='" + category.getCategory() + "'");   //todo CATEGORY empty
+        return query;
     }
 
     @Override
@@ -98,54 +168,12 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
         super.onFirstViewAttach();
         getViewState().showProgress();
 
-
         // .getCategory();
-
-
-    }
-
-
-    private BackendlessDataQuery createQuery(int pageSize, int offset) {
-
-        BackendlessDataQuery query = new BackendlessDataQuery(new QueryOptions(pageSize, offset));
-        query.setWhereClause("category='" + category + "'");
-        return query;
-    }
-
-
-    public void loadNext(int _pageSize, int _offset) {
-
-        // Log.d(TAG, "loadNext: loading next page with params: pagesize=" + _pageSize + "  offset=" + _offset);
-
-        Backendless.Data.of(Map.class).find(createQuery(_pageSize, _offset), new AsyncCallback<BackendlessCollection<Map>>() {
-            @Override
-            public void handleResponse(BackendlessCollection<Map> response) {
-
-                Log.d(TAG, "execute: " + response.getCurrentPage().size());
-
-
-                Realm.getDefaultInstance().executeTransactionAsync(realm1 -> {
-                    realm1.copyToRealmOrUpdate(response.getCurrentPage());
-                }, () -> {
-
-                    Log.d(TAG, "handleResponse: copied/updated" + response.getCurrentPage().size() + "  from Backendless to realm (async).");
-                });
-                if (response.getTotalObjects() > (offset += pageSize)) {
-                    loadNext(pageSize, offset);
-                } else getViewState().hideProgress();
-            }
-
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                Log.d(TAG, "handleFault: " + fault.toString());
-            }
-        });
     }
 
 
     public void iWantList() {
-        //getViewState().showList(maps);
-        Log.d(TAG, "iWantList: no you don't ;P may be want");
+
     }
 
     @Override
@@ -154,8 +182,25 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
     }
 
     public void unlock(Map map) {
-
+        Log.d(TAG, "unlock: called from card click with map "+map.getName()+map.getObjectId());
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        backendlessCatcher.unsubscribe();
+        categoryCatcher.unsubscribe();
+        realm.close();
+    }
+
+
+    public void onMapCardClicked(Map map) {
+        String url = map.getI_url();
+        realm.executeTransactionAsync(realm1 -> {
+            HouseAd ad = realm1.where(HouseAd.class).findFirst();
+            ad.setImg(url);
+            realm1.copyToRealmOrUpdate(ad);
+        });
+    }
 }

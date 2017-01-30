@@ -1,5 +1,6 @@
 package com.sopa.mvvc.datamodel;
 
+import java.io.Serializable;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -10,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by yurikomlev on 09.12.16.
  */
 
-public class Category extends RealmObject {
+public class Category extends RealmObject implements Serializable{
 
     private String category;
     private String category_ru;

@@ -32,16 +32,18 @@ import com.sopa.mvvc.ui.fragment.blank.UploadMapFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm (reads/writes) , 3 ALiveObservables oO anything)   And include
+//todo      it in global realm Log     log presenter   - write to live analytics to balance load
 public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView {
 
     private static final String TAG = "MoxActivity : DEBUG";
-    private static final String POSITION = "pos";
 
     @InjectPresenter(type = PresenterType.GLOBAL)
     UserConfigPresenter mUserConfigPresenter;
 
-    @InjectPresenter(type = PresenterType.GLOBAL)
+    @InjectPresenter
     MoxPresenter mMoxPresenter;
+
 
     ActivityMoxBinding binding;
 
@@ -50,18 +52,25 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_mox);
-
         setSupportActionBar(binding.toolbar);
 
 
-        //binding.tabs.setup//(binding.container.pager, true);
+        //binding.counterWidgetOnActivity.init(getMvpDelegate());
+      //  binding.count.
+        setupViewPager();
 
+    }
+
+
+
+    private void setupViewPager() {
         binding.container.pager.setOffscreenPageLimit(1);
         binding.container.pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         binding.container.pager.setPageTransformer(true, new ViewPager.PageTransformer() {
             private static final float MIN_SCALE = 0.75f;
 
             public void transformPage(View view, float position) {
+                /*
                 int pageWidth = view.getWidth();
 
                 if (position < -1) { // [-Infinity,-1)
@@ -84,8 +93,11 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                     view.setTranslationX(pageWidth * -position);
 
                     // Scale the page down (between MIN_SCALE and 1)
-                    float scaleFactor = MIN_SCALE
-                            + (1 - MIN_SCALE) * (1 - Math.abs(position));
+
+                  float scaleFactor =  new AccelerateDecelerateInterpolator().getInterpolation(1-position);
+                 //   float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position));
+
+
                     view.setScaleX(scaleFactor);
                     view.setScaleY(scaleFactor);
 
@@ -93,10 +105,12 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                     // This page is way off-screen to the right.
                     view.setAlpha(0);
                 }
+                */
             }
-        });
-        binding.tabs.setupWithViewPager(binding.container.pager,true);
 
+        });     //sliding animation
+
+        binding.tabs.setupWithViewPager(binding.container.pager, true);
         binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -116,18 +130,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     }
 
 
-
-
-
-    //Setting View Pager
-    private void setupViewPager(ViewPager viewPager) {
-        MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
-        // adapter.addFrag(new DummyFragment("ANDROID"), "ANDROID");
-        // adapter.addFrag(new DummyFragment("iOS"), "iOS");
-        // adapter.addFrag(new DummyFragment("WINDOWS"), "WINDOWS");
-        viewPager.setAdapter(adapter);
-    }
-
+    //--------   Moxy View  methods implementation ------- ///
     @Override
     public void showMyAppsDialog() {
 
@@ -175,35 +178,17 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     @Override
     public void showTabs(List<Category> categories) {
-
         Log.d(TAG, "showTabs: sorry not implement");
     }
 
-
     @Override
     public void updateTabs(List<Category> categories, int position) {
-
-        //position = binding.tabs.getSelectedTabPosition();
         ((MyAdapter) binding.container.pager.getAdapter()).updateItems(categories);
-         setCurrentTab(position);
-
+        setCurrentTab(position);
     }
 
     @Override
     public void showUploadDialog() {
-
-    }
-
-
-    public void setCurrentTab(int currentTab) {
-
-        binding.container.pager.setCurrentItem(currentTab, true);
-
-    }
-
-
-    @Override
-    public void onUpdatedSettings(UserConfig config) {
 
     }
 
@@ -212,91 +197,106 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         setCurrentTab(lastTab);
     }
 
+    public void setCurrentTab(int currentTab) {
 
-//------------         adapter          ------------ //
+        binding.container.pager.setCurrentItem(currentTab, true);
 
-public class MyAdapter extends FragmentPagerAdapter {
-    List<Category> categories;
-
-    MyAdapter(FragmentManager fm) {
-        super(fm);
-        this.categories = new ArrayList<Category>();
-        Category c = new Category();
-        c.setCategory("loading");
-        c.setObjectId("loading");
-        categories.add(c);
     }
 
+
+    //--------   UserConfig View methods implementation ------- ///
     @Override
-    public int getCount() {
-        return categories.size();
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return categories.get(position).getCategory();
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return getCategoryFragment(categories.get(position).getObjectId());
-    }
-
-    void updateItems(List<Category> updated) {
-
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new MyDiffCallback(updated, this.categories));
-        notifyDataSetChanged();
-        diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
-            @Override
-            public void onInserted(int position, int count) {
-
-                categories = updated;
-                notifyDataSetChanged();
-                Log.d(TAG, "onInserted: " + count + " categories");
-            }
-
-            @Override
-            public void onRemoved(int position, int count) {
-                Log.d(TAG, "onRemoved: ");
-            }
-
-            @Override
-            public void onMoved(int fromPosition, int toPosition) {
-                Log.d(TAG, "onMoved: ");
-            }
-
-            @Override
-            public void onChanged(int position, int count, Object payload) {
-                Log.d(TAG, "onChanged: ");
-                notifyDataSetChanged();
-
-            }
-        });
-        //  diffResult.dispatchUpdatesTo(this);
-
+    public void onUpdatedSettings(UserConfig config) {
 
     }
 
-}
 
 
-    private static Fragment getCategoryFragment(String categoryId) {
+    //--------   Adapter for tabs (viewpager) ------- ///
+
+    public class MyAdapter extends FragmentPagerAdapter {
+        List<Category> categories;
+
+        MyAdapter(FragmentManager fm) {
+            super(fm);
+            this.categories = new ArrayList<Category>();
+            Category c = new Category();
+            c.setCategory("loading");
+            c.setObjectId("loading");
+            categories.add(c);
+        }
+
+        @Override
+        public int getCount() {
+            return categories.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return categories.get(position).getCategory();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return getCategoryFragment(categories.get(position));
+        }
+
+        void updateItems(List<Category> updated) {
+
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new MyDiffCallback(updated, this.categories));
+            notifyDataSetChanged();
+            diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
+                @Override
+                public void onInserted(int position, int count) {
+
+                    categories = updated;
+                    notifyDataSetChanged();
+                    Log.d(TAG, "onInserted: " + count + " categories");
+                }
+
+                @Override
+                public void onRemoved(int position, int count) {
+                    Log.d(TAG, "onRemoved: ");
+                }
+
+                @Override
+                public void onMoved(int fromPosition, int toPosition) {
+                    Log.d(TAG, "onMoved: ");
+                }
+
+                @Override
+                public void onChanged(int position, int count, Object payload) {
+                    Log.d(TAG, "onChanged: ");
+                    notifyDataSetChanged();
+
+                }
+            });
+            //  diffResult.dispatchUpdatesTo(this);
+
+
+        }
+
+    }
+
+
+    //--------   Create fragments for tabs ------- ///
+    private static Fragment getCategoryFragment(Category categoryId) {
         Log.d(TAG, "getCategoryFragment: created categoryListFragment with Id" + categoryId);
 
         CategoryListFragment fragment = new CategoryListFragment();
         Bundle args = new Bundle();
-        args.putString("objectId", categoryId);
+        args.putSerializable("objectId", categoryId);
         fragment.setArguments(args);
         return fragment;
     }
 
     private static Fragment getUploadMapFragment() {
         Log.d(TAG, "getUploadMapFragment: created UploadMapFragment ");
-
         return new UploadMapFragment();
     }
 
 
+    //--------   Toolbar  and   menu  ------- ///
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -306,11 +306,9 @@ public class MyAdapter extends FragmentPagerAdapter {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -2,6 +2,8 @@ package com.sopa.mvvc.presentation.presenter.blank;
 
 
 import android.databinding.BindingAdapter;
+import android.databinding.BindingConversion;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -54,6 +56,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class MoxPresenter extends MvpPresenter<MoxView> {
     private final static String TAG = "MoxPresenter: ";
 
+
     private Realm realm;
     private UserConfig userConfig;
     private RealmResults<Category> categories;
@@ -80,10 +83,9 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
     protected void onFirstViewAttach() {
         Log.d(TAG, "onFirstViewAttach: ");
         super.onFirstViewAttach();
+
         //getViewState().updateTabs(categories);
-
         //updateTabs
-
 
     }
 
@@ -128,6 +130,12 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
     public void onDestroy() {
         super.onDestroy();
         realm.close();
+    }
+
+
+    @BindingConversion
+    public static ColorDrawable convertColorToDrawable(int color) {
+        return color != 0 ? new ColorDrawable(color) : null;
     }
 
     @BindingAdapter("img:url")
