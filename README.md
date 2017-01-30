@@ -115,7 +115,7 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 ## Model
 `model` - is literally _anything_ where we can _read/write/get/set/download/upload/configure/change_ any digital **data**:
   
-- online data input/output/storage:
+- **online data input/output/storage:
   - retrofit
   - backendless
   - rest api's
