@@ -250,7 +250,7 @@ Presenter is a java class which `implements MvpPresenter`
 - type 3 (callbacks)
   - simple:
   
-		onNewLevel(){
+  		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
