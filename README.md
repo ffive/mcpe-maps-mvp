@@ -23,9 +23,9 @@ Don't be scared of this squares. Imagine yourself in automatic-order Cafe.
 Then:
 
 - `Models` are kitchen,fridge,coffee machine,billing system, vip members list, etc...
-- `View` is a set of _all possible_ actions which are meant to be happen 0+ times for each Customer.	
+- `View` is a set of _all possible_ actions. _Please think of it in terms of **The system creator's vision of the process. That kind of meaning. Not the synonym of 'look' or 'widget'**_.	
 		
- 	 	public interface CustomerView implements MvpView {
+		public interface CustomerView implements MvpView {
 		
   			void welcome(String greetingsPhrase);
   			void assignSeat (int tableNumber);
@@ -40,8 +40,14 @@ Then:
   
 >People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance.
 
-  - Customer usually is a human(Activity) who has some visible state (emotion and look), is going to react(behave) to cafe events
-    - attach itself (enter cafe)
+  - Let's define some more links between _cafe visit_ and _app usage_:
+    - a cafe == system (app+server+storage+users)
+    - a customer == `Activity implements CustomerView` 
+      - might be a human, dog, organisation etc. The only rule is be able to perform Customer behaviour.
+      - has some state we can describe - emotion and look == UI widgets, sound devices, [fleshlight]
+      - will react(behave) to cafe events defined in `View` _(again - think of it in sense of Cafe Owner's view on the whole process)_
+      
+    
     - await (might be not the only one in cafe queue)
     - change face view(emote) and position(sit,walk,leave)
     - eat, drink
