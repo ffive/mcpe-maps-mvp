@@ -64,15 +64,18 @@ Then:
   
 Let's look at your typical actions through the prism of Moxy-MVP:
   
-You have some _initial state_, your eyes render hungry, your whole body is running `performLongWaitAnimation()`
-`Presenter` defined some `callbacks` so he receives from `View`:
+1. You have an _initial state_ : your eyes render hungry, your whole body is running `performLongWaitAnimation()`
+2. iPad is showing you a shiny menu (`Presenter` listens for UI  `callbacks` from some entity implementing `CustomerView`:
 
-    - menu_item_4 - coffee
-    - menu_item_2 - donut
-    `onOrderReceived(List<MenuItem> orderedItems )`! -> get item from `model:coffeemachine`, get item from `model:fridge`
+		//1. Customer chooses coffee and donut, iPad's perspective:
+		-> onOrderReceived( List<MenuItem> orderedItems ) 
+		-> start retrieving coffee from `model`:coffeemachine
+		-> get donut from `model:fridge`
+		-> get waiter and send donut to user with him
+		->
   
  - `presenter` begins `new AsyncTask("ask barista to make latte")`, and syncTask - fridge.retrieveDonut() , meanwhile sending command to yoUI -> relax and take your seat waiting for results:  faceView State changes to happiness  and you take a seat( Your)
-  -`presenter` also listens to `model:barista` events - so when barista tells presenter coffee is ready - presenter takes coffee and issues a View command (implemented by you )   `send coffee to View`
+  -`presenter` also listens to `model:coffeemachine` events - so when its ready- iPad shows tells presenter coffee is ready - presenter takes coffee and issues a View command (implemented by you )   `send coffee to View`
   - In response - you are rendered even more happy - and perform EatingAnimation. When eating ends - you call back to presenter to ask a bill.
   
 >more info in [wiki/moxy MVP](https://github.com/ffive/mcpe-maps-mvp/wiki/Moxy-MVP)
@@ -147,17 +150,17 @@ Steps to construct a View part of Moxy- MVP:
 			...
 		}
 		
-end of story.
+The above @InjectPresenter annotation tells moxy to generate `ViewState` class for this `View` implementor.
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
 
 ## ViewState
 
-Firstly, it **_is generated automatically by Moxy_** and it works.
+First, it is **generated automatically by Moxy** and **it works perfect**.
 
 ViewState is a class which :
   
-- holds the current state of `view` and also history of _change ui_ commands from presenter.
+- holds the current state of `view` and also history of commands from `presenter` to `views`.
 - manages the activity/fragments lifecycle mess for you - and makes it perfectly.
   
 ## Presenter
@@ -171,18 +174,13 @@ Generally you'll find yourself writing 3 types of methods here:
   - camera
   - sensors
   - touchscreen
-
-      
+  
 2. Methods to manipulate the data (so-called business logic of the app)
  
 3. Callbacks - write methods you will call from **View**, when events( eg. clicks, touches, end of animation)  happen there.
 	
 		//pseudo-code:
 		
-		/* model -  any kind of storage containg a table of Map.class objects ( realm,backendless,prefs,etc..)
-		getViewState() - a handle for our View( activity, fragment, view, layout, list item, etc.)
-		*/	
-	
 		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
 			
 			getViewState().runLikeAnimation();		// ui command ( View's method)
@@ -199,6 +197,8 @@ Generally you'll find yourself writing 3 types of methods here:
 			
 		}
 	
+or
+
 		onSettingsClickedFromActivity(){
 			
 			UserConfig currentSettings = model.getConfigs(); //retrieve up-to-date configs from db
@@ -209,6 +209,8 @@ Generally you'll find yourself writing 3 types of methods here:
 			getViewState().displaySettingsWindowUsingConfig(config); 	
 		}
 	
+or
+
 		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
