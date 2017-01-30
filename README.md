@@ -154,7 +154,7 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 
 >[example](https://github.com/ffive/mcpe-maps-mvp/blob/master/app/src/main/java/com/sopa/mvvc/ui/fragment/blank/UploadMapFragment.java#L22-L25)
 ```java
-		public class MyFragment extends MvpAppCompatFragment implements CustomerView {
+public class MyFragment extends MvpAppCompatFragment implements CustomerView {
 		
 			@InjectPresenter
 			MyMoxyPresenter myPresenterObject;
@@ -172,8 +172,8 @@ No specific MVP code is needed to consider any data source  a `model`. Use the s
 			}
 			...
 		}
-
 ```
+
 The above @InjectPresenter annotation tells moxy to generate `ViewState` class for this `View` implementor.
 
 >**Important** : `android.View` is totally different from `View` V of MVP  . Really. Not samesame kind of stuff. 
