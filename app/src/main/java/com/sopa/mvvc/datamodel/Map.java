@@ -39,7 +39,7 @@ public class Map extends RealmObject implements  Comparable<Map>, Serializable{
 
 
     private Double rating;
-    private Integer downloads;
+    private Integer downloads=0;
     private Integer totalRates;
 
     //ratings stuff
