@@ -61,15 +61,25 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
 1. You have an _initial state_ : your eyes render hungry, your whole body is running `performLongWaitAnimation()`
 2. iPad (`presenter`) presents a menu: 
 
-		//1. Customer chooses coffee and donut, iPad's perspective:
-		-> onOrderReceived( List<MenuItem> orderedItems ) 
-		-> start retrieving coffee from `model`:coffeemachine
-		-> get donut from `model:fridge`
-		-> get waiter and send donut to Customer with him
- 
+		Customer places order on coffee.
+		Customer places order on donut.
+		Customer confirms the whole order.
+3. iPad receives and onOrderReceived callback with data.
+
+		iPad's perspective:
+			-> onOrderReceived( List<MenuItem> orderedItems ) 
+			-> start retrieving coffee from `model`:coffeemachine
+			
  - `presenter` begins `new Async( ()->launchCoffeeMachine("latte") )`,
- - `presenter` launches another  sync - `fridge.retrieveDonut()` ,
+ 
+			-> get donut from `model.openFridge().getDonut(4,20)`
+
+- `presenter` launches another  syncronous operation - `fridge.retrieveDonut()` ,
+
+			-> get waiter and send donut to Customer with him
+ 
  - `presenter` listens to events:
+ 
    - from `model:coffeemachine` -  when its ready- iPad issues a command - tells waiter coffee to move coffee from `model:machine` to **Customer**;
    - from `CustomerView`callbacks:
      - Customer performs Eating.
