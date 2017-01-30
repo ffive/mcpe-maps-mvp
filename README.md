@@ -223,8 +223,7 @@ Presenter is a java class which `implements MvpPresenter`
 			model.of(Map.class)
 				.where("objectId",map.id)
 				.find( results -> { getLocalModel().copyOrupdate(results); });
-		}
-		  	
+		}		  	
 - Type 2 (logic):
 
 		private Map incrementLikes(Map map){
@@ -242,17 +241,16 @@ Presenter is a java class which `implements MvpPresenter`
 			// and displays it's variables we took from db - that's the job of presenter as designed;
 			getViewState().displaySettingsWindowUsingConfig(config); 	
 		}
-
 - type 3 (callbacks)
   - simple:
   
-		onNewLevel(){
+  		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
   - mixed: 
   
-		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
+  		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
 			getViewState().runLikeAnimation();		// ui command ( View's method)
 			getViewState().showBackgroundProgress();	// ui command ( View's method)
 			
