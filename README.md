@@ -36,20 +36,6 @@ Then:
 #### Important!
 >Please think of `View`  **_in terms of_ the _system designer's_ vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 
-### Implementation details:
-
-#### View:
-	public interface CustomerView implements MvpView {				
-		void welcome(String greetingsPhrase);
-		void assignSeat (int tableNumber);
-		void presentMenu (List<MenuItems> menu);
-		void orderReady(MenuItem cookedItem);
-		void showBill(Map<MenuItem,String> chequeBiu);
-		void auRevoir();
-	}
-  
-  - Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
-  
 >People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance. Both visitor and organisation can use cafe : use menu, place an order, pay bill. And to succeed the process there is no difference for cafe how old is the organisation or what annual income the visitor has.
 
    - Let's define some more links between _cafe visit_ and _app usage_:
@@ -98,7 +84,21 @@ MVP-independent actions | go peeing, answer call, browse memes	| Incoming calls,
   
 >Mixing MVP and non-MVP *is already good*, while moving more code to MVP is good x10.
 
+### Implementation details:
 
+#### View:
+
+ Each and every **Customer**, including you,  `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
+ 
+ 		public interface CustomerView implements MvpView {				
+			void welcome(String greetingsPhrase);
+			void assignSeat (int tableNumber);
+			void presentMenu (List<MenuItems> menu);
+			void orderReady(MenuItem cookedItem);
+			void showBill(Map<MenuItem,String> chequeBiu);
+			void auRevoir();
+		}
+ 
 #### Nevertheless there are some tactics which allow to drastically reduce the volume of code needed to create a system _if and **only if**_ **you define the roles of your classes** according to some rules - let's call them [**Best practices**](https://github.com/ffive/mcpe-maps-mvp/wiki/Best-Practices)
 
 ## Model
