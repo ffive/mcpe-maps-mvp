@@ -34,16 +34,13 @@ Then:
 #### Important!
 >Please think of it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
 
- 
-
-
 ### In detail
   		
 			public interface CustomerView implements MvpView {
-		
-  				void welcome(String greetingsPhrase);
-  				void assignSeat (int tableNumber);
-  				void presentMenu (List<MenuItems> menu);
+				
+				void welcome(String greetingsPhrase);
+				void assignSeat (int tableNumber);
+				void presentMenu (List<MenuItems> menu);
 				void orderReady(MenuItem cookedItem);
 				void showBill(Map<MenuItem,String> chequeBiu);
 				void auRevoir();
