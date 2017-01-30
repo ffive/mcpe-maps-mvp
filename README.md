@@ -248,7 +248,6 @@ Presenter is a java class which `implements MvpPresenter`
   - simple:
   
   		onNewLevel(){
-		
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
@@ -256,7 +255,6 @@ Presenter is a java class which `implements MvpPresenter`
   - mixed: 
   
 		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
-			
 			getViewState().runLikeAnimation();		// ui command ( View's method)
 			getViewState().showBackgroundProgress();	// ui command ( View's method)
 			
