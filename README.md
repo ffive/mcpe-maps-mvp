@@ -244,6 +244,7 @@ Presenter is a java class which `implements MvpPresenter`
 		}
 
 - type 3 (callbacks)
+
   - simple:
   		
 		onNewLevel(){
