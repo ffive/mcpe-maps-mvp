@@ -24,12 +24,14 @@ Then:
 
 - `Models` include kitchen,fridge,coffee machine,billing system, vip members list, etc...
 - `ViewState` role goes to **Waiter**.
-- `View`  **set** of _all possible_ **actions** cafe will perform with every customer. 
-- `Presenter` is an iPad with menu,orders,etc -and handles data processing between 
-  - presenter deliveres results of cooking,counting etc to you with the help of **Waiter** .
-  - customers (`CustomerView implementators`)
+- `View` is just a **set** of _all possible_ **interactions** cafe will perform 0+ times on each customer. 
+- `Presenter` is an iPad with menu,orders,billing - it handles data processing between: 
+  - customers (`View` == anyone who implements `CustomerView`'s methods)
   - waiter (`ViewState`);
   - kitchen,fridge,coffee machine,billing system, vip members list, etc... (`Model`)
+  
+>`presenter` deliveres results of cooking,counting etc to you with the help of **Waiter** .
+ 
     
 #### Important!
 >Please think of it **in terms of _the system designer's vision_** of the process._That kind of meaning. Not the synonym of 'look' or 'widget'_.	
