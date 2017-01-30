@@ -33,7 +33,8 @@ Then:
 				void orderReady(MenuItem cookedItem);
 				void showBill(Map<MenuItem,String> chequeBiu);
 				void auRevoir();
-  			}
+				
+				}
   
   - Every customer including you `implements CustomerView` - defines _how this entity reacts_ to events which might happen in cafe (defined above^). 
   
