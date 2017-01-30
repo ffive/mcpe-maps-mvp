@@ -14,11 +14,11 @@
 
 ## This project uses moxy library as MVP basis.
 
-### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View` ,`Presenter`
+### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View`,`ViewState` and `Presenter`
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
-Don't be scared of this squares. Imagine yourself in automatic-order Cafe.
+Don't be scared of this squares. Imagine a Cafe, where you make your orders using iPad embedded in every table.
 
 Then:
 
@@ -38,12 +38,11 @@ Then:
 
 >People are different. Cafe visitors are different. App users are different. But our **aim** is to find such _typical_ actions that _do not depend_ on the difference between customers/users. That's one of the most importance. Both visitor and organisation can use cafe : use menu, place an order, pay bill. And to succeed the process there is no difference for cafe how old is the organisation or what annual income the visitor has.
 
-   - Let's define some more links between _cafe visit_ and _app usage_:
-     - a cafe == MVP system built to simulate cafe
-     - a customer ==  application part:
+   - Let's compare  _cafe visit_ to  _adding MVP functional to app component_:
+ 
      
 
-Property	 	| 		Real Cafe 		| Android app part using Moxy-MVP
+Property	 	| 		Real Cafe 		| Android app using  Moxy-MVP
 	------------ 	|		------------		| -------------
 Entity we use with MVP	| Customer  				| `? implements CustomerView`
 subject			| A person, group, organisation 	| `Fragment`, `Activity`, `CustomView+MvpDelegate`
