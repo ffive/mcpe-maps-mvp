@@ -128,8 +128,9 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         realm.close();
+        super.onDestroy();
+
     }
 
 

@@ -61,6 +61,14 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     }
 
+    @Override
+    protected void onStop ( ) {
+        Log.d (TAG, "onStop: ");
+
+        super.onStop ( );
+    }
+
+
 
 
     private void setupViewPager() {

@@ -188,10 +188,11 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         backendlessCatcher.unsubscribe();
         categoryCatcher.unsubscribe();
         realm.close();
+        super.onDestroy();
+
     }
 
 
