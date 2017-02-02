@@ -18,6 +18,12 @@
 
 ![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
+## We DO NOT communicate between fragments,activities,toolbars,views,services etc. Instead, we abstract to communicate between M, V  and P only - that's the main point which simplifies the whole architecture a lot.
+
+> `View1` -> `Presenter1` -> `model` (save to db, because db triggers all listeners)-> `Presenter2`  -> `View2`
+
+			    
+
 Don't be scared of this squares. Imagine a Cafe, where you make your orders using iPad embedded in every table.
 
 Then:
@@ -209,15 +215,19 @@ Presenter is a java class which `implements MvpPresenter`
 `Presenter` methods examples:
 
 - Type 1 (CRUD)
-  - local
+
+- local
+
 ```java
 	private List<Map> getLocalMaps(){	
 		Model model = getLocalRepository(); 
 		return model.where(Map.class).findAll();	 
 	}
 ```
-  - remote
-```java
+
+- remote
+
+```java  
 	private refreshMaps(){	
 		Model model = Backendless.Persistence();
 		model.of(Map.class)
@@ -225,8 +235,11 @@ Presenter is a java class which `implements MvpPresenter`
 			.find( results -> { getLocalModel().copyOrupdate(results); });
 		}
 ```
+
 - Type 2 (logic):
+
 ```java
+
 		private Map incrementLikes(Map map){
 			int oldLikes = map.getLikes();			// inner data manipulations
 			map.setLikes( oldLikes + 1);
@@ -241,17 +254,20 @@ Presenter is a java class which `implements MvpPresenter`
 			// View in it's turn has a databinded layout which takes userConfig 
 			// and displays it's variables we took from db - that's the job of presenter as designed;
 			getViewState().displaySettingsWindowUsingConfig(config); 	
-		}
+		}		
 ```
 - type 3 (callbacks)
   - simple:
+  
   ```java
   		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
-```
+  ```
+  
   - mixed: 
+  
   ```java
   		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
 			getViewState().runLikeAnimation();		// ui command ( View's method)
@@ -263,7 +279,8 @@ Presenter is a java class which `implements MvpPresenter`
 			model.saveToDatabase(map);    			// type 1 - saving updated map to db 
 			
 			getViewState().hideBackgroundProgress();	// ui command ( View's method)
-			}	
+			}
 ```
+
 to be continued...
 
