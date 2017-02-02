@@ -57,32 +57,48 @@ import rx.schedulers.Schedulers;
 
 public class DetailsFragment extends MvpAppCompatFragment implements DetailsView {
 
-      @InjectPresenter
-    DetailsPresenter mDetailsPresenter;
-    @ProvidePresenter
-    DetailsPresenter getPresenter() {
-        return new DetailsPresenter(getArguments().getString("map"));
-    }
-
-
     private static final String TAG = "map";
     private static final String mcpe_dir = Environment.getExternalStorageDirectory().getAbsolutePath()
             + "/games/com.mojang/minecraftWorlds/";
-
+    public String[] allowedContentTypes = new String[]{"application/octet-stream", "text/html; charset=ISO-8859-1", "image/png", "image/jpeg",
+            "image/bmp", "application/pdf", "text/html; charset=UTF-8", "image/png;charset=UTF-8"};
+      @InjectPresenter
+    DetailsPresenter mDetailsPresenter;
+    Realm realm = Realm.getDefaultInstance();
     private
     @NonNull
     Map map;
     private ProgressDialog progress;
     private BackendlessApiREST service;
     private FragmentDetailsBinding binding;
-    Realm realm = Realm.getDefaultInstance();
 
     public static DetailsFragment newInstance() {
         DetailsFragment fragment = new DetailsFragment ();
         return fragment;
     }
 
+    @BindingAdapter("img:url")
+    public static void imgLoad(ImageView imageView, String url) {
 
+        Picasso.with(imageView.getContext()).load(url).into(imageView);
+
+    }
+
+    @BindingAdapter(value = {"android:src", "placeHolder"},
+            requireAll = false)
+    public static void setImageUrl(ImageView view, String url,
+                                   int placeHolder) {
+        RequestCreator requestCreator = Picasso.with(view.getContext()).load(url);
+        if (placeHolder != 0) {
+            requestCreator.placeholder(placeHolder);
+        }
+        requestCreator.into(view);
+    }
+
+    @ProvidePresenter
+    DetailsPresenter getPresenter() {
+        return new DetailsPresenter(getArguments().getString("map"));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedInstanceState) {
@@ -150,10 +166,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         return Color.rgb(red, green, 0);
     }
 
-    public boolean isRu() {
-        return Locale.getDefault().getLanguage().equalsIgnoreCase("ru") && !map.getDescription_Ru().equals("0");
-    }
-
     public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(getActivity(),
@@ -174,24 +186,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
 
     }
-
-    @BindingAdapter("img:url")
-    public static void imgLoad(ImageView imageView, String url) {
-
-        Picasso.with(imageView.getContext()).load(url).into(imageView);
-
-    }
-    @BindingAdapter(value = {"android:src", "placeHolder"},
-            requireAll = false)
-    public static void setImageUrl(ImageView view, String url,
-                                   int placeHolder) {
-        RequestCreator requestCreator = Picasso.with(view.getContext()).load(url);
-        if (placeHolder != 0) {
-            requestCreator.placeholder(placeHolder);
-        }
-        requestCreator.into(view);
-    }
-
 
     public void download(String url, String url_b) {
 
@@ -250,14 +244,9 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         //Toast.makeText(getActivity(), getString(R.string.toast_error_map_download), Toast.LENGTH_LONG).show();//replace with snackbar
     }
 
-
-
-
     private boolean isZipCached(Map map) {
         return new File(mcpe_dir + URLUtil.guessFileName(map.getMap_url(), null, "application/zip")).exists();
     }
-
-
 
     private void tryRate(int rating)  {
 
@@ -275,7 +264,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         });
     }
 
-
     //Permissions listener
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -285,7 +273,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
             //resume tasks needing this permission
         }
     }
-
 
     private Observable<String> workingLinkObservable(String url) {
 
@@ -314,7 +301,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     }
 
-
     public void goDownload(String url) {
 
         //i want a good string///or not yet ;)
@@ -326,7 +312,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         map.setLocked(false);
         realm.commitTransaction();
     }
-
 
     public boolean canAccessMCPE() {
         try {
@@ -354,7 +339,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
                 .setNegativeButton(getString(R.string.dialog_launch_btn_no), null)
                 .create().show();
     }
-
 
     public Observable<File> download(String id) {
         return service.download(id)
@@ -384,9 +368,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
             }
         });
     }
-
-    public String[] allowedContentTypes = new String[]{"application/octet-stream", "text/html; charset=ISO-8859-1", "image/png", "image/jpeg",
-            "image/bmp", "application/pdf", "text/html; charset=UTF-8", "image/png;charset=UTF-8"};
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
