@@ -209,24 +209,23 @@ Presenter is a java class which `implements MvpPresenter`
 `Presenter` methods examples:
 
 - Type 1 (CRUD)
-  - local
-```java
 
+- local
+```java
 	private List<Map> getLocalMaps(){	
 		Model model = getLocalRepository(); 
 		return model.where(Map.class).findAll();	 
 	}
-	```
-  - remote
-  ```java
-  
+```
+- remote
+```java  
 	private refreshMaps(){	
 		Model model = Backendless.Persistence();
 		model.of(Map.class)
 			.where("objectId",map.id)
 			.find( results -> { getLocalModel().copyOrupdate(results); });
 		}
-		```
+```
 - Type 2 (logic):
 ```java
 
