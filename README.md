@@ -210,21 +210,21 @@ Presenter is a java class which `implements MvpPresenter`
 
 - Type 1 (CRUD)
   - local
-```java
+  ```java
 	private List<Map> getLocalMaps(){	
 		Model model = getLocalRepository(); 
 		return model.where(Map.class).findAll();	 
 	}
-```
+	```
   - remote
-```java
+  ```java
 	private refreshMaps(){	
 		Model model = Backendless.Persistence();
 		model.of(Map.class)
 			.where("objectId",map.id)
 			.find( results -> { getLocalModel().copyOrupdate(results); });
 		}
-```
+		```
 - Type 2 (logic):
 ```java
 		private Map incrementLikes(Map map){
@@ -242,7 +242,7 @@ Presenter is a java class which `implements MvpPresenter`
 			// and displays it's variables we took from db - that's the job of presenter as designed;
 			getViewState().displaySettingsWindowUsingConfig(config); 	
 		}
-```
+		```
 - type 3 (callbacks)
   - simple:
   ```java
