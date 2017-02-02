@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.blank.MoxActivity"
+            android:name=".ui.activity.MoxActivity"
             android:label="@string/app_name"
         >
             <intent-filter>

@@ -5,13 +5,13 @@
 <data>
     <variable
         name="ad"
-        type="com.sopa.mvvc.datamodel.HouseAd"/>
+        type="com.sopa.mvvc.datamodel.remote.backendless.HouseAd" />
 </data>
     <android.support.constraint.ConstraintLayout
         android:id="@+id/advertising_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.sopa.mvvc.ui.activity.blank.MoxActivity">
+        tools:context="com.sopa.mvvc.ui.activity.MoxActivity">
 
 
         <ImageView

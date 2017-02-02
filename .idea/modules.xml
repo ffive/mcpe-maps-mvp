@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mcpe-maps-mvp.iml" filepath="$PROJECT_DIR$/mcpe-maps-mvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvvc.iml" filepath="$PROJECT_DIR$/mvvc.iml" />
     </modules>
   </component>

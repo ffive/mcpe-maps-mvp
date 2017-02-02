@@ -4,8 +4,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
-        <variable name ="map" type ="com.sopa.mvvc.datamodel.Map"/>
-        <variable name ="presenter" type ="com.sopa.mvvc.presentation.presenter.blank.DetailsPresenter"/>
+        <variable name ="map" type ="com.sopa.mvvc.datamodel.remote.backendless.Map"/>
+        <variable name ="presenter" type ="com.sopa.mvvc.mvp.presenter.screens.DetailsPresenter"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

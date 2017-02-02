@@ -8,7 +8,7 @@
 
     <variable
         name="ad"
-        type="com.sopa.mvvc.datamodel.HouseAd"/>
+        type="com.sopa.mvvc.datamodel.remote.backendless.HouseAd"/>
 
 </data>
 
