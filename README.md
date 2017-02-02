@@ -210,7 +210,8 @@ Presenter is a java class which `implements MvpPresenter`
 
 - Type 1 (CRUD)
   - local
-  ```java
+```java
+
 	private List<Map> getLocalMaps(){	
 		Model model = getLocalRepository(); 
 		return model.where(Map.class).findAll();	 
@@ -218,6 +219,7 @@ Presenter is a java class which `implements MvpPresenter`
 	```
   - remote
   ```java
+  
 	private refreshMaps(){	
 		Model model = Backendless.Persistence();
 		model.of(Map.class)
@@ -227,6 +229,7 @@ Presenter is a java class which `implements MvpPresenter`
 		```
 - Type 2 (logic):
 ```java
+
 		private Map incrementLikes(Map map){
 			int oldLikes = map.getLikes();			// inner data manipulations
 			map.setLikes( oldLikes + 1);
