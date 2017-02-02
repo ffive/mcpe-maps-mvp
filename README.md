@@ -20,8 +20,9 @@
 
 ## We DO NOT communicate between fragments,activities,toolbars,views,services etc. Instead, we abstract to communicate between m v and p only, that's the main point which simplifies the whole dev process.
 
-> `View1` -> `Presenter1` -> `model` (save to db) 
-			    -> `Presenter2` (because db triggers all listeners) -> `View2`
+> `View1` -> `Presenter1` -> `model` (save to db, because db triggers all listeners)-> `Presenter2`  -> `View2`
+
+			    
 
 Don't be scared of this squares. Imagine a Cafe, where you make your orders using iPad embedded in every table.
 
