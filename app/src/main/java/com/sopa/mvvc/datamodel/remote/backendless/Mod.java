@@ -3,26 +3,25 @@ package com.sopa.mvvc.datamodel.remote.backendless;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- *
+ * Created by AndreiPiatosin on 02-Feb-17.
  */
-public class Map extends RealmObject implements  Comparable<Map>, Serializable{
 
+public class Mod extends RealmObject implements Comparable<Mod>, Serializable{
 
-  //  @SerializedName("p")
+    //  @SerializedName("p")
     private boolean p;
     //@SerializedName("i_url")
     private String i_url;
-    //@SerializedName("map_url")
-    private String map_url;
-    //@SerializedName("map_urlb")
-    private String map_urlb;
+    //@SerializedName("mod_url")
+    private String mod_url;
+    //@SerializedName("mod_urlb")
+    private String mod_urlb;
 
 
     @PrimaryKey
@@ -43,14 +42,15 @@ public class Map extends RealmObject implements  Comparable<Map>, Serializable{
     private Double rating;
     private Integer downloads=0;
     private Integer totalRates;
-   // @SerializedName("___class")
+    // @SerializedName("___class")
     private String __class = getClass().getSimpleName();
 
-    public Map() {
+    public Mod() {
 
     }
 
-    public Map(String name, String img, String category, String description) {
+
+    public Mod(String name, String img, String category, String description) {
         this.name = name;
         this.i_url = img;
         this.category = category;
@@ -99,11 +99,11 @@ public class Map extends RealmObject implements  Comparable<Map>, Serializable{
     }
 
     public String getMap_url() {
-        return map_url;
+        return mod_url;
     }
 
     public void setMap_url(String map_url) {
-        this.map_url = map_url;
+        this.mod_url = map_url;
     }
 
     public String getCategory() {
@@ -140,11 +140,11 @@ public class Map extends RealmObject implements  Comparable<Map>, Serializable{
     }
 
     public String getMap_urlb() {
-        return map_urlb;
+        return mod_urlb;
     }
 
-    public void setMap_urlb(String map_urlb) {
-        this.map_urlb = map_urlb;
+    public void setMap_urlb(String mod_urlb) {
+        this.mod_urlb = mod_urlb;
     }
 
     public boolean isLocked() {
@@ -207,8 +207,8 @@ public class Map extends RealmObject implements  Comparable<Map>, Serializable{
 
 
     @Override
-    public int compareTo(@NonNull Map map) {
-        return isP() ? (map.isP() ? 0 : 1) : (map.isP() ? -1 : -0);
+    public int compareTo(@NonNull Mod mod) {
+        return isP() ? (mod.isP() ? 0 : 1) : (mod.isP() ? -1 : -0);
     }
 
     public boolean isRated() {
