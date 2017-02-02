@@ -211,13 +211,16 @@ Presenter is a java class which `implements MvpPresenter`
 - Type 1 (CRUD)
 
 - local
+
 ```java
 	private List<Map> getLocalMaps(){	
 		Model model = getLocalRepository(); 
 		return model.where(Map.class).findAll();	 
 	}
 ```
+
 - remote
+
 ```java  
 	private refreshMaps(){	
 		Model model = Backendless.Persistence();
@@ -226,7 +229,9 @@ Presenter is a java class which `implements MvpPresenter`
 			.find( results -> { getLocalModel().copyOrupdate(results); });
 		}
 ```
+
 - Type 2 (logic):
+
 ```java
 
 		private Map incrementLikes(Map map){
@@ -243,17 +248,20 @@ Presenter is a java class which `implements MvpPresenter`
 			// View in it's turn has a databinded layout which takes userConfig 
 			// and displays it's variables we took from db - that's the job of presenter as designed;
 			getViewState().displaySettingsWindowUsingConfig(config); 	
-		}
-		```
+		}		
+```
 - type 3 (callbacks)
   - simple:
+  
   ```java
   		onNewLevel(){
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
   ```
+  
   - mixed: 
+  
   ```java
   		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
 			getViewState().runLikeAnimation();		// ui command ( View's method)
@@ -266,6 +274,7 @@ Presenter is a java class which `implements MvpPresenter`
 			
 			getViewState().hideBackgroundProgress();	// ui command ( View's method)
 			}
-			```
+```
+
 to be continued...
 
