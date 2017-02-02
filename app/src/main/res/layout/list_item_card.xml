@@ -74,14 +74,28 @@
                 card_view:layout_constraintHorizontal_bias="0.33" />
 
 
+            <TextView
+                android:text="@{map.description}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/short_descr"
+                card_view:layout_constraintBottom_toBottomOf="@+id/imageView"
+                card_view:layout_constraintTop_toTopOf="@+id/imageView"
+                card_view:layout_constraintRight_toRightOf="@+id/imageView"
+                android:layout_marginStart="16dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="16dp"/>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_unlock"
                 android:id="@+id/button"
-android:visibility="@{map.locked?View.VISIBLE:View.GONE}"
+                android:visibility="@{map.locked?View.VISIBLE:View.GONE}"
                 android:onClick="@{(view)->presenter.unlock(map)}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" android:typeface="monospace"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:typeface="monospace"
+
                 card_view:layout_constraintRight_toRightOf="@+id/imageView"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="8dp"

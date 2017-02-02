@@ -3,8 +3,6 @@ package com.sopa.mvvc.datamodel.remote.backendless;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

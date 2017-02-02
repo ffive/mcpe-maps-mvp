@@ -47,6 +47,7 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
         realm = Realm.getDefaultInstance();
         category = categoryObj;
 
+
         //todo listen to tab's category from realm, not from constructor?
         categoryCatcher = Observable.just(category).subscribe(new Observer<Category>() {
             @Override
@@ -164,6 +165,7 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
     @Override
     protected void onFirstViewAttach() {
+
         super.onFirstViewAttach();
         getViewState().showProgress();
 
