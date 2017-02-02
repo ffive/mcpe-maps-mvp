@@ -250,7 +250,7 @@ Presenter is a java class which `implements MvpPresenter`
 			getViewState().showSuccessAnimation();
 			getViewState().displayAd();
 		}
-```
+  ```
   - mixed: 
   ```java
   		onLikeButtonClicked(int mapId){		//type 3: this method is called from activity,(like btn ClickListener)
@@ -263,7 +263,7 @@ Presenter is a java class which `implements MvpPresenter`
 			model.saveToDatabase(map);    			// type 1 - saving updated map to db 
 			
 			getViewState().hideBackgroundProgress();	// ui command ( View's method)
-			}	
-```
+			}
+			```
 to be continued...
 
