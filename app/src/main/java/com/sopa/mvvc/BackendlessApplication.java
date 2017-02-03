@@ -17,6 +17,7 @@ public class BackendlessApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        Backendless.initApp(getApplicationContext(), "5866D097-2401-59A4-FFE4-5A242A79D100", "1735093B-9AB4-C4ED-FFC9-68B76DB74D00", "v1");
+        //todo apikeys de-hardcode
+        Backendless.initApp(getApplicationContext(), "D6C4C848-6DBF-3FDA-FF9B-5EAC025EB500", "B69F271E-04E3-B179-FF94-7D8C68295500", "v1");
     }
 }
