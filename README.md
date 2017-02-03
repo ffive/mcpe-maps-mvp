@@ -16,13 +16,14 @@
 
 ### MVP refers to an abstract project architecture narrowed down to the relations and communicating  between `Model`, `View`,`ViewState` and `Presenter`
 
-![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
 
 ## We DO NOT communicate between fragments,activities,toolbars,views,services etc. Instead, we abstract to communicate between M, V  and P only - that's the main point which simplifies the whole architecture a lot.
 
 > `View1` -> `Presenter1` -> `model` (save to db, because db triggers all listeners)-> `Presenter2`  -> `View2`
 
 			    
+![](https://camo.githubusercontent.com/d0a4baaa8261d93d56367a0d82f3be91abdd95bf/68747470733a2f2f686162726173746f726167652e6f72672f66696c65732f6132652f6235312f3862342f61326562353138623436356134646639623437653638373934353139323730642e676966)
+
 
 Don't be scared of this squares. Imagine a Cafe, where you make your orders using iPad embedded in every table.
 
