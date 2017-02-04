@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface MoxView extends MvpView {
 
+    void setLanguagesList( List<String> languageList );
+
     void showMyAppsDialog();
 
     void showNewApp(String message, String link, String pkg);

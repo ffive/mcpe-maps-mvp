@@ -17,16 +17,23 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.backendless.property.ObjectProperty;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
+import com.sopa.mvvc.datamodel.remote.backendless.Description;
 import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.mvp.view.screens.MoxView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import ru.terrakok.cicerone.commands.Back;
 import rx.android.schedulers.AndroidSchedulers;
 
 
@@ -172,5 +179,14 @@ public class MoxPresenter extends MvpPresenter<MoxView>{
         });
 
     }
+
+    private void loadAvailableLanguages (){
+        java.util.Map<Integer,String> result = new HashMap<>();
+        result = Backendless.Events.dispatch( "getCurrentLanguages", new HashMap() );
+
+        List<String> availableLanguages = new ArrayList<String>(result.values());
+        getViewState().setLanguagesList( availableLanguages );
+    }
+
 }
 
