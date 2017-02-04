@@ -50,7 +50,9 @@ public class LoginActivity extends Activity
               {
                 super.handleResponse( currentUser );
                 Backendless.UserService.setCurrentUser( currentUser );
-                startActivity( new Intent( getBaseContext(), LoginSuccessActivity.class ) );
+
+                onActivityResult (421,1,new Intent ());
+                // startActivity( new Intent( getBaseContext(), LoginSuccessActivity.class ) );
                 finish();
               }
             } );
@@ -119,7 +121,9 @@ public class LoginActivity extends Activity
       public void handleResponse( BackendlessUser backendlessUser )
       {
         super.handleResponse( backendlessUser );
-        startActivity( new Intent( LoginActivity.this, LoginSuccessActivity.class ) );
+        //startActivity( new Intent( LoginActivity.this, LoginSuccessActivity.class ) );
+
+        onActivityResult (421,1,new Intent ());
         finish();
       }
     }, rememberLogin );
