@@ -31,8 +31,8 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
                     initialCfg.setRecyclerPosition(0);
                     realm1.copyToRealm(initialCfg);
                 })
-                .schemaVersion(version) // Must be bumped when the schema changes
-                .migration(new Migration_v1()) // Migration to run instead of throwing an exception
+                //.schemaVersion(version) // Must be bumped when the schema changes
+               // .migration(new Migration_v1()) // Migration to run instead of throwing an exception
                 .build();
 
         //Realm.deleteRealm(zRealmConfig);
