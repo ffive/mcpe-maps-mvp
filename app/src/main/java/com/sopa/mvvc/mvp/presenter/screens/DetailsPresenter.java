@@ -46,6 +46,10 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
     }
 
     public void unlock() {
+
+        realm.beginTransaction();
+        map.setLocked(false);
+        realm.commitTransaction();
     }
 
     public void unlock(Map map) {
@@ -55,5 +59,11 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
     }
 
     public void deleteMap() {
+    }
+
+    public void onRateChanged ( int rating ) {
+
+
+
     }
 }

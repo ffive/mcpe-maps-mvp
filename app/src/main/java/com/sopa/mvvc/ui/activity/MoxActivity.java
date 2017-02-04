@@ -19,13 +19,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.PresenterType;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.ActivityMoxBinding;
-import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.datamodel.local.MyDiffCallback;
 import com.sopa.mvvc.datamodel.local.UserConfig;
-import com.sopa.mvvc.mvp.presenter.screens.MoxPresenter;
+import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.mvp.presenter.entities.UserConfigPresenter;
-import com.sopa.mvvc.mvp.view.screens.MoxView;
+import com.sopa.mvvc.mvp.presenter.screens.MoxPresenter;
 import com.sopa.mvvc.mvp.view.entities.UserConfigView;
+import com.sopa.mvvc.mvp.view.screens.MoxView;
 import com.sopa.mvvc.ui.fragment.CategoryListFragment;
 import com.sopa.mvvc.ui.fragment.UploadMapFragment;
 

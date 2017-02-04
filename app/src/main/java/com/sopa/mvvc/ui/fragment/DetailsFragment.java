@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,28 +23,22 @@ import android.widget.ImageView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.backendless.Backendless;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.loopj.android.http.SyncHttpClient;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.FragmentDetailsBinding;
 import com.sopa.mvvc.datamodel.remote.backendless.Map;
+import com.sopa.mvvc.mvp.presenter.screens.DetailsPresenter;
+import com.sopa.mvvc.mvp.view.screens.DetailsView;
 import com.sopa.mvvc.network.asynchttp.LoadingListener;
 import com.sopa.mvvc.network.asynchttp.MapDownloader;
 import com.sopa.mvvc.network.retrofit.BackendlessApiREST;
 import com.sopa.mvvc.network.retrofit.ServiceGenerator;
-import com.sopa.mvvc.mvp.presenter.screens.DetailsPresenter;
-import com.sopa.mvvc.mvp.view.screens.DetailsView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 
-import io.realm.Realm;
 import okio.BufferedSink;
 import okio.Okio;
 import retrofit2.Response;
@@ -64,10 +56,11 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
             "image/bmp", "application/pdf", "text/html; charset=UTF-8", "image/png;charset=UTF-8"};
       @InjectPresenter
     DetailsPresenter mDetailsPresenter;
-    Realm realm = Realm.getDefaultInstance();
-    private
-    @NonNull
-    Map map;
+
+
+
+    private @NonNull Map map;
+
     private ProgressDialog progress;
     private BackendlessApiREST service;
     private FragmentDetailsBinding binding;
@@ -103,6 +96,12 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedInstanceState) {
 
+
+
+        binding = FragmentDetailsBinding.inflate (inflater, root, false);
+
+
+
         service = ServiceGenerator.createService(BackendlessApiREST.class);
 
        // map = Realm.getDefaultInstance().where(Map.class).equalTo("objectId", getArguments().getString("map")).findFirst();    //todo realm read
@@ -110,7 +109,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
       //  map.setCached(isZipCached(map));
       //  realm.commitTransaction();
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, root, false);
+
         binding.setPresenter(mDetailsPresenter);
 
         //binding.ratingBar2.setRating(map.getRating().floatValue());
@@ -129,20 +128,12 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
             tryRate((int) binding.ratingBar2.getRating());
         });
 
-        binding.ratingBar2.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
-                int color = DetailsFragment.this.generateColor(rating);
-                simpleRatingBar.setFillColor(color);
-            }
+        binding.ratingBar2.setOnRatingBarChangeListener(( simpleRatingBar, rating, fromUser ) -> {
+            int color = DetailsFragment.this.generateColor(rating);
+            simpleRatingBar.setFillColor(color);
         });
 
-        binding.ratingBar2.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View view, DragEvent dragEvent) {
-                return false;
-            }
-        });
+        binding.ratingBar2.setOnDragListener(( view, dragEvent ) -> false);
 
 
         progress = new ProgressDialog(getActivity());
@@ -157,7 +148,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         //((MainActivity) getActivity()).setShareIntent(shareIntent);  TODO:
 
 
-        return binding.getRoot();
+        return binding.root;
     }
 
     private int generateColor(float rating) {
@@ -250,18 +241,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     private void tryRate(int rating)  {
 
-        map.setRating((double) rating);
-        Backendless.Data.save(map, new AsyncCallback<Map>() {
-            @Override
-            public void handleResponse(Map response) {
-                realm.copyToRealmOrUpdate(map);
-            }
-
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                //TODO: handle error
-            }
-        });
+      mDetailsPresenter.onRateChanged(rating);
     }
 
     //Permissions listener
@@ -308,9 +288,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     }
 
     public void unlock() {
-        realm.beginTransaction();
-        map.setLocked(false);
-        realm.commitTransaction();
+     mDetailsPresenter.unlock ();
     }
 
     public boolean canAccessMCPE() {
