@@ -66,12 +66,16 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
     }
 
 
-
-
     @Override
     public void onDestroy() {
         realm.close();
         super.onDestroy();
+    }
+
+
+
+    public void onLanguageUpdated( String language ){
+        config.setLanguage(language);
     }
 
 

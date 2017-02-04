@@ -1,5 +1,6 @@
 package com.sopa.mvvc.ui.activity;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,16 +8,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.util.ListUpdateCallback;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.PresenterType;
+import com.sopa.mvvc.BackendlessApplication;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.ActivityMoxBinding;
 import com.sopa.mvvc.datamodel.local.MyDiffCallback;
@@ -31,6 +35,8 @@ import com.sopa.mvvc.ui.fragment.UploadMapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Stream;
 
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
@@ -138,7 +144,52 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     }
 
 
+
     //--------   Moxy View  methods implementation ------- ///
+
+    @Override
+    public void setLanguagesList( List<String> languageList ) {
+
+        int currentLanguagePosition = -1;
+        int defaultLanguagePosition = 0;
+        final String[] userLanguage = new String[1];
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice );
+
+        for ( int i = 0; i < languageList.size(); i++ ){
+            arrayAdapter.add( languageList.get(i) );
+            
+            String language = languageList.get(i).toLowerCase();
+            if ( language.equals( Locale.getDefault().getLanguage().toLowerCase() ) ){
+                currentLanguagePosition = i;
+            } /*  else if ( language.equals( BackendlessApplication.DEFAULT_LANGUAGE.toLowerCase() ) ){
+                defaultLanguagePosition = i;
+            }*/
+        }
+
+        if ( currentLanguagePosition == -1 ){
+            currentLanguagePosition = defaultLanguagePosition;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle( R.string.language_chooser_dialog_title );
+        builder.setSingleChoiceItems(arrayAdapter, currentLanguagePosition, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                userLanguage[0] = languageList.get(i);
+            }
+        });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mUserConfigPresenter.onLanguageUpdated(userLanguage[0]);
+                dialogInterface.dismiss();
+            }
+        });
+
+
+    }
+
     @Override
     public void showMyAppsDialog() {
 

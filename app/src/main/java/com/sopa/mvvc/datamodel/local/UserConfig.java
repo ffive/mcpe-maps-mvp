@@ -27,6 +27,7 @@ public class UserConfig extends RealmObject{
     @PrimaryKey
     private long id;
 
+    private String language;
     private int lastTab;
     private float recyclerPosition;
 
@@ -44,5 +45,13 @@ public class UserConfig extends RealmObject{
 
     public void setRecyclerPosition(float recyclerPosition) {
         this.recyclerPosition = recyclerPosition;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
