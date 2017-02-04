@@ -63,7 +63,6 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
         binding.myRecyclerView.setLayoutManager(mLayoutManager);
 
 
-
         //todo refactor , move everything except update to presenter somehow
         dataSource = new RxDataSource<Map>(new ArrayList<>());
         dataSource.bindRecyclerView(binding.myRecyclerView, R.layout.list_item_card)
