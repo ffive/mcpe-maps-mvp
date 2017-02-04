@@ -33,12 +33,12 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
-
                 android:elevation="4dp"
-
-                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:minHeight="?attr/actionBarSize"
+                android:paddingTop="@dimen/tool_bar_top_padding"
+                android:transitionName="actionBar"
 
                 />
 
