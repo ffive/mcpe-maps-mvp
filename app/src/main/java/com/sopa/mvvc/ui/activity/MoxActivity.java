@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.PresenterType;
-import com.sopa.mvvc.BackendlessApplication;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.ActivityMoxBinding;
 import com.sopa.mvvc.datamodel.local.MyDiffCallback;
@@ -36,7 +35,6 @@ import com.sopa.mvvc.ui.fragment.UploadMapFragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
@@ -57,7 +55,10 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_mox);
+        binding = DataBindingUtil.setContentView(MoxActivity.this, R.layout.activity_mox);
+        // you
+        // build
+        // the project
         setSupportActionBar(binding.toolbar);
 
 

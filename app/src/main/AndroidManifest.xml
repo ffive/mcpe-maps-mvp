@@ -32,7 +32,12 @@
 
         </activity>
 
-        <activity  android:name="com.backendless.mvp.login.LoginActivity"/>
+        <activity android:name="com.backendless.mvp.login.LoginActivity"/>
+        <activity android:name="com.backendless.mvp.login.PasswordRecoveryRequestedActivity" />
+        <activity android:name="com.backendless.mvp.login.RegisterActivity" />
+        <activity android:name="com.backendless.mvp.login.RegistrationSuccessActivity" />
+        <activity android:name="com.backendless.mvp.login.RestorePasswordActivity" />
+        <activity android:name="com.backendless.mvp.login.LoginSuccessActivity" />
 
 
     </application>
