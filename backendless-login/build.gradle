@@ -23,5 +23,5 @@ android {
 }
 
 dependencies {
-    provided files('/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/libs/backendless.jar')
+    provided files('./../libs/backendless.jar')
 }
