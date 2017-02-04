@@ -4,6 +4,8 @@ package com.sopa.mvvc.mvp.presenter.screens;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -53,7 +55,7 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 
 @InjectViewState
-public class MoxPresenter extends MvpPresenter<MoxView> {
+public class MoxPresenter extends MvpPresenter<MoxView>{
     private final static String TAG = "MoxPresenter: ";
 
 
