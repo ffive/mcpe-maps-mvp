@@ -311,7 +311,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
             super (fm);
             this.categories = new ArrayList<Category> ( );
             Category c = new Category ( );
-            c.setCategory ("loading");
+            c.setCategory ("loading ");
             c.setObjectId ("loading");
             categories.add (c);
         }
