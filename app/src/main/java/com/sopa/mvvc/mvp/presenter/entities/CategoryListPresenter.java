@@ -12,7 +12,6 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
-import com.sopa.mvvc.datamodel.remote.backendless.HouseAd;
 import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.mvp.view.entities.CategoryListView;
 
@@ -33,7 +32,7 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
     Category category;
 
-    RealmResults<Map> maps;
+
 
     private Realm realm;
     private String TAG = "categ presenter";
@@ -163,16 +162,6 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
         return query;
     }
 
-    @Override
-    protected void onFirstViewAttach() {
-
-        super.onFirstViewAttach();
-        getViewState().showProgress();
-
-        // .getCategory();
-    }
-
-
     public void iWantList() {
 
     }
@@ -182,10 +171,14 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
         super.attachView(view);
     }
 
-    public void unlock(Map map) {
-        Log.d(TAG, "unlock: called from card click with map "+map.getName()+map.getObjectId());
-    }
+    @Override
+    protected void onFirstViewAttach() {
 
+        super.onFirstViewAttach();
+        getViewState().showProgress();
+
+        // .getCategory();
+    }
 
     @Override
     public void onDestroy() {
@@ -196,13 +189,16 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
     }
 
+    public void unlock(Map map) {
+        Log.d(TAG, "unlock: called from card click with map "+map.getName()+map.getObjectId());
+    }
 
     public void onMapCardClicked(Map map) {
-        String url = map.getI_url();
+        //String url = map.getI_url();
         realm.executeTransactionAsync(realm1 -> {
-            HouseAd ad = realm1.where(HouseAd.class).findFirst();
-            ad.setImg(url);
-            realm1.copyToRealmOrUpdate(ad);
+           // HouseAd ad = realm1.where(HouseAd.class).findFirst();
+          //  ad.setImg(url);
+           // realm1.copyToRealmOrUpdate(ad);
         });
     }
 }
