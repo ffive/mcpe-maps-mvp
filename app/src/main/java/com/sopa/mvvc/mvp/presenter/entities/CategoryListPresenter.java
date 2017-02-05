@@ -41,10 +41,10 @@ public class CategoryListPresenter extends MvpPresenter<CategoryListView> {
 
     private rx.Subscription categoryCatcher, backendlessCatcher;
 
-    public CategoryListPresenter(Category categoryObj) {
+    public CategoryListPresenter(String categoryId) {
         super();
         realm = Realm.getDefaultInstance();
-        category = categoryObj;
+        category = realm.where (Category.class).equalTo ("objectId",categoryId).findFirst (); //todo async?
 
 
         //todo listen to tab's category from realm, not from constructor?

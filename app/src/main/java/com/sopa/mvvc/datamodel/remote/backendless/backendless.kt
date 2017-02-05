@@ -1,16 +1,14 @@
 package com.sopa.mvvc.datamodel.remote.backendless
 
-import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 import java.io.Serializable
 
 /**
  * Created by yurikomlev on 03.02.17.
  */
 
-class BackendlessObject : RealmObject(), Serializable {
-
+class BackendlessObjectKt : RealmObject(), Serializable {
+/*
     // @SerializedName("___class")
     var __class = javaClass.simpleName
 
@@ -208,7 +206,7 @@ class Map : RealmObject, Comparable<Map>, Serializable {
         var category: String? = null
 
     }
-
+*/
 }
 
 

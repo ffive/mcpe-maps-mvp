@@ -62,6 +62,8 @@ public class Migration_v1 implements RealmMigration {
             DynamicRealmObject dynamicRealmObject = realm.createObject("UserConfig", userId);
             dynamicRealmObject.set("lastTab",0);
             dynamicRealmObject.set("recyclerPosition",0f);
+            dynamicRealmObject.set("language","en");
+
 
         }
 
