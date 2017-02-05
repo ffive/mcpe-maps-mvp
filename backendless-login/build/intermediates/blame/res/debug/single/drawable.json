@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/build/intermediates/res/merged/debug/drawable/btn_facebook_bg.png",
+        "source": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/src/main/res/drawable/btn_facebook_bg.png"
+    },
+    {
+        "merged": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/build/intermediates/res/merged/debug/drawable/icon.png",
+        "source": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/src/main/res/drawable/icon.png"
+    },
+    {
+        "merged": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/build/intermediates/res/merged/debug/drawable/btn_twitter_bg.png",
+        "source": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/src/main/res/drawable/btn_twitter_bg.png"
+    },
+    {
+        "merged": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/build/intermediates/res/merged/debug/drawable/btn_google_bg.png",
+        "source": "/Users/yurikomlev/FFiveProjects/mcpe-maps-mvp/mvp-Login/src/main/res/drawable/btn_google_bg.png"
+    }
+]
