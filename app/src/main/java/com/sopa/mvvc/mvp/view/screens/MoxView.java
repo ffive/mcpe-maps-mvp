@@ -4,11 +4,12 @@ import com.arellomobile.mvp.MvpView;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface MoxView extends MvpView {
 
-    void setLanguagesList( List<String> languageList );
+    void setLanguagesList ( Map<String, Integer> languageList, String userLang );
 
     void showMyAppsDialog();
 

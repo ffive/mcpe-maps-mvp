@@ -4,8 +4,6 @@ package com.sopa.mvvc.mvp.presenter.screens;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -17,23 +15,19 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
-import com.backendless.property.ObjectProperty;
-import com.sopa.mvvc.datamodel.remote.backendless.Category;
-import com.sopa.mvvc.datamodel.remote.backendless.Description;
-import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.datamodel.local.UserConfig;
+import com.sopa.mvvc.datamodel.remote.backendless.Category;
+import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.mvp.view.screens.MoxView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
-import ru.terrakok.cicerone.commands.Back;
 import rx.android.schedulers.AndroidSchedulers;
 
 
@@ -62,131 +56,168 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 
 @InjectViewState
-public class MoxPresenter extends MvpPresenter<MoxView>{
+public class MoxPresenter extends MvpPresenter<MoxView> {
     private final static String TAG = "MoxPresenter: ";
 
 
     private Realm realm;
     private UserConfig userConfig;
     private RealmResults<Category> categories;
+    private AsyncCallback<BackendlessCollection<Category>> nextPageCallback = new AsyncCallback<BackendlessCollection<Category>> ( ) {
+        @Override
+        public void handleResponse ( BackendlessCollection<Category> response ) {
+            Log.d (TAG, "handleResponse: just received  " + response.getCurrentPage ( ).size ( ) + "categories ");
 
-    public MoxPresenter() {
-        super();
+            realm.executeTransactionAsync (
+                    realm1 -> {
+                        realm1.copyToRealmOrUpdate (response.getCurrentPage ( ));
+                    });
+        }
 
-        Log.d(TAG, "MoxPresenter: Constructor()");
+        @Override
+        public void handleFault ( BackendlessFault fault ) {
+            Log.d (TAG, "handleFault: " + fault.getDetail ( ));  //todo retry?
+        }
+    };
+    private java.util.Map<Integer, String> servedLocales;
 
-        getViewState().showLoading();
+    {
+        servedLocales = new HashMap<> ( );
+    }
 
-        realm = Realm.getDefaultInstance();
-        userConfig = realm.where(UserConfig.class).findFirstAsync();
-        userConfig.addChangeListener((RealmChangeListener<UserConfig>) element -> {
-            getViewState().sendLastTab(element.getLastTab());
+
+    public MoxPresenter ( ) {
+        super ( );
+
+        Log.d (TAG, "MoxPresenter: Constructor()");
+
+        getViewState ( ).showLoading ( );
+
+        realm = Realm.getDefaultInstance ( );
+        userConfig = realm.where (UserConfig.class).findFirstAsync ( );
+        userConfig.addChangeListener (( RealmChangeListener<UserConfig> ) element -> {
+            getViewState ( ).sendLastTab (element.getLastTab ( ));
         });
 
-        dataListenerFunction();
-        loadAllCategories();
+        dataListenerFunction ( );
+        loadAllCategories ( );
 
     }
 
+    private void dataListenerFunction ( ) {
+        realm.where (Category.class)
+                .findAllAsync ( )
+                .asObservable ( )
+                .filter (RealmResults:: isLoaded)
+                .filter (RealmResults:: isValid)
+                .subscribeOn (AndroidSchedulers.mainThread ( ))
+                .observeOn (AndroidSchedulers.mainThread ( ))
+                .subscribe (cats -> {
+                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ( ));  //if not same, else - reset position after apply
+                });
+    }
+
+    private void loadAllCategories ( ) {
+
+        Backendless.Persistence.of (Category.class).find (new BackendlessDataQuery (new QueryOptions (100, 0)), nextPageCallback);
+    }
+
+    @BindingConversion
+    public static ColorDrawable convertColorToDrawable ( int color ) {
+        return color != 0 ? new ColorDrawable (color) : null;
+    }
+
+    @BindingAdapter( "img:url" )
+    public static void imgLoad ( ImageView imageView, Map map ) {
+        if ( map != null ) {
+            Picasso.with (imageView.getContext ( )).load (map.getI_url ( )).tag (map.getCategory ( )).into (imageView);
+        }
+
+    }
+
+    @BindingAdapter( value = { "android:src", "placeHolder" },
+            requireAll = false )
+    public static void setImageUrl ( ImageView view, String url, int placeHolder ) {
+
+        RequestCreator requestCreator = Picasso.with (view.getContext ( )).load (url);
+
+        if ( placeHolder != 0 ) {
+            requestCreator.placeholder (placeHolder);
+        }
+        requestCreator.into (view);
+    }
+
     @Override
-    protected void onFirstViewAttach() {
-        Log.d(TAG, "onFirstViewAttach: ");
-        super.onFirstViewAttach();
+    protected void onFirstViewAttach ( ) {
+        Log.d (TAG, "onFirstViewAttach: ");
+        super.onFirstViewAttach ( );
 
         //getViewState().updateTabs(categories);
         //updateTabs
 
     }
 
-    private void dataListenerFunction() {
-        realm.where(Category.class)
-                .findAllAsync()
-                .asObservable()
-                .filter(RealmResults::isLoaded)
-                .filter(RealmResults::isValid)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(cats -> {
-                    getViewState().updateTabs(cats, userConfig.getLastTab());  //if not same, else - reset position after apply
-                });
-    }
-
-
-    private void loadAllCategories() {
-
-        Backendless.Persistence.of(Category.class).find(new BackendlessDataQuery(new QueryOptions(100, 0)), nextPageCallback);
-    }
-
-    private AsyncCallback<BackendlessCollection<Category>> nextPageCallback = new AsyncCallback<BackendlessCollection<Category>>() {
-        @Override
-        public void handleResponse(BackendlessCollection<Category> response) {
-            Log.d(TAG, "handleResponse: just received  " + response.getCurrentPage().size() + "categories ");
-
-            realm.executeTransactionAsync(
-                    realm1 -> {
-                        realm1.copyToRealmOrUpdate(response.getCurrentPage());
-                    });
-        }
-
-        @Override
-        public void handleFault(BackendlessFault fault) {
-            Log.d(TAG, "handleFault: " + fault.getDetail());  //todo retry?
-        }
-    };
-
-
     @Override
-    public void onDestroy() {
-        realm.close();
-        super.onDestroy();
+    public void onDestroy ( ) {
+        realm.close ( );
+        super.onDestroy ( );
 
     }
 
-
-    @BindingConversion
-    public static ColorDrawable convertColorToDrawable(int color) {
-        return color != 0 ? new ColorDrawable(color) : null;
-    }
-
-    @BindingAdapter("img:url")
-    public static void imgLoad(ImageView imageView, Map map) {
-        if (map != null) {
-            Picasso.with(imageView.getContext()).load(map.getI_url()).tag(map.getCategory()).into(imageView);
-        }
-
-    }
-
-    @BindingAdapter(value = {"android:src", "placeHolder"},
-            requireAll = false)
-    public static void setImageUrl(ImageView view, String url, int placeHolder) {
-
-        RequestCreator requestCreator = Picasso.with(view.getContext()).load(url);
-
-        if (placeHolder != 0) {
-            requestCreator.placeholder(placeHolder);
-        }
-        requestCreator.into(view);
-    }
-
-
-    public void onPageSet(int page) {
+    public void onPageSet ( int page ) {
 
         //vasponel)))
-      //  getViewState().sendLastTab(page);
-        realm.executeTransactionAsync(bgRealm -> {
-            UserConfig user = bgRealm.where(UserConfig.class).findFirst();
-            user.setLastTab(page);
+        //  getViewState().sendLastTab(page);
+        realm.executeTransactionAsync (bgRealm -> {
+            UserConfig user = bgRealm.where (UserConfig.class).findFirst ( );
+            user.setLastTab (page);
         });
 
     }
 
-    private void loadAvailableLanguages (){
-        java.util.Map<Integer,String> result = new HashMap<>();
-        result = Backendless.Events.dispatch( "getCurrentLanguages", new HashMap() );
+    private void loadAvailableLanguages ( ) {
 
-        List<String> availableLanguages = new ArrayList<String>(result.values());
-        getViewState().setLanguagesList( availableLanguages );
+        java.util.Map<String, Integer> result = new HashMap<> ( );
+
+
+        UserConfig userConfig = realm.where (UserConfig.class).findFirst ( );
+        String userLang = userConfig.getLanguage ( );
+
+
+        Backendless.Events.dispatch ("getCurrentLanguages", new HashMap ( ), new AsyncCallback<java.util.Map> ( ) {
+            @Override
+            public void handleResponse ( java.util.Map map ) {
+
+                servedLocales.putAll (map);
+
+                getViewState ( ).setLanguagesList (reverseMap (servedLocales), userLang);
+
+            }
+
+            @Override
+            public void handleFault ( BackendlessFault backendlessFault ) {
+
+            }
+        });
+
     }
 
+    //I'm sure think we can easily replace hashmaps for smth easier to handle
+    private HashMap<String, Integer> reverseMap ( java.util.Map<Integer, String> result ) {
+        HashMap<String, Integer> reversed = new HashMap<> ( );
+
+        HashSet<String> strKey = new HashSet<> (result.values ( ));
+        HashSet<Integer> posKey = new HashSet<> (result.keySet ( ));
+
+        for ( int i = 0; i < result.size ( ); i++ ) {
+            reversed.put (strKey.iterator ( ).next ( ), posKey.iterator ( ).next ( ));
+        }
+        return reversed;
+    }
+
+
+    public void onLanguageSelected ( int dialogPosition ) {
+        userConfig.setLanguage (servedLocales.get (dialogPosition));
+    }
 }
 
