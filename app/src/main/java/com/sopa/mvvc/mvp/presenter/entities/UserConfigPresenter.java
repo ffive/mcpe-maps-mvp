@@ -6,7 +6,6 @@ import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.sopa.mvvc.datamodel.local.UserConfig;
-import com.sopa.mvvc.datamodel.local.migrations.Migration_v1;
 import com.sopa.mvvc.mvp.view.entities.UserConfigView;
 
 import io.realm.Realm;
@@ -51,20 +50,17 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
 
     }
 
-
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-
-    }
-
-
     @Override
     public void attachView(UserConfigView view) {
         // view.sendLastTab(config.getLastTab());
         super.attachView(view);
     }
 
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+
+    }
 
     @Override
     public void onDestroy() {
@@ -74,8 +70,9 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
 
 
 
-    public void onLanguageUpdated( String language ){
-        config.setLanguage(language);
+    public void onLanguageUpdated( int language ){
+
+       // config.setLanguage(language);
     }
 
 

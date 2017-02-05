@@ -1,6 +1,5 @@
 package com.sopa.mvvc.ui.activity;
 
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -35,6 +34,7 @@ import com.sopa.mvvc.ui.fragment.UploadMapFragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm
 // (reads/writes) , 3 ALiveObservables oO anything)   And include
@@ -51,6 +51,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
 
     ActivityMoxBinding binding;
+    String userLocale = Locale.getDefault ( ).getLanguage ( ).toLowerCase ( );
 
     //--------   Create fragments for tabs ------- ///
     private static Fragment getCategoryFragment ( Category category ) {
@@ -70,6 +71,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         return new UploadMapFragment ( );
     }
 
+
+    //--------   Moxy View  methods implementation ------- ///
+
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate (savedInstanceState);
@@ -86,9 +90,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         setupViewPager ( );
 
     }
-
-
-    //--------   Moxy View  methods implementation ------- ///
 
     @Override
     protected void onStop ( ) {
@@ -163,44 +164,33 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         });
     }
 
+    String detectuserLocale ( ) {
+        return userLocale;
+    }
+
     @Override
-    public void setLanguagesList ( List<String> languageList ) {
+    public void setLanguagesList ( Map<String, Integer> languageList, String userLang ) {
 
-        int currentLanguagePosition = - 1;
-        int defaultLanguagePosition = 0;
-        final String[] userLanguage = new String[1];
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (this, android.R.layout.select_dialog_singlechoice);
-
-        for ( int i = 0; i < languageList.size ( ); i++ ) {
-            arrayAdapter.add (languageList.get (i));
-
-            String language = languageList.get (i).toLowerCase ( );
-            if ( language.equals (Locale.getDefault ( ).getLanguage ( ).toLowerCase ( )) ) {
-                currentLanguagePosition = i;
-            } /*  else if ( language.equals( BackendlessApplication.DEFAULT_LANGUAGE.toLowerCase() ) ){
-                defaultLanguagePosition = i;
-            }*/
-        }
-
-        if ( currentLanguagePosition == - 1 ) {
-            currentLanguagePosition = defaultLanguagePosition;
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder (this);
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder (this);
         builder.setTitle (R.string.language_chooser_dialog_title);
-        builder.setSingleChoiceItems (arrayAdapter, currentLanguagePosition, new DialogInterface.OnClickListener ( ) {
-            @Override
-            public void onClick ( DialogInterface dialogInterface, int i ) {
-                userLanguage[0] = languageList.get (i);
-            }
-        });
-        builder.setPositiveButton (android.R.string.ok, new DialogInterface.OnClickListener ( ) {
-            @Override
-            public void onClick ( DialogInterface dialogInterface, int i ) {
-                mUserConfigPresenter.onLanguageUpdated (userLanguage[0]);
-                dialogInterface.dismiss ( );
-            }
+
+        //wtf the only thing this method should do is display a list of languages as came from the server. end of story
+        //clicks are handled by presenter's callbacks
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<> (this, android.R.layout.select_dialog_singlechoice);
+
+        arrayAdapter.addAll (languageList.keySet ( ));  //  {   0: "russian" , 1: "default,  2:"french" } reversed
+
+        // setChecked (device-)default language.
+        builder.setSingleChoiceItems (arrayAdapter,
+                languageList.containsKey (userLang) ? languageList.get (userLang) : languageList.get ("default"),
+                ( dialogInterface, i ) -> { mMoxPresenter.onLanguageSelected(i);  });
+
+
+        builder.setPositiveButton (android.R.string.ok, ( dialogInterface, i ) -> {
+            mUserConfigPresenter.onLanguageUpdated (i);
+
         });
 
 
@@ -272,14 +262,14 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         setCurrentTab (lastTab);
     }
 
-
-    //--------   Adapter for tabs (viewpager) ------- ///
-
     public void setCurrentTab ( int currentTab ) {
 
         binding.container.pager.setCurrentItem (currentTab, true);
 
     }
+
+
+    //--------   Adapter for tabs (viewpager) ------- ///
 
     //--------   UserConfig View methods implementation ------- ///
     @Override
@@ -304,6 +294,18 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     }
 
 
+    class Lng {
+        int pos;
+        String code;
+
+        public Lng ( int pos, String code ) {
+            super ( );
+            this.pos = pos;
+            this.code = code;
+        }
+    }
+
+
     public class MyAdapter extends FragmentPagerAdapter {
         List<Category> categories;
 
@@ -311,7 +313,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
             super (fm);
             this.categories = new ArrayList<Category> ( );
             Category c = new Category ( );
-            c.setCategory ("loading");
+            c.setCategory ("loading ");
             c.setObjectId ("loading");
             categories.add (c);
         }
