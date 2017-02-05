@@ -36,13 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-//todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm (reads/writes) , 3 ALiveObservables oO anything)   And include
+//todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm
+// (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
 public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView {
 
     private static final String TAG = "MoxActivity : DEBUG";
 
-    @InjectPresenter(type = PresenterType.GLOBAL)
+    @InjectPresenter( type = PresenterType.GLOBAL )
     UserConfigPresenter mUserConfigPresenter;
 
     @InjectPresenter
@@ -51,22 +52,43 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     ActivityMoxBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    //--------   Create fragments for tabs ------- ///
+    private static Fragment getCategoryFragment ( Category category ) {
+        Log.d (TAG, "getCategoryFragment: created categoryListFragment with Id" + category.getCategory ( ));
 
-        binding = DataBindingUtil.setContentView(MoxActivity.this, R.layout.activity_mox);
+        CategoryListFragment fragment = new CategoryListFragment ( );
+        Bundle args = new Bundle ( );
+
+        args.putString ("objectId", category.getObjectId ( ));
+
+        fragment.setArguments (args);
+        return fragment;
+    }
+
+    private static Fragment getUploadMapFragment ( ) {
+        Log.d (TAG, "getUploadMapFragment: created UploadMapFragment ");
+        return new UploadMapFragment ( );
+    }
+
+    @Override
+    protected void onCreate ( Bundle savedInstanceState ) {
+        super.onCreate (savedInstanceState);
+
+        binding = DataBindingUtil.setContentView (MoxActivity.this, R.layout.activity_mox);
         // you
         // build
         // the project
-        setSupportActionBar(binding.toolbar);
+        setSupportActionBar (binding.toolbar);
 
 
         //binding.counterWidgetOnActivity.init(getMvpDelegate());
-      //  binding.count.
-        setupViewPager();
+        //  binding.count.
+        setupViewPager ( );
 
     }
+
+
+    //--------   Moxy View  methods implementation ------- ///
 
     @Override
     protected void onStop ( ) {
@@ -75,16 +97,13 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         super.onStop ( );
     }
 
-
-
-
-    private void setupViewPager() {
-        binding.container.pager.setOffscreenPageLimit(1);
-        binding.container.pager.setAdapter(new MyAdapter(getSupportFragmentManager()));
-        binding.container.pager.setPageTransformer(true, new ViewPager.PageTransformer() {
+    private void setupViewPager ( ) {
+        binding.container.pager.setOffscreenPageLimit (1);
+        binding.container.pager.setAdapter (new MyAdapter (getSupportFragmentManager ( )));
+        binding.container.pager.setPageTransformer (true, new ViewPager.PageTransformer ( ) {
             private static final float MIN_SCALE = 0.75f;
 
-            public void transformPage(View view, float position) {
+            public void transformPage ( View view, float position ) {
                 /*
                 int pageWidth = view.getWidth();
 
@@ -125,66 +144,62 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
         });     //sliding animation
 
-        binding.tabs.setupWithViewPager(binding.container.pager, true);
-        binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        binding.tabs.setupWithViewPager (binding.container.pager, true);
+        binding.tabs.addOnTabSelectedListener (new TabLayout.OnTabSelectedListener ( ) {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mMoxPresenter.onPageSet(tab.getPosition());
+            public void onTabSelected ( TabLayout.Tab tab ) {
+                mMoxPresenter.onPageSet (tab.getPosition ( ));
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public void onTabUnselected ( TabLayout.Tab tab ) {
 
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onTabReselected ( TabLayout.Tab tab ) {
 
             }
         });
     }
 
-
-
-    //--------   Moxy View  methods implementation ------- ///
-
     @Override
-    public void setLanguagesList( List<String> languageList ) {
+    public void setLanguagesList ( List<String> languageList ) {
 
-        int currentLanguagePosition = -1;
+        int currentLanguagePosition = - 1;
         int defaultLanguagePosition = 0;
         final String[] userLanguage = new String[1];
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice );
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (this, android.R.layout.select_dialog_singlechoice);
 
-        for ( int i = 0; i < languageList.size(); i++ ){
-            arrayAdapter.add( languageList.get(i) );
-            
-            String language = languageList.get(i).toLowerCase();
-            if ( language.equals( Locale.getDefault().getLanguage().toLowerCase() ) ){
+        for ( int i = 0; i < languageList.size ( ); i++ ) {
+            arrayAdapter.add (languageList.get (i));
+
+            String language = languageList.get (i).toLowerCase ( );
+            if ( language.equals (Locale.getDefault ( ).getLanguage ( ).toLowerCase ( )) ) {
                 currentLanguagePosition = i;
             } /*  else if ( language.equals( BackendlessApplication.DEFAULT_LANGUAGE.toLowerCase() ) ){
                 defaultLanguagePosition = i;
             }*/
         }
 
-        if ( currentLanguagePosition == -1 ){
+        if ( currentLanguagePosition == - 1 ) {
             currentLanguagePosition = defaultLanguagePosition;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle( R.string.language_chooser_dialog_title );
-        builder.setSingleChoiceItems(arrayAdapter, currentLanguagePosition, new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder (this);
+        builder.setTitle (R.string.language_chooser_dialog_title);
+        builder.setSingleChoiceItems (arrayAdapter, currentLanguagePosition, new DialogInterface.OnClickListener ( ) {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                userLanguage[0] = languageList.get(i);
+            public void onClick ( DialogInterface dialogInterface, int i ) {
+                userLanguage[0] = languageList.get (i);
             }
         });
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton (android.R.string.ok, new DialogInterface.OnClickListener ( ) {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mUserConfigPresenter.onLanguageUpdated(userLanguage[0]);
-                dialogInterface.dismiss();
+            public void onClick ( DialogInterface dialogInterface, int i ) {
+                mUserConfigPresenter.onLanguageUpdated (userLanguage[0]);
+                dialogInterface.dismiss ( );
             }
         });
 
@@ -192,142 +207,157 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     }
 
     @Override
-    public void showMyAppsDialog() {
+    public void showMyAppsDialog ( ) {
 
     }
 
     @Override
-    public void showNewApp(String message, String link, String pkg) {
+    public void showNewApp ( String message, String link, String pkg ) {
 
     }
 
     @Override
-    public void showRateDialog() {
+    public void showRateDialog ( ) {
     }
 
     @Override
-    public void showEULA() {
+    public void showEULA ( ) {
     }
 
     @Override
-    public void showRewardedAd() {
+    public void showRewardedAd ( ) {
     }
 
     @Override
-    public void showSearch() {
+    public void showSearch ( ) {
     }
 
     @Override
-    public void hideSearch() {
+    public void hideSearch ( ) {
     }
 
     @Override
-    public void showInterstitial() {
-
-    }
-
-    @Override
-    public void showLoading() {
-        binding.container.progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        binding.container.progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showTabs(List<Category> categories) {
-        Log.d(TAG, "showTabs: sorry not implement");
-    }
-
-    @Override
-    public void updateTabs(List<Category> categories, int position) {
-        ((MyAdapter) binding.container.pager.getAdapter()).updateItems(categories);
-        setCurrentTab(position);
-    }
-
-    @Override
-    public void showUploadDialog() {
+    public void showInterstitial ( ) {
 
     }
 
     @Override
-    public void sendLastTab(int lastTab) {
-        setCurrentTab(lastTab);
+    public void showLoading ( ) {
+        binding.container.progressBar.setVisibility (View.VISIBLE);
     }
 
-    public void setCurrentTab(int currentTab) {
-
-        binding.container.pager.setCurrentItem(currentTab, true);
-
-    }
-
-
-    //--------   UserConfig View methods implementation ------- ///
     @Override
-    public void onUpdatedSettings(UserConfig config) {
+    public void hideLoading ( ) {
+        binding.container.progressBar.setVisibility (View.GONE);
+    }
+
+    @Override
+    public void showTabs ( List<Category> categories ) {
+        Log.d (TAG, "showTabs: sorry not implement");
+    }
+
+    @Override
+    public void updateTabs ( List<Category> categories, int position ) {
+        ( ( MyAdapter ) binding.container.pager.getAdapter ( ) ).updateItems (categories);
+        setCurrentTab (position);
+    }
+
+    @Override
+    public void showUploadDialog ( ) {
 
     }
 
+    @Override
+    public void sendLastTab ( int lastTab ) {
+        setCurrentTab (lastTab);
+    }
 
 
     //--------   Adapter for tabs (viewpager) ------- ///
 
+    public void setCurrentTab ( int currentTab ) {
+
+        binding.container.pager.setCurrentItem (currentTab, true);
+
+    }
+
+    //--------   UserConfig View methods implementation ------- ///
+    @Override
+    public void onUpdatedSettings ( UserConfig config ) {
+
+    }
+
+    //--------   Toolbar  and   menu  ------- ///
+    @Override
+    public boolean onCreateOptionsMenu ( Menu menu ) {
+        getMenuInflater ( ).inflate (R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected ( MenuItem item ) {
+        int id = item.getItemId ( );
+        if ( id == R.id.action_settings ) {
+            return true;
+        }
+        return super.onOptionsItemSelected (item);
+    }
+
+
     public class MyAdapter extends FragmentPagerAdapter {
         List<Category> categories;
 
-        MyAdapter(FragmentManager fm) {
-            super(fm);
-            this.categories = new ArrayList<Category>();
-            Category c = new Category();
-            c.setCategory("loading");
-            c.setObjectId("loading");
-            categories.add(c);
+        MyAdapter ( FragmentManager fm ) {
+            super (fm);
+            this.categories = new ArrayList<Category> ( );
+            Category c = new Category ( );
+            c.setCategory ("loading");
+            c.setObjectId ("loading");
+            categories.add (c);
         }
 
         @Override
-        public int getCount() {
-            return categories.size();
+        public int getCount ( ) {
+            return categories.size ( );
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            return categories.get(position).getCategory();
+        public CharSequence getPageTitle ( int position ) {
+            return categories.get (position).getCategory ( );
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return getCategoryFragment(categories.get(position));
+        public Fragment getItem ( int position ) {
+            return getCategoryFragment (categories.get (position));
         }
 
-        void updateItems(List<Category> updated) {
+        void updateItems ( List<Category> updated ) {
 
-            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new MyDiffCallback(updated, this.categories));
-            notifyDataSetChanged();
-            diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff (new MyDiffCallback (updated, this.categories));
+            notifyDataSetChanged ( );
+            diffResult.dispatchUpdatesTo (new ListUpdateCallback ( ) {
                 @Override
-                public void onInserted(int position, int count) {
+                public void onInserted ( int position, int count ) {
 
                     categories = updated;
-                    notifyDataSetChanged();
-                    Log.d(TAG, "onInserted: " + count + " categories");
+                    notifyDataSetChanged ( );
+                    Log.d (TAG, "onInserted: " + count + " categories");
                 }
 
                 @Override
-                public void onRemoved(int position, int count) {
-                    Log.d(TAG, "onRemoved: ");
+                public void onRemoved ( int position, int count ) {
+                    Log.d (TAG, "onRemoved: ");
                 }
 
                 @Override
-                public void onMoved(int fromPosition, int toPosition) {
-                    Log.d(TAG, "onMoved: ");
+                public void onMoved ( int fromPosition, int toPosition ) {
+                    Log.d (TAG, "onMoved: ");
                 }
 
                 @Override
-                public void onChanged(int position, int count, Object payload) {
-                    Log.d(TAG, "onChanged: ");
-                    notifyDataSetChanged();
+                public void onChanged ( int position, int count, Object payload ) {
+                    Log.d (TAG, "onChanged: ");
+                    notifyDataSetChanged ( );
 
                 }
             });
@@ -336,40 +366,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
         }
 
-    }
-
-
-    //--------   Create fragments for tabs ------- ///
-    private static Fragment getCategoryFragment(Category categoryId) {
-        Log.d(TAG, "getCategoryFragment: created categoryListFragment with Id" + categoryId);
-
-        CategoryListFragment fragment = new CategoryListFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("objectId", categoryId);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    private static Fragment getUploadMapFragment() {
-        Log.d(TAG, "getUploadMapFragment: created UploadMapFragment ");
-        return new UploadMapFragment();
-    }
-
-
-    //--------   Toolbar  and   menu  ------- ///
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 

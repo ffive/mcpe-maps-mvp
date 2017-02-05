@@ -17,14 +17,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.minimize.android.rxrecycleradapter.RxDataSource;
 import com.minimize.android.rxrecycleradapter.SimpleViewHolder;
-import com.sopa.mvvc.ui.animations.DetailsTransition;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.FragmentCategoryListBinding;
 import com.sopa.mvvc.databinding.ListItemCardBinding;
-import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.mvp.presenter.entities.CategoryListPresenter;
 import com.sopa.mvvc.mvp.view.entities.CategoryListView;
+import com.sopa.mvvc.ui.animations.DetailsTransition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +40,37 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
 
     @InjectPresenter
     CategoryListPresenter mCategoryListPresenter;
+    FragmentCategoryListBinding binding;
+
+    private RxDataSource<Map> dataSource;
+
+    private Action1<SimpleViewHolder<Map, ViewDataBinding>> onNext = new Action1<SimpleViewHolder<Map, ViewDataBinding>>() {
+        @Override
+        public void call(SimpleViewHolder<Map, ViewDataBinding> mapHolder) {
+            ListItemCardBinding b = (ListItemCardBinding) mapHolder.getViewDataBinding();
+            Map map = mapHolder.getItem();
+            if (b != null) {
+                b.getRoot().setOnClickListener(view -> {
+                    if (map.isLocked()) {
+                        mCategoryListPresenter.unlock(map);
+                    } else {
+                        CategoryListFragment.this.openDetailsWithTransition(map, b.imageView);
+                    }
+                });
+                b.setMap(map);
+
+                //b.mapName.setText(map.getName());
+                //b.button.setText(R.string.btn_unlock);
+                //Picasso.with(b.getRoot().getContext()).load(map.getI_url()).fit().into(b.imageView);
+                //b.button.setVisibility(map.isLocked() ? View.VISIBLE : View.GONE);
+            }
+        }
+    };
 
     @ProvidePresenter
     CategoryListPresenter getPresenter() {
-        return new CategoryListPresenter((Category)getArguments().getSerializable("objectId"));
+        return new CategoryListPresenter(getArguments().getString ("objectId"));
     }
-
-
-    FragmentCategoryListBinding binding;
-    private RxDataSource<Map> dataSource;
-
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -78,35 +98,6 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
         mCategoryListPresenter.iWantList();
         super.onViewCreated(view, savedInstanceState);
     }
-
-    @Override
-    public void showList(List<Map> items) {
-
-
-    }
-
-    private Action1<SimpleViewHolder<Map, ViewDataBinding>> onNext = new Action1<SimpleViewHolder<Map, ViewDataBinding>>() {
-        @Override
-        public void call(SimpleViewHolder<Map, ViewDataBinding> mapHolder) {
-            ListItemCardBinding b = (ListItemCardBinding) mapHolder.getViewDataBinding();
-            Map map = mapHolder.getItem();
-            if (b != null) {
-                b.getRoot().setOnClickListener(view -> {
-                    if (map.isLocked()) {
-                        mCategoryListPresenter.unlock(map);
-                    } else {
-                        CategoryListFragment.this.openDetailsWithTransition(map, b.imageView);
-                    }
-                });
-                b.setMap(map);
-
-                //b.mapName.setText(map.getName());
-                //b.button.setText(R.string.btn_unlock);
-                //Picasso.with(b.getRoot().getContext()).load(map.getI_url()).fit().into(b.imageView);
-                //b.button.setVisibility(map.isLocked() ? View.VISIBLE : View.GONE);
-            }
-        }
-    };
 
     private void openDetailsWithTransition(Map map, final ImageView sharedView) {
 
@@ -140,18 +131,6 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
        // (getActivity().
     }
 
-
-    @Override
-    public void showProgress() {
-        binding.progressBar2.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgress() {
-        binding.progressBar2.setVisibility(View.INVISIBLE);
-
-    }
-
     @Override
     public void updateList(List<Map> updatedList) throws NullPointerException {
 
@@ -161,6 +140,23 @@ public class CategoryListFragment extends MvpAppCompatFragment implements Catego
             dataSource.updateDataSet(updatedList);
             dataSource.updateAdapter();
         }
+
+    }
+
+    @Override
+    public void showList(List<Map> items) {
+
+
+    }
+
+    @Override
+    public void showProgress() {
+        binding.progressBar2.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        binding.progressBar2.setVisibility(View.INVISIBLE);
 
     }
 
