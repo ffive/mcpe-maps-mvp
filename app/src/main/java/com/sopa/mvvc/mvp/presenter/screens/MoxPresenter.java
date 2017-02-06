@@ -79,7 +79,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
             Log.d (TAG, "handleFault: " + fault.getDetail ( ));  //todo retry?
         }
     };
-    private java.util.Map<Integer, String> servedLocales;
+    private java.util.Map<String, String> servedLocales;
 
     {
         servedLocales = new HashMap<> ( );
@@ -177,14 +177,10 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     public void loadAvailableLanguages ( ) {
 
-        java.util.Map<String, Integer> result = new HashMap<> ( );
-
-
         UserConfig userConfig = realm.where (UserConfig.class).findFirst ( );
         String userLang = userConfig.getLanguage ( );
 
-
-        Backendless.Events.dispatch ("getAvailableLanguages", new HashMap ( ), new AsyncCallback<java.util.Map> ( ) {
+        Backendless.Events.dispatch ("getAvailableLanguages", new HashMap(), new AsyncCallback<java.util.Map> ( ) {
             @Override
             public void handleResponse ( java.util.Map map ) {
 
@@ -202,22 +198,14 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     }
 
-/*    //I'm sure think we can easily replace hashmaps for smth easier to handle
-    private HashMap<String, Integer> reverseMap ( java.util.Map<Integer, String> result ) {
-        HashMap<String, Integer> reversed = new HashMap<> ( );
-
-        HashSet<String> strKey = new HashSet<> (result.values ( ));
-        HashSet<Integer> posKey = new HashSet<> (result.keySet ( ));
-
-        for ( int i = 0; i < result.size ( ); i++ ) {
-            reversed.put (strKey.iterator ( ).next ( ), posKey.iterator ( ).next ( ));
-        }
-        return reversed;
-    }*/
-
-
     public void onLanguageSelected ( int dialogPosition ) {
-        userConfig.setLanguage (servedLocales.get (dialogPosition));
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                userConfig.setLanguage (servedLocales.get (dialogPosition));
+                realm.copyToRealmOrUpdate(userConfig);
+            }
+        });
     }
 }
 

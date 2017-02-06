@@ -89,8 +89,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         //  binding.count.
         setupViewPager ( );
 
-        mMoxPresenter.loadAvailableLanguages();
-
     }
 
     @Override
@@ -173,28 +171,28 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     @Override
     public void setLanguagesList ( Map<String, String> languageMap, String userLang ) {
 
-        userLang = "Russian";
+        //userLang = "Russian";
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder (this);
         builder.setTitle (R.string.language_chooser_dialog_title);
-
-        //wtf the only thing this method should do is display a list of languages as came from the server. end of story
-        //clicks are handled by presenter's callbacks
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<> (this, android.R.layout.select_dialog_singlechoice);
 
         arrayAdapter.addAll (languageMap.values());  // localized {   0: "Русский" ,  2:"English", 3:"Deutch" }
 
-        // setChecked (device-)default language.
-        //no need to check item at the same time we fill the list, should be separate action
-        builder.setSingleChoiceItems (arrayAdapter, 0,
-                ( dialogInterface, i ) -> { mMoxPresenter.onLanguageSelected(i);  });
+        int defaultListPosition;
+        if ( languageMap.get(userLang)!= null ){
+            defaultListPosition = arrayAdapter.getPosition( languageMap.get(userLang) );
+        }   else {
+            defaultListPosition = arrayAdapter.getPosition( languageMap.get("English") );
+        }
+
+        builder.setSingleChoiceItems (arrayAdapter, defaultListPosition,
+            ( dialogInterface, i ) -> mMoxPresenter.onLanguageSelected(i) );
 
 
-        builder.setPositiveButton (android.R.string.ok, ( dialogInterface, i ) -> {
-            mUserConfigPresenter.onLanguageUpdated (i);
-
-        });
+        builder.setPositiveButton (android.R.string.ok,
+                ( dialogInterface, i ) -> mMoxPresenter.onLanguageSelected(i) );
 
         builder.show();
 
