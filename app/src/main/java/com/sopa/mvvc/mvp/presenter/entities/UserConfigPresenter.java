@@ -43,6 +43,9 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
         config.addChangeListener(new RealmChangeListener<RealmObject>() {
             @Override
             public void onChange(RealmObject element) {
+
+
+
                 Log.e(TAG, "onChange: I am global userconfig's onchange listener -----lastTab:"+((UserConfig)element).getLastTab()+" ------!!!!!"+ ((UserConfig)element)
                         .getId());
             }
