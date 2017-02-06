@@ -177,8 +177,8 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     public void loadAvailableLanguages ( ) {
 
-        UserConfig userConfig = realm.where (UserConfig.class).findFirst ( );
-        String userLang = userConfig.getLanguage ( );
+        userConfig = realm.where (UserConfig.class).findFirst ( );
+        String userLang = userConfig.getLanguage();
 
         Backendless.Events.dispatch ("getAvailableLanguages", new HashMap(), new AsyncCallback<java.util.Map> ( ) {
             @Override
@@ -206,6 +206,9 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
                 realm.copyToRealmOrUpdate(userConfig);
             }
         });
+
+        getViewState().sendLanguage( servedLocales.get (dialogPosition) );
     }
+
 }
 

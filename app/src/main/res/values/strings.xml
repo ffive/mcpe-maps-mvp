@@ -193,5 +193,6 @@
     </string>
     <string name="advertising">Advertising</string>
     <string name="language_chooser_dialog_title">Choose your language</string>
+    <string name="language">Language</string>
 
 </resources>

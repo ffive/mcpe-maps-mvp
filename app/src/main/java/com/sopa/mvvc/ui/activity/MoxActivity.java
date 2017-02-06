@@ -170,6 +170,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     @Override
     public void setLanguagesList ( Map<String, String> languageMap, String userLang ) {
+/*
 
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder (this);
@@ -194,7 +195,13 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                 ( dialogInterface, i ) -> mMoxPresenter.onLanguageSelected(i) );
 
         builder.show();
+*/
 
+
+    }
+
+    @Override
+    public void sendLanguage(String language) {
 
     }
 

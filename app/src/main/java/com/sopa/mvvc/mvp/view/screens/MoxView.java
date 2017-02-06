@@ -11,6 +11,8 @@ public interface MoxView extends MvpView {
 
     void setLanguagesList ( Map<String, String> languageMap, String userLang );
 
+    void sendLanguage ( String language );
+
     void showMyAppsDialog();
 
     void showNewApp(String message, String link, String pkg);
