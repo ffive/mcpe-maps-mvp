@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 
 
-//success/r
-//            startActivity (new Intent (MainActivity.this, MoxActivity.class));
+            startActivity (new Intent (MainActivity.this, MoxActivity.class));
 
 
       //
