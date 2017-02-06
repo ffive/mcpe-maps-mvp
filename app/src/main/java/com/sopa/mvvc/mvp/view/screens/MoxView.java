@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface MoxView extends MvpView {
 
-    void setLanguagesList ( Map<String, Integer> languageList, String userLang );
+    void setLanguagesList ( Map<String, String> languageList, String userLang );
 
     void showMyAppsDialog();
 

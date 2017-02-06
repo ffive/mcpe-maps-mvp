@@ -104,24 +104,6 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     }
 
-    private void dataListenerFunction ( ) {
-        realm.where (Category.class)
-                .findAllAsync ( )
-                .asObservable ( )
-                .filter (RealmResults:: isLoaded)
-                .filter (RealmResults:: isValid)
-                .subscribeOn (AndroidSchedulers.mainThread ( ))
-                .observeOn (AndroidSchedulers.mainThread ( ))
-                .subscribe (cats -> {
-                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ( ));  //if not same, else - reset position after apply
-                });
-    }
-
-    private void loadAllCategories ( ) {
-
-        Backendless.Persistence.of (Category.class).find (new BackendlessDataQuery (new QueryOptions (100, 0)), nextPageCallback);
-    }
-
     @BindingConversion
     public static ColorDrawable convertColorToDrawable ( int color ) {
         return color != 0 ? new ColorDrawable (color) : null;
@@ -145,6 +127,24 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
             requestCreator.placeholder (placeHolder);
         }
         requestCreator.into (view);
+    }
+
+    private void dataListenerFunction ( ) {
+        realm.where (Category.class)
+                .findAllAsync ( )
+                .asObservable ( )
+                .filter (RealmResults:: isLoaded)
+                .filter (RealmResults:: isValid)
+                .subscribeOn (AndroidSchedulers.mainThread ( ))
+                .observeOn (AndroidSchedulers.mainThread ( ))
+                .subscribe (cats -> {
+                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ( ));  //if not same, else - reset position after apply
+                });
+    }
+
+    private void loadAllCategories ( ) {
+
+        Backendless.Persistence.of (Category.class).find (new BackendlessDataQuery (new QueryOptions (100, 0)), nextPageCallback);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     }
 
-    private void loadAvailableLanguages ( ) {
+    public void loadAvailableLanguages ( ) {
 
         java.util.Map<String, Integer> result = new HashMap<> ( );
 
@@ -184,13 +184,13 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
         String userLang = userConfig.getLanguage ( );
 
 
-        Backendless.Events.dispatch ("getCurrentLanguages", new HashMap ( ), new AsyncCallback<java.util.Map> ( ) {
+        Backendless.Events.dispatch ("getAvailableLanguages", new HashMap ( ), new AsyncCallback<java.util.Map> ( ) {
             @Override
             public void handleResponse ( java.util.Map map ) {
 
                 servedLocales.putAll (map);
 
-                getViewState ( ).setLanguagesList (reverseMap (servedLocales), userLang);
+                getViewState ( ).setLanguagesList (map, userLang);
 
             }
 
@@ -202,7 +202,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     }
 
-    //I'm sure think we can easily replace hashmaps for smth easier to handle
+/*    //I'm sure think we can easily replace hashmaps for smth easier to handle
     private HashMap<String, Integer> reverseMap ( java.util.Map<Integer, String> result ) {
         HashMap<String, Integer> reversed = new HashMap<> ( );
 
@@ -213,7 +213,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
             reversed.put (strKey.iterator ( ).next ( ), posKey.iterator ( ).next ( ));
         }
         return reversed;
-    }
+    }*/
 
 
     public void onLanguageSelected ( int dialogPosition ) {

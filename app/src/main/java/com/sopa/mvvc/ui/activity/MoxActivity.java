@@ -89,6 +89,8 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         //  binding.count.
         setupViewPager ( );
 
+        mMoxPresenter.loadAvailableLanguages();
+
     }
 
     @Override
@@ -169,8 +171,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     }
 
     @Override
-    public void setLanguagesList ( Map<String, Integer> languageList, String userLang ) {
+    public void setLanguagesList ( Map<String, String> languageMap, String userLang ) {
 
+        userLang = "Russian";
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder (this);
         builder.setTitle (R.string.language_chooser_dialog_title);
@@ -180,11 +183,11 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<> (this, android.R.layout.select_dialog_singlechoice);
 
-        arrayAdapter.addAll (languageList.keySet ( ));  //  {   0: "russian" , 1: "default,  2:"french" } reversed
+        arrayAdapter.addAll (languageMap.values());  // localized {   0: "Русский" ,  2:"English", 3:"Deutch" }
 
         // setChecked (device-)default language.
-        builder.setSingleChoiceItems (arrayAdapter,
-                languageList.containsKey (userLang) ? languageList.get (userLang) : languageList.get ("default"),
+        //no need to check item at the same time we fill the list, should be separate action
+        builder.setSingleChoiceItems (arrayAdapter, 0,
                 ( dialogInterface, i ) -> { mMoxPresenter.onLanguageSelected(i);  });
 
 
@@ -192,6 +195,8 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
             mUserConfigPresenter.onLanguageUpdated (i);
 
         });
+
+        builder.show();
 
 
     }
@@ -313,7 +318,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
             super (fm);
             this.categories = new ArrayList<Category> ( );
             Category c = new Category ( );
-            c.setCategory ("loading ");
+            c.setCategory ("loading");
             c.setObjectId ("loading");
             categories.add (c);
         }
