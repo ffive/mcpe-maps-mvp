@@ -1,17 +1,16 @@
 package com.sopa.mvvc.ui.activity;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.PresenterType;
 import com.sopa.mvvc.R;
-import com.sopa.mvvc.databinding.ActivityMoxBinding;
+import com.sopa.mvvc.databinding.ActivityUserSettingsBinding;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.mvp.presenter.entities.UserConfigPresenter;
@@ -30,21 +29,17 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
     @InjectPresenter
     MoxPresenter mMoxPresenter;
 
-    ActivityMoxBinding binding;
+    ActivityUserSettingsBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView( UserSettingsActivity.this, R.layout.activity_user_settings );
+       binding = DataBindingUtil.setContentView( UserSettingsActivity.this, R.layout.activity_user_settings);
 
-        binding.tvLanguageValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMoxPresenter.loadAvailableLanguages();
-            }
-        });
+
+        binding.tvLanguageKey.setOnClickListener(view -> mMoxPresenter.loadAvailableLanguages());
         //setSupportActionBar(binding.toolbar);
 
     }
@@ -81,6 +76,13 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
                 ( dialogInterface, i ) -> mMoxPresenter.onLanguageSelected(i) );
 
         builder.show();
+
+    }
+
+    @Override
+    public void sendLanguage(String language) {
+
+      //  binding.tvLanguageValue.setText(language);
 
     }
 
@@ -151,13 +153,6 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
 
     @Override
     public void sendLastTab(int tab) {
-
-    }
-
-    @Override
-    public void sendLanguage(String language) {
-
-        binding.tvLanguageValue.setText(language);
 
     }
 }
