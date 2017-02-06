@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.backendless.BackendlessUser;
 import com.sopa.mvvc.ui.activity.MoxActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,8 +25,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 
+        BackendlessUser backendlessUser = (BackendlessUser) data.getSerializableExtra("backendless_user");
 
+        if (backendlessUser.getProperty("language").toString().equals("")){
             startActivity (new Intent (MainActivity.this, MoxActivity.class));
+        }   else {
+            startActivity (new Intent (MainActivity.this, MoxActivity.class));
+        }
 
 
       //

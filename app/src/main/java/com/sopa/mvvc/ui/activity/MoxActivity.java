@@ -171,7 +171,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     @Override
     public void setLanguagesList ( Map<String, String> languageMap, String userLang ) {
 
-        //userLang = "Russian";
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder (this);
         builder.setTitle (R.string.language_chooser_dialog_title);
