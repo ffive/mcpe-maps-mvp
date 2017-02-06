@@ -23,7 +23,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -104,6 +103,24 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
     }
 
+    private void dataListenerFunction ( ) {
+        realm.where (Category.class)
+                .findAllAsync ( )
+                .asObservable ( )
+                .filter (RealmResults:: isLoaded)
+                .filter (RealmResults:: isValid)
+                .subscribeOn (AndroidSchedulers.mainThread ( ))
+                .observeOn (AndroidSchedulers.mainThread ( ))
+                .subscribe (cats -> {
+                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ( ));  //if not same, else - reset position after apply
+                });
+    }
+
+    private void loadAllCategories ( ) {
+
+        Backendless.Persistence.of (Category.class).find (new BackendlessDataQuery (new QueryOptions (100, 0)), nextPageCallback);
+    }
+
     @BindingConversion
     public static ColorDrawable convertColorToDrawable ( int color ) {
         return color != 0 ? new ColorDrawable (color) : null;
@@ -127,24 +144,6 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
             requestCreator.placeholder (placeHolder);
         }
         requestCreator.into (view);
-    }
-
-    private void dataListenerFunction ( ) {
-        realm.where (Category.class)
-                .findAllAsync ( )
-                .asObservable ( )
-                .filter (RealmResults:: isLoaded)
-                .filter (RealmResults:: isValid)
-                .subscribeOn (AndroidSchedulers.mainThread ( ))
-                .observeOn (AndroidSchedulers.mainThread ( ))
-                .subscribe (cats -> {
-                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ( ));  //if not same, else - reset position after apply
-                });
-    }
-
-    private void loadAllCategories ( ) {
-
-        Backendless.Persistence.of (Category.class).find (new BackendlessDataQuery (new QueryOptions (100, 0)), nextPageCallback);
     }
 
     @Override
@@ -199,15 +198,15 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
     }
 
     public void onLanguageSelected ( int dialogPosition ) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                userConfig.setLanguage (servedLocales.get (dialogPosition));
-                realm.copyToRealmOrUpdate(userConfig);
-            }
+        getViewState().sendLanguage( servedLocales.get (dialogPosition));
+
+        realm.executeTransactionAsync(realm1 -> {
+
+            userConfig.setLanguage (servedLocales.get (dialogPosition));
+            realm1.copyToRealmOrUpdate(userConfig);
         });
 
-        getViewState().sendLanguage( servedLocales.get (dialogPosition) );
+
     }
 
 }
