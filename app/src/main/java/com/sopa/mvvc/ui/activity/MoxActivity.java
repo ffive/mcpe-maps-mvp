@@ -327,18 +327,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     }
 
 
- static class Lng {
-        int pos;
-        String code;
-
-        public Lng ( int pos, String code ) {
-            super ( );
-            this.pos = pos;
-            this.code = code;
-        }
-    }
-
-
    static public class MyAdapter extends FragmentPagerAdapter {
         List<Category> categories;
 
