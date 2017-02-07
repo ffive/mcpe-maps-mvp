@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView (R.layout.activity_main);
 
 
-        startActivityForResult (new Intent (MainActivity.this, com.backendless.mvp.login.LoginActivity.class), Defaults.REQUEST_LOGIN_CODE);
+        startActivityForResult (new Intent (MainActivity.this, com.backendless.mvp.login.LoginActivity.class),420);// Defaults.REQUEST_LOGIN_CODE);
 
 
     }
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 
 
-        if ( requestCode == Defaults.REQUEST_LOGIN_CODE ) {
+       // if ( //requestCode == Defaults.REQUEST_LOGIN_CODE ) {
             BackendlessUser backendlessUser;
             switch ( resultCode ) {
 
@@ -41,13 +41,12 @@ public class MainActivity extends AppCompatActivity {
                     backendlessUser = ( BackendlessUser ) data.getSerializableExtra ("backendless_user");
                     break;
                 }
-                default:
-                    break;
+                default:break;
             }
 
 
             //
             //  super.onActivityResult (requestCode, resultCode, data);
-        }
+      //  }
     }
 }

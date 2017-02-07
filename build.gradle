@@ -15,10 +15,12 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://jitpack.io'
+            credentials { username authToken } //authToken=187dede5ccb703a4f329de25831ab70baa08d810
+        }
     }
 }
 
