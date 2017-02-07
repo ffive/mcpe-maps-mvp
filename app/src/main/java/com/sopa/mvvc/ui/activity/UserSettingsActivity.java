@@ -36,7 +36,7 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       binding = DataBindingUtil.setContentView( UserSettingsActivity.this, R.layout.activity_user_settings);
+        binding = DataBindingUtil.setContentView( UserSettingsActivity.this, R.layout.activity_user_settings);
 
 
         binding.tvLanguageKey.setOnClickListener(view -> mMoxPresenter.loadAvailableLanguages());
