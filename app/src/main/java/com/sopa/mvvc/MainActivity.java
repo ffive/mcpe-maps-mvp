@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.backendless.BackendlessUser;
 import com.backendless.mvp.login.Defaults;
 import com.sopa.mvvc.ui.activity.MoxActivity;
 
@@ -28,29 +29,34 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult (requestCode, resultCode, data);
 
         if ( requestCode == Defaults.REQUEST_CODE ) {
-          //  BackendlessUser backendlessUser;
             switch ( resultCode ) {
 
 
                 case Defaults.VALID_LOGIN: {
 
-                    //backendlessUser = ( BackendlessUser ) data.getSerializableExtra ("backendless_user");
-                    startActivity (new Intent (MainActivity.this, MoxActivity.class));
+                    startActivity (new Intent (MainActivity.this, MoxActivity.class).putExtra("isLanguageChoosed", isLanguageChoosed(data) ));
                     break;
                 }
                 case Defaults.LOGIN_SUCCESS: {
 
-                  // backendlessUser = ( BackendlessUser ) data.getSerializableExtra ("backendless_user");
-                    startActivity (new Intent (MainActivity.this, MoxActivity.class));
+                    startActivity (new Intent (MainActivity.this, MoxActivity.class).putExtra("isLanguageChoosed", isLanguageChoosed(data) ));
                     break;
                 }
                 default:{startActivity (new Intent (MainActivity.this, MoxActivity.class));}
             }
 
-
-
-              //
-      //  }
+        }
     }
+    
+    private boolean isLanguageChoosed (Intent data){
+        BackendlessUser backendlessUser = (BackendlessUser) data.getSerializableExtra("backendless_user");
+
+        boolean isLanguageChoosed = false;
+
+        if (!backendlessUser.getProperty("language").toString().equals("")){
+            isLanguageChoosed = true;
+        }   
+        return isLanguageChoosed;
+    }
+    
 }
-    }
