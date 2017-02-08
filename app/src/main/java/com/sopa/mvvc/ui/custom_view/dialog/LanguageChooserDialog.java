@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import com.arellomobile.mvp.MvpDelegate;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.sopa.mvvc.R;
+import com.sopa.mvvc.databinding.DialogLanguageChooserBinding;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguagePresenter;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageView;
@@ -40,7 +41,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
     public Context context;
     @InjectPresenter
     LanguagePresenter languagePresenter;
-    private ViewDataBinding binding; //generic for now
+    private DialogLanguageChooserBinding binding; //generic for now
     private MvpDelegate mParentDelegate;
     private MvpDelegate<LanguageChooserDialog> mMvpDelegate;
     private ListView listView;
