@@ -44,10 +44,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
     private DialogLanguageChooserBinding binding; //generic for now
     private MvpDelegate mParentDelegate;
     private MvpDelegate<LanguageChooserDialog> mMvpDelegate;
-    private ListView listView;
-    private ProgressBar progressBar;
-    private Button buttonOk;
-    private Button buttonCancel;
+
     private ArrayAdapter<String> arrayAdapter;
 
     private int positionSelected = 0;
@@ -56,26 +53,20 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         super(context);
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.dialog_language_chooser,parent,true);
 
-        buttonOk = (Button) findViewById( R.id.buttonOk );
-        buttonCancel = (Button) findViewById( R.id.buttonCancel );
-        listView = (ListView) findViewById( R.id.listView );
-        progressBar = (ProgressBar) findViewById( R.id.progressBar );
+
 
         arrayAdapter = new ArrayAdapter<> (context, android.R.layout.select_dialog_singlechoice);
 
-        listView.setEmptyView( progressBar );
+        binding.listView.setEmptyView( binding.progressBar ); // todo: move to separate method
         //listView.setAdapter(arrayAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                positionSelected = i;
-                languagePresenter.onLanguageSelected(i);
-            }
+        binding.listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            positionSelected = i;
+            languagePresenter.onLanguageSelected(i);
         });
 
-        buttonOk.setOnClickListener( this );
-        buttonCancel.setOnClickListener( this );
+        binding.buttonOk.setOnClickListener( this );
+        binding.buttonCancel.setOnClickListener( this );
 
 
     }
@@ -173,9 +164,9 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
             defaultListPosition = arrayAdapter.getPosition( languageMap.get("English") );
         }
 
-        listView.setAdapter( arrayAdapter );
+        binding.listView.setAdapter( arrayAdapter );
 
-        listView.setSelection( defaultListPosition );
+        binding.listView.setSelection( defaultListPosition );
     }
 
 }
