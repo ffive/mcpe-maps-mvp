@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
                 case Defaults.VALID_LOGIN: {
 
-                    startActivity (new Intent (MainActivity.this, MoxActivity.class).putExtra("isLanguageChoosed", isLanguageChoosed(data) ));
+                    startActivity (new Intent (MainActivity.this, MoxActivity.class).putExtra("isLanguageChoosed", isLanguageChosen(data) ));
                     break;
                 }
                 case Defaults.LOGIN_SUCCESS: {
 
-                    startActivity (new Intent (MainActivity.this, MoxActivity.class).putExtra("isLanguageChoosed", isLanguageChoosed(data) ));
+                    startActivity (new Intent (MainActivity.this, MoxActivity.class).putExtra("isLanguageChoosed", isLanguageChosen(data) ));
                     break;
                 }
                 default:{startActivity (new Intent (MainActivity.this, MoxActivity.class));}
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-    private boolean isLanguageChoosed (Intent data){
+    private boolean isLanguageChosen(Intent data){
         BackendlessUser backendlessUser = (BackendlessUser) data.getSerializableExtra("backendless_user");
 
         boolean isLanguageChoosed = false;
