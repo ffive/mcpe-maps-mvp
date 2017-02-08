@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +36,7 @@ import static android.R.string.yes;
 
 public class LanguageChooserDialog extends Dialog implements View.OnClickListener, LanguageView {
 
+
     public Context context;
     @InjectPresenter
     LanguagePresenter languagePresenter;
@@ -47,9 +50,31 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     private int positionSelected = 0;
 
-    public LanguageChooserDialog(Context context) {
+    public LanguageChooserDialog(Context context, ViewGroup parent) {
         super(context);
-        this.context = context;
+         DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.dialog_language_chooser,parent,true);
+
+        buttonOk = (Button) dialogView.findViewById( R.id.buttonOk );
+        buttonCancel = (Button) findViewById( R.id.buttonCancel );
+        listView = (ListView) findViewById( R.id.listView );
+        progressBar = (ProgressBar) findViewById( R.id.progressBar );
+
+        arrayAdapter = new ArrayAdapter<> (context, android.R.layout.select_dialog_singlechoice);
+
+        listView.setEmptyView( progressBar );
+        //listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                positionSelected = i;
+                languagePresenter.onLanguageSelected(i);
+            }
+        });
+
+        buttonOk.setOnClickListener( this );
+        buttonCancel.setOnClickListener( this );
+
 
     }
 
@@ -58,6 +83,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        /*
         //binding = DataBindingUtil.setContentView()
         setContentView(R.layout.dialog_language_chooser);
 
@@ -84,7 +110,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         buttonCancel.setOnClickListener( this );
 
       //  languagePresenter.loadAvailableLanguages();
-
+*/
     }
 
     @Override
@@ -128,8 +154,6 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         getMvpDelegate().onSaveInstanceState();
         getMvpDelegate().onDetach();
     }
-
-
 
 
     @Override
