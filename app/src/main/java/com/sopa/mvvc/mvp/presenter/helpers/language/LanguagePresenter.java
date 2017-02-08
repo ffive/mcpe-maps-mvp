@@ -32,7 +32,7 @@ public class LanguagePresenter extends MvpPresenter<LanguageView> {
 
     public void loadAvailableLanguages ( ) {
 
-      //  getViewState().showLanguageChooserDialog();
+        getViewState().showLanguageChooserDialog();
 
         userConfig = realm.where (UserConfig.class).findFirst ( );
         String userLang = userConfig.getLanguage();

@@ -138,6 +138,21 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         return mMvpDelegate;
     }
 
+    public void setList(Map<String, String> languageMap, String userLang) {
+        arrayAdapter.addAll(languageMap.values());
+
+        int defaultListPosition;
+        if (languageMap.get(userLang) != null) {
+            defaultListPosition = arrayAdapter.getPosition(languageMap.get(userLang));
+        } else {
+            defaultListPosition = arrayAdapter.getPosition(languageMap.get("English"));
+        }
+
+        binding.listView.setAdapter(arrayAdapter);
+
+        binding.listView.setSelection(defaultListPosition);
+    }
+
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -153,18 +168,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     @Override
     public void setLanguagesList(Map<String, String> languageMap, String userLang) {
-        arrayAdapter.addAll(languageMap.values());
 
-        int defaultListPosition;
-        if (languageMap.get(userLang) != null) {
-            defaultListPosition = arrayAdapter.getPosition(languageMap.get(userLang));
-        } else {
-            defaultListPosition = arrayAdapter.getPosition(languageMap.get("English"));
-        }
-
-        binding.listView.setAdapter(arrayAdapter);
-
-        binding.listView.setSelection(defaultListPosition);
     }
 
 }

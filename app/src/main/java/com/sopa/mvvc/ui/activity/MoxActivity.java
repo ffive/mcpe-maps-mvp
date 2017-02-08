@@ -379,6 +379,10 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     @Override
     public void showLanguageChooserDialog() {
+        LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(this,binding.container.constraint);
+
+        languageChooserDialog.init(getMvpDelegate());
+        languageChooserDialog.show();
 
     }
 
@@ -389,7 +393,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(this,binding.container.constraint);
 
         languageChooserDialog.init(getMvpDelegate());
-        languageChooserDialog.setLanguagesList(languageMap,userLang);
+        languageChooserDialog.setList(languageMap,userLang);
         languageChooserDialog.show();
 
 
