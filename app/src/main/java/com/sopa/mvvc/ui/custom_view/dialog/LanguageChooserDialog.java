@@ -51,13 +51,12 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     public LanguageChooserDialog(Context context, ViewGroup parent) {
         super(context);
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.dialog_language_chooser,parent,true);
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_language_chooser, parent, true);
 
 
+        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
 
-        arrayAdapter = new ArrayAdapter<> (context, android.R.layout.select_dialog_singlechoice);
-
-        binding.listView.setEmptyView( binding.progressBar ); // todo: move to separate method
+        binding.listView.setEmptyView(binding.progressBar); // todo: move to separate method
         //listView.setAdapter(arrayAdapter);
 
         binding.listView.setOnItemClickListener((adapterView, view, i, l) -> {
@@ -65,8 +64,8 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
             languagePresenter.onLanguageSelected(i);
         });
 
-        binding.buttonOk.setOnClickListener( this );
-        binding.buttonCancel.setOnClickListener( this );
+        binding.buttonOk.setOnClickListener(this);
+        binding.buttonCancel.setOnClickListener(this);
 
 
     }
@@ -108,7 +107,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        switch ( view.getId() ){
+        switch (view.getId()) {
             case R.id.buttonOk:
                 languagePresenter.onLanguageSelected(positionSelected);
                 dismiss();
@@ -119,7 +118,6 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         }
 
     }
-
 
 
     public void init(MvpDelegate parentDelegate) {
@@ -155,18 +153,18 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     @Override
     public void setLanguagesList(Map<String, String> languageMap, String userLang) {
-        arrayAdapter.addAll( languageMap.values() );
+        arrayAdapter.addAll(languageMap.values());
 
         int defaultListPosition;
-        if ( languageMap.get(userLang)!= null ){
-            defaultListPosition = arrayAdapter.getPosition( languageMap.get(userLang) );
-        }   else {
-            defaultListPosition = arrayAdapter.getPosition( languageMap.get("English") );
+        if (languageMap.get(userLang) != null) {
+            defaultListPosition = arrayAdapter.getPosition(languageMap.get(userLang));
+        } else {
+            defaultListPosition = arrayAdapter.getPosition(languageMap.get("English"));
         }
 
-        binding.listView.setAdapter( arrayAdapter );
+        binding.listView.setAdapter(arrayAdapter);
 
-        binding.listView.setSelection( defaultListPosition );
+        binding.listView.setSelection(defaultListPosition);
     }
 
 }
