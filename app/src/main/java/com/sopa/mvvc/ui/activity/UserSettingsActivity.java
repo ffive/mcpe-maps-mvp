@@ -39,13 +39,18 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
         binding = DataBindingUtil.setContentView( UserSettingsActivity.this, R.layout.activity_user_settings);
 
 
-        binding.tvLanguageKey.setOnClickListener(view -> mMoxPresenter.loadAvailableLanguages());
+  //      binding.tvLanguageKey.setOnClickListener(view -> mMoxPresenter.loadAvailableLanguages());
         //setSupportActionBar(binding.toolbar);
 
     }
 
     @Override
     public void onUpdatedSettings(UserConfig config) {
+
+    }
+/*
+    @Override
+    public void showLanguageDialog() {
 
     }
 
@@ -84,7 +89,7 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
 
       //  binding.tvLanguageValue.setText(language);
 
-    }
+    }*/
 
     @Override
     public void showMyAppsDialog() {

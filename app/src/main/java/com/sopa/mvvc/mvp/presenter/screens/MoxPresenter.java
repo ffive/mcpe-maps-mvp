@@ -173,8 +173,10 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
         });
 
     }
-
+/*
     public void loadAvailableLanguages ( ) {
+
+        getViewState().showLanguageDialog();
 
         userConfig = realm.where (UserConfig.class).findFirst ( );
         String userLang = userConfig.getLanguage();
@@ -207,7 +209,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
         });
 
 
-    }
+    }*/
 
 }
 
