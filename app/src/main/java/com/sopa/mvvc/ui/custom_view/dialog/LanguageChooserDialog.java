@@ -52,16 +52,16 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     public LanguageChooserDialog(Context context, ViewGroup parent) {
         super(context);
-         DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.dialog_language_chooser,parent,true);
+        DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_language_chooser, parent, true);
 
-        buttonOk = (Button) dialogView.findViewById( R.id.buttonOk );
-        buttonCancel = (Button) findViewById( R.id.buttonCancel );
-        listView = (ListView) findViewById( R.id.listView );
-        progressBar = (ProgressBar) findViewById( R.id.progressBar );
+        buttonOk = (Button) dialogView.findViewById(R.id.buttonOk);
+        buttonCancel = (Button) findViewById(R.id.buttonCancel);
+        listView = (ListView) findViewById(R.id.listView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        arrayAdapter = new ArrayAdapter<> (context, android.R.layout.select_dialog_singlechoice);
+        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
 
-        listView.setEmptyView( progressBar );
+        listView.setEmptyView(progressBar);
         //listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,8 +72,8 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
             }
         });
 
-        buttonOk.setOnClickListener( this );
-        buttonCancel.setOnClickListener( this );
+        buttonOk.setOnClickListener(this);
+        buttonCancel.setOnClickListener(this);
 
 
     }
@@ -115,7 +115,7 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        switch ( view.getId() ){
+        switch (view.getId()) {
             case R.id.buttonOk:
                 languagePresenter.onLanguageSelected(positionSelected);
                 dismiss();
@@ -126,7 +126,6 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
         }
 
     }
-
 
 
     public void init(MvpDelegate parentDelegate) {
@@ -162,18 +161,18 @@ public class LanguageChooserDialog extends Dialog implements View.OnClickListene
 
     @Override
     public void setLanguagesList(Map<String, String> languageMap, String userLang) {
-        arrayAdapter.addAll( languageMap.values() );
+        arrayAdapter.addAll(languageMap.values());
 
         int defaultListPosition;
-        if ( languageMap.get(userLang)!= null ){
-            defaultListPosition = arrayAdapter.getPosition( languageMap.get(userLang) );
-        }   else {
-            defaultListPosition = arrayAdapter.getPosition( languageMap.get("English") );
+        if (languageMap.get(userLang) != null) {
+            defaultListPosition = arrayAdapter.getPosition(languageMap.get(userLang));
+        } else {
+            defaultListPosition = arrayAdapter.getPosition(languageMap.get("English"));
         }
 
-        listView.setAdapter( arrayAdapter );
+        listView.setAdapter(arrayAdapter);
 
-        listView.setSelection( defaultListPosition );
+        listView.setSelection(defaultListPosition);
     }
 
 }
