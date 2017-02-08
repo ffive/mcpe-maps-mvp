@@ -386,7 +386,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     public void setLanguagesList(Map<String, String> languageMap, String userLang) {
 
 
-        LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(this);
+        LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(this,binding.container.constraint);
 
         languageChooserDialog.init(getMvpDelegate());
         languageChooserDialog.setLanguagesList(languageMap,userLang);
