@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLanguageChosen(Intent data){
         BackendlessUser backendlessUser = (BackendlessUser) data.getSerializableExtra("backendless_user");
 
-        boolean isLanguageChoosed = false;
+        boolean isLanguageChosen = false;
 
-        if (!backendlessUser.getProperty("language").toString().equals("")){
-            isLanguageChoosed = true;
+        if (!backendlessUser.getProperty("language").toString().isEmpty()){
+            isLanguageChosen = true;
         }   
-        return isLanguageChoosed;
+        return isLanguageChosen;
     }
     
 }
