@@ -1,8 +1,6 @@
 package com.sopa.mvvc.mvp.presenter.helpers.language;
 
 import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import java.util.Map;
 
@@ -11,9 +9,8 @@ import java.util.Map;
  */
 
 public interface LanguageView extends MvpView {
-    @StateStrategyType(AddToEndSingleStrategy.class)
-    void showLanguageChooserDialog();
 
-    void setLanguagesList (Map<String, String> languageMap, String userLang );
+    void updateAvailableLanguages ( Map<String, String> languageMap, String userLang );
+
 
 }

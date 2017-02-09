@@ -5,14 +5,8 @@ import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.backendless.Backendless;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.mvp.view.entities.UserConfigView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -50,8 +44,6 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
             @Override
             public void onChange(RealmObject element) {
 
-
-
                 Log.e(TAG, "onChange: I am global userconfig's onchange listener -----lastTab:"+((UserConfig)element).getLastTab()+" ------!!!!!"+ ((UserConfig)element)
                         .getId());
             }
@@ -79,46 +71,6 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
 
 
 
-    public void onLanguageUpdated( int language ){
-
-       // config.setLanguage(language);
-    }
-/*
-    public void loadAvailableLanguages ( ) {
-
-        getViewState().showLanguageDialog();
-
-        String userLang = config.getLanguage();
-
-        Backendless.Events.dispatch ("getAvailableLanguages", new HashMap(), new AsyncCallback<Map>( ) {
-            @Override
-            public void handleResponse ( java.util.Map map ) {
-
-                servedLocales.putAll (map);
-
-                getViewState ( ).setLanguagesList (map, userLang);
-
-            }
-
-            @Override
-            public void handleFault ( BackendlessFault backendlessFault ) {
-
-            }
-        });
-
-    }
-
-    public void onLanguageSelected ( int dialogPosition ) {
-        // getViewState().sendLanguage( servedLocales.get (dialogPosition));
-
-        realm.executeTransaction(realm1 -> {
-
-            config.setLanguage (servedLocales.get (dialogPosition));
-            realm1.copyToRealmOrUpdate(config);
-        });
-
-
-    }*/
 
 
 
