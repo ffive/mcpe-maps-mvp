@@ -91,6 +91,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         binding = DataBindingUtil.setContentView (MoxActivity.this, R.layout.activity_mox);
         // you
         // build
+        
         // the project
         setSupportActionBar (binding.toolbar);
         initNavigationDrawer ( );
