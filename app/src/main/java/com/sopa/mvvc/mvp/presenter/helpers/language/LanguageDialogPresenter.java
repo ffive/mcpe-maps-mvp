@@ -1,7 +1,6 @@
 package com.sopa.mvvc.mvp.presenter.helpers.language;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpDelegate;
 import com.arellomobile.mvp.MvpPresenter;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -18,33 +17,29 @@ import io.realm.Realm;
  */
 
 @InjectViewState
-public class LanguagePresenter extends MvpPresenter<LanguageView> {
+public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
 
     private Realm realm;
-    private UserConfig userConfig;
+
     private java.util.Map<String, String> servedLocales;
 
-    public LanguagePresenter() {
+    public LanguageDialogPresenter () {
         realm = Realm.getDefaultInstance ( );
-        userConfig = realm.where (UserConfig.class).findFirst( );
         servedLocales = new HashMap<>();
+
     }
+
 
     public void loadAvailableLanguages ( ) {
 
-      //  getViewState().showLanguageChooserDialog();
-
-        userConfig = realm.where (UserConfig.class).findFirst ( );
-        String userLang = userConfig.getLanguage();
+        String userLang = realm.where (UserConfig.class).findFirst ( ).getLanguage();
 
         Backendless.Events.dispatch ("getAvailableLanguages", new HashMap(), new AsyncCallback<Map>( ) {
             @Override
             public void handleResponse ( java.util.Map map ) {
 
                 servedLocales.putAll (map);
-
-                getViewState().setLanguagesList (map, userLang);
-
+                getViewState().updateAvailableLanguages (map, userLang);
             }
 
             @Override
@@ -55,13 +50,15 @@ public class LanguagePresenter extends MvpPresenter<LanguageView> {
 
     }
 
+
+
     public void onLanguageSelected ( int dialogPosition ) {
-       // getViewState().sendLanguage( servedLocales.get (dialogPosition));
 
         realm.executeTransaction(realm1 -> {
 
-            userConfig.setLanguage (servedLocales.get (dialogPosition));
-            realm1.copyToRealmOrUpdate(userConfig);
+            UserConfig cfg = realm1.where (UserConfig.class).findFirst ();
+            cfg.setLanguage (servedLocales.get (dialogPosition));
+            realm1.copyToRealmOrUpdate(cfg);
         });
 
 

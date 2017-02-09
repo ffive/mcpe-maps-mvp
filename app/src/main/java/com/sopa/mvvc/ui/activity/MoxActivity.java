@@ -3,11 +3,11 @@ package com.sopa.mvvc.ui.activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.util.ListUpdateCallback;
 import android.util.Log;
@@ -15,10 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
-import com.arellomobile.mvp.MvpDelegate;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.PresenterType;
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -35,24 +33,21 @@ import com.sopa.mvvc.datamodel.local.MyDiffCallback;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.mvp.presenter.entities.UserConfigPresenter;
-import com.sopa.mvvc.mvp.presenter.helpers.language.LanguagePresenter;
-import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageView;
 import com.sopa.mvvc.mvp.presenter.screens.MoxPresenter;
 import com.sopa.mvvc.mvp.view.entities.UserConfigView;
 import com.sopa.mvvc.mvp.view.screens.MoxView;
-import com.sopa.mvvc.ui.custom_view.dialog.LanguageChooserDialog;
+import com.sopa.mvvc.ui.custom_view.dialog.LanguageDialog;
 import com.sopa.mvvc.ui.fragment.CategoryListFragment;
 import com.sopa.mvvc.ui.fragment.UploadMapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm
 // (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
-public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView, LanguageView {
+public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView {
 
     private static final String TAG = "MoxActivity : DEBUG";
 
@@ -62,14 +57,13 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     @InjectPresenter
     MoxPresenter mMoxPresenter;
 
-    @InjectPresenter
-    LanguagePresenter languagePresenter;
+
 
 
     ActivityMoxBinding binding;
     String userLocale = Locale.getDefault ( ).getLanguage ( ).toLowerCase ( );
 
-    AlertDialog.Builder builder;
+    DialogFragment dialogFragment;
 
     //--------   Create fragments for tabs ------- ///
     private static Fragment getCategoryFragment ( Category category ) {
@@ -93,6 +87,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate (savedInstanceState);
 
+
         binding = DataBindingUtil.setContentView (MoxActivity.this, R.layout.activity_mox);
         // you
         // build
@@ -105,7 +100,8 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         setupViewPager ( );
 
         if (!getIntent().getBooleanExtra("isLanguageChoosed", false)){
-            languagePresenter.loadAvailableLanguages();
+            dialogFragment = new LanguageDialog ();
+            dialogFragment.show (getSupportFragmentManager (),"initial language setup");
         }
 
 
@@ -146,8 +142,8 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
                             switch ( ((Nameable)drawerItem).getNameRes() ){
                                 case (R.string.drawer_item_language)   :
-                                  //  LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(MoxActivity.this);
-                                    languagePresenter.loadAvailableLanguages();
+                                  //  LanguageDialog languageChooserDialog = new LanguageDialog(MoxActivity.this);
+                                   dialogFragment.show (getSupportFragmentManager (),"settings");
                                     break;
                             }
 
@@ -233,52 +229,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     String detectuserLocale ( ) {
         return userLocale;
     }
-
-/*    @Override
-    public void showLanguageDialog() {
-        LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(this);
-        languageChooserDialog.show();
-
-
-      //  AlertDialog.Builder builder;
-*//*        builder = new AlertDialog.Builder (this);
-        builder.setTitle (R.string.language_chooser_dialog_title);
-        builder.setView( R.layout.dialog_language_chooser)
-
-        builder.show();*//*
-
-    }
-
-    @Override
-    public void setLanguagesList ( Map<String, String> languageMap, String userLang ) {
-
-*//*
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<> (this, android.R.layout.select_dialog_singlechoice);
-
-        arrayAdapter.addAll (languageMap.values());  // localized {   0: "Русский" ,  2:"English", 3:"Deutch" }
-
-        int defaultListPosition;
-        if ( languageMap.get(userLang)!= null ){
-            defaultListPosition = arrayAdapter.getPosition( languageMap.get(userLang) );
-        }   else {
-            defaultListPosition = arrayAdapter.getPosition( languageMap.get("English") );
-        }
-
-        builder.setSingleChoiceItems (arrayAdapter, defaultListPosition,
-            ( dialogInterface, i ) -> mMoxPresenter.onLanguageSelected(i) );
-
-
-        builder.setPositiveButton (android.R.string.ok,
-                ( dialogInterface, i ) -> mMoxPresenter.onLanguageSelected(i) );
-*//*
-
-
-    }
-
-    @Override
-    public void sendLanguage ( String language ) {
-
-    }*/
 
     @Override
     public void showMyAppsDialog ( ) {
@@ -377,23 +327,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         return super.onOptionsItemSelected (item);
     }
 
-    @Override
-    public void showLanguageChooserDialog() {
-
-    }
-
-    @Override
-    public void setLanguagesList(Map<String, String> languageMap, String userLang) {
-
-
-        LanguageChooserDialog languageChooserDialog = new LanguageChooserDialog(this,binding.container.constraint);
-
-        languageChooserDialog.init(getMvpDelegate());
-        languageChooserDialog.setLanguagesList(languageMap,userLang);
-        languageChooserDialog.show();
-
-
-    }
 
 
     static public class MyAdapter extends FragmentPagerAdapter {

@@ -15,7 +15,7 @@ public interface UserConfigView extends MvpView {
 /*
      void showLanguageDialog ();
 
-     void setLanguagesList (Map<String, String> languageMap, String userLang );
+     void updateAvailableLanguages (Map<String, String> languageMap, String userLang );
 
      void sendLanguage ( String language );*/
 }

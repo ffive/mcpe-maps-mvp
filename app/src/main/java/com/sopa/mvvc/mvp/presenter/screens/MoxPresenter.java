@@ -187,7 +187,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
                 servedLocales.putAll (map);
 
-                getViewState ( ).setLanguagesList (map, userLang);
+                getViewState ( ).updateAvailableLanguages (map, userLang);
 
             }
 

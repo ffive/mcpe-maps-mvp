@@ -55,7 +55,7 @@ public class UserSettingsActivity extends AppCompatActivity implements MoxView,U
     }
 
     @Override
-    public void setLanguagesList(Map<String, String> languageMap, String userLang) {
+    public void updateAvailableLanguages(Map<String, String> languageMap, String userLang) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder (this);
         builder.setTitle (R.string.language_chooser_dialog_title);
