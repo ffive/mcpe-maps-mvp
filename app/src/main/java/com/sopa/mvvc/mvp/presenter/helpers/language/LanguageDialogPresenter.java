@@ -8,6 +8,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.realm.Realm;
@@ -21,7 +22,7 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
 
     private Realm realm;
 
-    private java.util.Map<String, String> servedLocales;
+    private HashMap<String, String> servedLocales;
 
     public LanguageDialogPresenter () {
         realm = Realm.getDefaultInstance ( );
@@ -52,15 +53,14 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
 
 
 
-    public void onLanguageSelected ( int dialogPosition ) {
+    public void onLanguageSelected ( String newLanguage ) {
 
         realm.executeTransaction(realm1 -> {
 
             UserConfig cfg = realm1.where (UserConfig.class).findFirst ();
-            cfg.setLanguage (servedLocales.get (dialogPosition));
+            cfg.setLanguage (newLanguage);
             realm1.copyToRealmOrUpdate(cfg);
         });
-
 
     }
 }

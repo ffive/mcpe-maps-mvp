@@ -8,9 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.sopa.mvvc.R;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageDialogPresenter;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageView;
-import com.sopa.mvvc.mvp.presenter.helpers.language.MyAdapter;
+import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageAdapter;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,8 +29,9 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
     RecyclerView recyclerView;
 
 
-    private MyAdapter mAdapter;
+    private LanguageAdapter mAdapter;
     private ArrayList<String> mData;
+    private ArrayList<String> mKeys;
     private LinearLayoutManager mLayoutManager;
 
     public LanguageDialog ( ) {
@@ -40,11 +42,13 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
     public Dialog onCreateDialog ( Bundle savedInstanceState ) {
 
         mData = new ArrayList<> ( );
+        mKeys = new ArrayList<>();
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager (getContext ( ));
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter (mData);
+        mAdapter = new LanguageAdapter(mData );
+
 
         //init recycler
         recyclerView = new RecyclerView (getContext ( ));
@@ -52,18 +56,17 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
         recyclerView.setLayoutManager (mLayoutManager);
         recyclerView.setAdapter (mAdapter);
 
+
         //now ask to load languages, or before
         languageDialogPresenter.loadAvailableLanguages ( );
 
         //todo: de-hardcode   +
         // .setIcon(R.drawable.androidhappy)  //why not?
         return new AlertDialog.Builder (getActivity ( ))
-                       .setTitle ("Selecxt language")
-                       .setMessage ("ftw")
+                       .setTitle (R.string.language_chooser_dialog_title)
                        .setView (recyclerView)
                        .setPositiveButton ("OK", ( dialog, which ) -> {
-                           //positionSelected = which;
-                           languageDialogPresenter.onLanguageSelected (which);
+                           languageDialogPresenter.onLanguageSelected (mKeys.get(mAdapter.getItemClickedPosition()));
                        })
                        .setNegativeButton ("Cancel", null).create ( );
     }
@@ -72,10 +75,8 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
     @Override
     public void updateAvailableLanguages ( Map<String, String> languageMap, String deviceLang ) {
 
-
-        //int pos = mAdapter.get (languageMap.get (deviceLang) != null ? languageMap.get (deviceLang) : languageMap.get ("English"));
-
         mData.addAll (languageMap.values ( ));
+        mKeys.addAll(languageMap.keySet());
         recyclerView.getAdapter ( ).notifyDataSetChanged ( );
 
     }

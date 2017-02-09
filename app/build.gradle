@@ -94,5 +94,7 @@ dependencies {
         transitive = true
     }
 
+    compile 'com.afollestad.material-dialogs:core:0.9.3.0'
+
 }
 apply plugin: 'realm-android'
