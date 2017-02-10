@@ -108,7 +108,7 @@
             android:adjustViewBounds="false"
             android:contentDescription="@{map.name}"
             android:cropToPadding="false"
-            android:text="@{dictionary.btn_unlock}"
+            android:text="@string/btn_unlock"
             android:textColor="#ff000000"
             android:textStyle="bold"
             android:tint="#121212"

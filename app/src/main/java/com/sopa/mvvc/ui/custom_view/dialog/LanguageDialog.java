@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.sopa.mvvc.R;
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageDialogPresenter;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageView;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageAdapter;
@@ -67,7 +68,7 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
         //todo: de-hardcode   +
         // .setIcon(R.drawable.androidhappy)  //why not?
         return new AlertDialog.Builder (getActivity ( ))
-                       .setTitle (R.string.language_chooser_dialog_title)
+                       .setTitle (Dictionary.language_chooser_dialog_title)
                        .setView (recyclerView)
                        .setPositiveButton ("OK", ( dialog, which ) -> {
                            languageDialogPresenter.onLanguageSelected (mKeys.get(mAdapter.getItemClickedPosition()));

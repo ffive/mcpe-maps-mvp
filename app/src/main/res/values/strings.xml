@@ -1,5 +1,8 @@
 <resources>
 
+
     <string name="action_settings">Settings</string>
+
+    <string name="btn_unlock">Premium</string>
 
 </resources>

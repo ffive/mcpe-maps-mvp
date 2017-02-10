@@ -26,6 +26,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.loopj.android.http.SyncHttpClient;
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.FragmentDetailsBinding;
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
 import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.mvp.presenter.screens.DetailsPresenter;
 import com.sopa.mvvc.mvp.view.screens.DetailsView;
@@ -142,7 +143,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
 /*
         Intent shareIntent = new Intent(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_TEXT, "Try the  " + map.getName() + " Minecraft PE map from" )//+ getString(R.string.market_url, getActivity().getPackageName())) todo:  link
+                .putExtra(Intent.EXTRA_TEXT, "Try the  " + map.getName() + " Minecraft PE map from" )//+ (Dictionary.market_url, getActivity().getPackageName())) todo:  link
                 .setType("text/plain");
 */
         //((MainActivity) getActivity()).setShareIntent(shareIntent);  TODO:
@@ -232,7 +233,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
                     }
                 });
 
-        //Toast.makeText(getActivity(), getString(R.string.toast_error_map_download), Toast.LENGTH_LONG).show();//replace with snackbar
+        //Toast.makeText(getActivity(), (Dictionary.toast_error_map_download), Toast.LENGTH_LONG).show();//replace with snackbar
     }
 
     private boolean isZipCached(Map map) {
@@ -305,16 +306,16 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void openApp() {
         // __showInterstitial
         new AlertDialog.Builder(getContext())
-                .setTitle(getString(R.string.dialog_launch_title))
-                .setMessage(getString(R.string.dialog_launch_message))
-                .setPositiveButton(getString(R.string.dialog_launch_btn_ok), (dialogInterface, i) -> {
+                .setTitle((Dictionary.dialog_launch_title))
+                .setMessage((Dictionary.dialog_launch_message))
+                .setPositiveButton((Dictionary.dialog_launch_btn_ok), (dialogInterface, i) -> {
                             Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.mojang.minecraftpe");
                             if (intent != null) {
                                 startActivity(intent.addCategory(Intent.CATEGORY_LAUNCHER));
                             }
                         }
                 )
-                .setNegativeButton(getString(R.string.dialog_launch_btn_no), null)
+                .setNegativeButton((Dictionary.dialog_launch_btn_no), null)
                 .create().show();
     }
 
