@@ -13,9 +13,11 @@ public interface UserConfigView extends MvpView {
 
      void sendLastTab(int lastTab);
 /*
+
      void showLanguageDialog ();
 
-     void updateAvailableLanguages (Map<String, String> languageMap, String userLang );
+     void updateLanguageDialog (Map<String, String> languageMap, String userLang );
+*/
 
-     void sendLanguage ( String language );*/
+    // void sendLanguage ( String language );
 }

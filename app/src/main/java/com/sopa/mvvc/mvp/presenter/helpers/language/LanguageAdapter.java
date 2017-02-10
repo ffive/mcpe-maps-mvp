@@ -6,19 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.sopa.mvvc.R;
 import com.sopa.mvvc.databinding.ListItemLanguageBinding;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHolder> {
     private List<String> mDataset;
-    private int itemClickedPosition;
+    private List<String> mKeySet;
+    private int itemClickedPosition=-1;
+    private RadioButton prevRadioButton;
+    private String defaultLanguage;
 
-    public LanguageAdapter(List<String> myDataset) {
-        mDataset = myDataset;
+    public LanguageAdapter(List<String> myData, List<String> myKeySet) {
+        this.mDataset = myData;
+        this.mKeySet = myKeySet;
     }
 
     public int getItemClickedPosition() {
@@ -37,21 +44,30 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.binding.textView.setText(mDataset.get (position));
-        holder.binding.radioButton.setChecked(position == itemClickedPosition);
+        holder.binding.textView.setText(mDataset.get(position));
+  //      holder.binding.radioButton.setChecked(position == itemClickedPosition);
+
+        String tvText = mKeySet.get(position);
+        if ( mKeySet.get(position).contains(defaultLanguage) && itemClickedPosition == -1){
+            itemClickedPosition = position;
+            holder.binding.radioButton.setChecked(true);
+            prevRadioButton = holder.binding.radioButton;
+        }
 
         holder.binding.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 itemClickedPosition = position;
 
-/*                if (position == mCheckedPostion) {
-                    holder.checkBox.setChecked(false);
-                    mCheckedPostion = -1;
-                } else {
-                    mCheckedPostion = position;
-                    notifyDataSetChanged();
-                }*/
+               // if (prevRadioButton!=null){
+                    prevRadioButton.setChecked(false);
+            //    }
+
+                holder.binding.radioButton.setChecked(true);
+                prevRadioButton = holder.binding.radioButton;
+                notifyDataSetChanged();
+
             }
         });
 
@@ -60,6 +76,10 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
     @Override
     public int getItemCount() {
         return mDataset.size ();
+    }
+
+    public void setDefaultLanguage( String defaultLanguage ){
+        this.defaultLanguage = defaultLanguage;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

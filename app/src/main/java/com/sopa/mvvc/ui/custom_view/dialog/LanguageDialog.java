@@ -14,6 +14,7 @@ import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageView;
 import com.sopa.mvvc.mvp.presenter.helpers.language.LanguageAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,14 +46,17 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
         mKeys = new ArrayList<>();
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager (getContext ( ));
+       // new LinearLayoutManager()
+        mLayoutManager.canScrollVertically();
+        //mLayoutManager.heig
 
         // specify an adapter (see also next example)
-        mAdapter = new LanguageAdapter(mData );
+        mAdapter = new LanguageAdapter( mData, mKeys );
 
 
         //init recycler
-        recyclerView = new RecyclerView (getContext ( ));
-        recyclerView.setHasFixedSize (true);
+        recyclerView = new RecyclerView ( getContext() );
+     //   recyclerView.setHasFixedSize (true);
         recyclerView.setLayoutManager (mLayoutManager);
         recyclerView.setAdapter (mAdapter);
 
@@ -78,6 +82,7 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
         mData.addAll (languageMap.values ( ));
         mKeys.addAll(languageMap.keySet());
         recyclerView.getAdapter ( ).notifyDataSetChanged ( );
+        ((LanguageAdapter)recyclerView.getAdapter()).setDefaultLanguage( deviceLang );
 
     }
 
