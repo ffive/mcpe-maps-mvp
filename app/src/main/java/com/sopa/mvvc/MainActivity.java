@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_main);
 
-        loadNewDescription();
+    //    loadNewDescription();
         loadNewDictionary();
         startActivityForResult (new Intent (MainActivity.this, com.backendless.mvp.login.LoginActivity.class),Defaults.REQUEST_CODE);// Defaults
         // .REQUEST_LOGIN_CODE);
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         HashMap dictionary = new HashMap();
 
 
+        dictionary.put( "language", "English" );
 
         dictionary.put ( "app_name", "MapsMinecraft" );
 

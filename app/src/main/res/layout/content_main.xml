@@ -1,6 +1,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+
+        <data >
+                <variable
+                    name="dictionary"
+                    type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
+                    />
+        </data>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraint"
             android:layout_width="match_parent"
@@ -24,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="#000000"
-            android:text="@string/i_am_banner"
+            android:text="@{dictionary.i_am_banner}"
             android:textColor="#FFF"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

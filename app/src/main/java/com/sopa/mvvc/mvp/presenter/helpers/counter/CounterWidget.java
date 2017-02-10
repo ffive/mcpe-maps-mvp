@@ -13,13 +13,11 @@ import com.sopa.mvvc.databinding.ItemCounterBinding;
 
 public class CounterWidget extends FrameLayout implements CounterView {
 
-    private MvpDelegate mParentDelegate;
-    private MvpDelegate<CounterWidget> mMvpDelegate;
-
     @InjectPresenter
     CounterPresenter mCounterPresenter;
-
     ItemCounterBinding binding;
+    private MvpDelegate mParentDelegate;
+    private MvpDelegate<CounterWidget> mMvpDelegate;
 
     public CounterWidget(Context context, AttributeSet attrs) {
         super(context, attrs);

@@ -6,7 +6,12 @@
     <variable
         name="ad"
         type="com.sopa.mvvc.datamodel.remote.backendless.HouseAd" />
+    <variable
+        name="dictionary"
+        type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
+        />
 </data>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/advertising_root"
         android:layout_width="match_parent"
@@ -18,9 +23,9 @@
             android:id="@+id/adImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@{dictionary.advertising}"
             app:srcCompat="@color/brand_primary"
-            i_url:url="@{ad.link}"
-            android:contentDescription="@string/advertising"/>
+            i_url:url="@{ad.link}"/>
     </android.support.constraint.ConstraintLayout>
 
 </layout>
