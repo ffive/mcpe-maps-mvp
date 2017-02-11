@@ -4,8 +4,8 @@
 
     <data >
         <variable
-            name="dictionary"
-            type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
+            name="userConfig"
+            type="com.sopa.mvvc.datamodel.local.UserConfig"
             />
     </data>
     
@@ -26,7 +26,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@{dictionary.language}"
+            android:text="@{userConfig.dictionary.language}"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/guideline"

@@ -1,5 +1,7 @@
 package com.sopa.mvvc.datamodel.local;
 
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -30,6 +32,7 @@ public class UserConfig extends RealmObject{
     private String language;
     private int lastTab;
     private float recyclerPosition;
+    public static Dictionary dictionary;
 
     public int getLastTab() {
         return lastTab;
@@ -54,4 +57,5 @@ public class UserConfig extends RealmObject{
     public void setLanguage(String language) {
         this.language = language;
     }
+
 }

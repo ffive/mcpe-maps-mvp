@@ -14,8 +14,8 @@
         name="presenter"
         type="com.sopa.mvvc.mvp.presenter.entities.CategoryListPresenter"/>
     <variable
-        name="dictionary"
-        type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
+        name="userConfig"
+        type="com.sopa.mvvc.datamodel.local.UserConfig"
         />
     </data>
 
@@ -98,7 +98,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:onClick="@{(view)->presenter.unlock(map)}"
-                android:text="@{dictionary.btn_unlock}"
+                android:text="@{userConfig.dictionary.btn_unlock}"
 
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:typeface="monospace"

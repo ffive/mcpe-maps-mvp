@@ -1,12 +1,16 @@
 package com.sopa.mvvc.mvp.presenter.helpers.language;
 
+import android.util.Log;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.BackendlessDataQuery;
 import com.sopa.mvvc.datamodel.local.UserConfig;
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -63,16 +67,27 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
             realm1.copyToRealmOrUpdate(cfg);
         });
 
-        Backendless.Persistence.of( "Dictionary" ).find( new AsyncCallback<BackendlessCollection<Map>>(){
+        String whereClause = "language = '" + newLanguage + "'";
+        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+        dataQuery.setWhereClause( whereClause );
+
+        Backendless.Persistence.of(Dictionary.class).find( dataQuery, new AsyncCallback<BackendlessCollection<Dictionary>>(){
             @Override
-            public void handleResponse( BackendlessCollection<Map> foundContacts )
+            public void handleResponse( BackendlessCollection<Dictionary> foundDictionary )
             {
-                // every loaded object from the "Contact" table is now an individual java.util.Map
+             //  Log.d("TEST", "handleResponse: " + foundDictionary.getCurrentPage().get(0).language);
+                UserConfig.dictionary = foundDictionary.getCurrentPage().get(0);
+/*                realm.executeTransaction(realm1 -> {
+
+                    UserConfig cfg = realm1.where (UserConfig.class).findFirst ();
+                    cfg.setDictionary( foundDictionary.getCurrentPage().get(0) );
+                    realm1.copyToRealmOrUpdate(cfg);
+                });*/
             }
             @Override
             public void handleFault( BackendlessFault fault )
             {
-                // an error has occurred, the error code can be retrieved with fault.getCode()
+
             }
         });
 

@@ -9,6 +9,7 @@ import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.mvp.login.Defaults;
+import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
 import com.sopa.mvvc.ui.activity.MoxActivity;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     //    loadNewDescription();
       //  loadNewDictionary();
+        UserConfig.dictionary = new Dictionary();
         startActivityForResult (new Intent (MainActivity.this, com.backendless.mvp.login.LoginActivity.class),Defaults.REQUEST_CODE);// Defaults
         // .REQUEST_LOGIN_CODE);
 
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         dictionary.put( "language", "English" );
+
+        dictionary.put( "language_title", "Language" );
 
         dictionary.put ( "app_name", "MapsMinecraft" );
 
@@ -180,11 +184,6 @@ public class MainActivity extends AppCompatActivity {
         dictionary.put ( "title_activity_scrolling", "ScrollingActivity" );
         dictionary.put ( "advertising", "Advertising" );
         dictionary.put ( "language_chooser_dialog_title", "Choose your language" );
-        dictionary.put ( "language", "Language" );
-
-
-
-
 
 
         Backendless.Persistence.of( "Dictionary" ).save( dictionary, new AsyncCallback<Map>() {

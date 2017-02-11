@@ -68,10 +68,10 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
         realm.close();
         super.onDestroy();
     }
-
-
-
-
+/*
+    public UserConfig getUserConfig(){
+        return config;
+    }*/
 
 
 }

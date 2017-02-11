@@ -7,8 +7,8 @@
         <variable name ="map" type ="com.sopa.mvvc.datamodel.remote.backendless.Map"/>
         <variable name ="presenter" type ="com.sopa.mvvc.mvp.presenter.screens.DetailsPresenter"/>
         <variable
-            name="dictionary"
-            type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
+            name="userConfig"
+            type="com.sopa.mvvc.datamodel.local.UserConfig"
             />
     </data>
 
@@ -141,7 +141,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:onClick="@{(v)->  (map.p &amp;&amp; map.locked)? presenter.unlock():presenter.download(map.map_url,map.map_urlb) }"
-            android:text="@{dictionary.btn_install}"
+            android:text="@{userConfig.dictionary.btn_install}"
             android:textColor="#ff010101"
             android:textSize="20dp"
             android:textStyle="bold"

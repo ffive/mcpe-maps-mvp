@@ -57,9 +57,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     @InjectPresenter
     MoxPresenter mMoxPresenter;
-
-
-
+    
 
     ActivityMoxBinding binding;
     String userLocale = Locale.getDefault ( ).getLanguage ( ).toLowerCase ( );
@@ -87,8 +85,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate (savedInstanceState);
-
-
+        
+      //  userConfig = mUserConfigPresenter.getUserConfig();
+        
         binding = DataBindingUtil.setContentView (MoxActivity.this, R.layout.activity_mox);
         // you
         // build
@@ -120,18 +119,18 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                 .withActionBarDrawerToggle (true)
                 .withHeader (R.layout.drawer_header)
                 .addDrawerItems (
-                        new PrimaryDrawerItem ( ).withName (Dictionary.drawer_item_home).withIcon (FontAwesome.Icon.faw_home).withBadge ("99")
+                        new PrimaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_home).withIcon (FontAwesome.Icon.faw_home).withBadge ("99")
                                 .withIdentifier (1),
-                        new PrimaryDrawerItem ( ).withName (Dictionary.drawer_item_free_play).withIcon (FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem ( ).withName (Dictionary.drawer_item_custom).withIcon (FontAwesome.Icon.faw_eye).withBadge ("6")
+                        new PrimaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_free_play).withIcon (FontAwesome.Icon.faw_gamepad),
+                        new PrimaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_custom).withIcon (FontAwesome.Icon.faw_eye).withBadge ("6")
                                 .withIdentifier (2),
-                        new SectionDrawerItem ( ).withName (Dictionary.drawer_item_settings),
-                        new SecondaryDrawerItem ( ).withName (Dictionary.drawer_item_language).withIcon (FontAwesome.Icon.faw_language),
-                        new SecondaryDrawerItem ( ).withName (Dictionary.drawer_item_help).withIcon (FontAwesome.Icon.faw_cog),
-                        new SecondaryDrawerItem ( ).withName (Dictionary.drawer_item_open_source).withIcon (FontAwesome.Icon.faw_question).setEnabled
+                        new SectionDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_settings),
+                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_language).withIcon (FontAwesome.Icon.faw_language),
+                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_help).withIcon (FontAwesome.Icon.faw_cog),
+                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_open_source).withIcon (FontAwesome.Icon.faw_question).setEnabled
                                                                                                                                                  (false),
                         new DividerDrawerItem ( ),
-                        new SecondaryDrawerItem ( ).withName (Dictionary.drawer_item_contact).withIcon (FontAwesome.Icon.faw_github).withBadge
+                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_contact).withIcon (FontAwesome.Icon.faw_github).withBadge
                                                                                                                                            ("12+")
                                 .withIdentifier (1)
                 )
@@ -140,9 +139,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
 
                         if (drawerItem instanceof Nameable) {
-                            String language = Dictionary.drawer_item_language;
+                            String language = UserConfig.dictionary.drawer_item_language;
 
-                            if ( ((Nameable)drawerItem).getName().equals(Dictionary.drawer_item_language) ){
+                            if ( ((Nameable)drawerItem).getName().equals(UserConfig.dictionary.drawer_item_language) ){
                                 dialogFragment.show (getSupportFragmentManager (),"settings");
                             }
 
