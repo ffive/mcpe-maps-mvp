@@ -3,6 +3,7 @@ package com.sopa.mvvc.mvp.presenter.helpers.language;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.sopa.mvvc.datamodel.local.UserConfig;
@@ -60,6 +61,19 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
             UserConfig cfg = realm1.where (UserConfig.class).findFirst ();
             cfg.setLanguage (newLanguage);
             realm1.copyToRealmOrUpdate(cfg);
+        });
+
+        Backendless.Persistence.of( "Dictionary" ).find( new AsyncCallback<BackendlessCollection<Map>>(){
+            @Override
+            public void handleResponse( BackendlessCollection<Map> foundContacts )
+            {
+                // every loaded object from the "Contact" table is now an individual java.util.Map
+            }
+            @Override
+            public void handleFault( BackendlessFault fault )
+            {
+                // an error has occurred, the error code can be retrieved with fault.getCode()
+            }
         });
 
     }

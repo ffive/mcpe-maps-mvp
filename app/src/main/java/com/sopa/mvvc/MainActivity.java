@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView (R.layout.activity_main);
 
     //    loadNewDescription();
-        loadNewDictionary();
+      //  loadNewDictionary();
         startActivityForResult (new Intent (MainActivity.this, com.backendless.mvp.login.LoginActivity.class),Defaults.REQUEST_CODE);// Defaults
         // .REQUEST_LOGIN_CODE);
 
