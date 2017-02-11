@@ -140,13 +140,18 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
 
                         if (drawerItem instanceof Nameable) {
+                            String language = Dictionary.drawer_item_language;
 
-                            switch ( ((Nameable)drawerItem).getName() ){
-  /*                              case (Dictionary.drawer_item_language)   :
+                            if ( ((Nameable)drawerItem).getName().equals(Dictionary.drawer_item_language) ){
+                                dialogFragment.show (getSupportFragmentManager (),"settings");
+                            }
+
+/*                            switch ( ((Nameable)drawerItem).getName() ){
+                                case (language)   :
                                   //  LanguageDialog languageChooserDialog = new LanguageDialog(MoxActivity.this);
                                    dialogFragment.show (getSupportFragmentManager (),"settings");
-                                    break;*/
-                            }
+                                    break;
+                            }*/
 
                         }
                     }
