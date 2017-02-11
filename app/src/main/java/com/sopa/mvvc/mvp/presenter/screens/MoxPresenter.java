@@ -95,8 +95,6 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
         realm = Realm.getDefaultInstance ( );
         userConfig = realm.where (UserConfig.class).findFirstAsync ( );
-
-        userConfig.dictionaryTest = new Dictionary();
         userConfig.addChangeListener (( RealmChangeListener<UserConfig> ) element -> {
             getViewState ( ).sendLastTab (element.getLastTab ( ));
         });

@@ -33,7 +33,7 @@ public class UserConfig extends RealmObject{
     private int lastTab;
     private float recyclerPosition;
     public static Dictionary dictionary;
-    public Dictionary dictionaryTest;
+    private Dictionary dictionaryTest;
 
     public int getLastTab() {
         return lastTab;
@@ -59,4 +59,11 @@ public class UserConfig extends RealmObject{
         this.language = language;
     }
 
+    public Dictionary getDictionaryTest() {
+        return dictionaryTest;
+    }
+
+    public void setDictionaryTest(Dictionary dictionaryTest) {
+        this.dictionaryTest = dictionaryTest;
+    }
 }

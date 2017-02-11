@@ -80,7 +80,7 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
                 realm.executeTransaction(realm1 -> {
 
                     UserConfig cfg = realm1.where (UserConfig.class).findFirst ();
-                    cfg.dictionaryTest = ( foundDictionary.getCurrentPage().get(0) );
+                    cfg.setDictionaryTest( foundDictionary.getCurrentPage().get(0) );
                     realm1.copyToRealmOrUpdate(cfg);
                 });
             }

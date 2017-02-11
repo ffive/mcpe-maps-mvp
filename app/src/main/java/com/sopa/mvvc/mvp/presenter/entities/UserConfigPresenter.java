@@ -29,7 +29,7 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
                     UserConfig initialCfg = realm1.createObject(UserConfig.class, 0L);
                     initialCfg.setLastTab(0);
                     initialCfg.setRecyclerPosition(0);
-                    initialCfg.dictionaryTest = new Dictionary();
+                    initialCfg.setDictionaryTest(new Dictionary());
                     realm1.copyToRealm(initialCfg);
                 })
                 //.schemaVersion(version) // Must be bumped when the schema changes
