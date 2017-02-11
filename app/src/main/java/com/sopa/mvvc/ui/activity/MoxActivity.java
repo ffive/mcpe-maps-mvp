@@ -45,6 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm
 // (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
@@ -57,7 +60,7 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     @InjectPresenter
     MoxPresenter mMoxPresenter;
-    
+
 
     ActivityMoxBinding binding;
     String userLocale = Locale.getDefault ( ).getLanguage ( ).toLowerCase ( );
@@ -85,10 +88,22 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     @Override
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate (savedInstanceState);
-        
+
+
+        //bibo nexui v activity realm dergat - vizivaet changelistener kotory obrawaetsa k adapteru etogo je act
+
       //  userConfig = mUserConfigPresenter.getUserConfig();
-        
+
         binding = DataBindingUtil.setContentView (MoxActivity.this, R.layout.activity_mox);
+
+/*        Realm realm = Realm.getDefaultInstance();
+
+        realm.addChangeListener(new RealmChangeListener<Realm>() {
+            @Override
+            public void onChange(Realm element) {
+                //binding = DataBindingUtil.setContentView( MoxActivity.this, R.layout.activity_mox);
+            }
+        });*/
         // you
         // build
         // the project
@@ -112,6 +127,8 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     //--------   Moxy View  methods implementation ------- ///
 
     public void initNavigationDrawer ( ) {
+
+
 
         new Drawer ( )
                 .withActivity (this)

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.sopa.mvvc.datamodel.local.UserConfig;
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
 import com.sopa.mvvc.mvp.view.entities.UserConfigView;
 
 import io.realm.Realm;
@@ -28,6 +29,7 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
                     UserConfig initialCfg = realm1.createObject(UserConfig.class, 0L);
                     initialCfg.setLastTab(0);
                     initialCfg.setRecyclerPosition(0);
+                    initialCfg.dictionaryTest = new Dictionary();
                     realm1.copyToRealm(initialCfg);
                 })
                 //.schemaVersion(version) // Must be bumped when the schema changes

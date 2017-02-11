@@ -1,5 +1,8 @@
 package com.sopa.mvvc.datamodel.local.migrations;
 
+import com.sopa.mvvc.datamodel.local.UserConfig;
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
+
 import io.realm.DynamicRealm;
 import io.realm.DynamicRealmObject;
 import io.realm.RealmMigration;
@@ -28,9 +31,14 @@ public class Migration_v1 implements RealmMigration {
 
     @Override
     public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+        DynamicRealmObject userConfig = realm.where("UserConfig").findFirst ( );
 
         // DynamicRealm exposes an editable schema
         RealmSchema schema = realm.getSchema();
+/*
+        if ( newVersion == 0 ){
+            userConfig.set("dictionaryTest", new Dictionary());
+        }*/
 
         // Migrate to version 1: Add a new class.
         // Example:
@@ -56,6 +64,8 @@ public class Migration_v1 implements RealmMigration {
         //     private RealmList<Dog> dogs;
         //     // getters and setters left out for brevity
         // }
+
+
         if (newVersion == 1) {
             // schema.get("UserConfig").addField("id", long.class, FieldAttribute.PRIMARY_KEY);
 

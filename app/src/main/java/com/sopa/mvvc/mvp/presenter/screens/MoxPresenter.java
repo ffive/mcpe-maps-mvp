@@ -17,6 +17,7 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
+import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
 import com.sopa.mvvc.datamodel.remote.backendless.Map;
 import com.sopa.mvvc.mvp.view.screens.MoxView;
 import com.squareup.picasso.Picasso;
@@ -94,6 +95,8 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
 
         realm = Realm.getDefaultInstance ( );
         userConfig = realm.where (UserConfig.class).findFirstAsync ( );
+
+        userConfig.dictionaryTest = new Dictionary();
         userConfig.addChangeListener (( RealmChangeListener<UserConfig> ) element -> {
             getViewState ( ).sendLastTab (element.getLastTab ( ));
         });
@@ -137,7 +140,7 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
                 .subscribeOn (AndroidSchedulers.mainThread ( ))
                 .observeOn (AndroidSchedulers.mainThread ( ))
                 .subscribe (cats -> {
-                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ( ));  //if not same, else - reset position after apply
+                    getViewState ( ).updateTabs (cats, 0);  //getLastTab() if not same, else - reset position after apply
                 });
     }
 

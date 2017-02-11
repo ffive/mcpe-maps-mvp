@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     //    loadNewDescription();
       //  loadNewDictionary();
-        UserConfig.dictionary = new Dictionary();
+       // UserConfig.dictionary = new Dictionary();
         startActivityForResult (new Intent (MainActivity.this, com.backendless.mvp.login.LoginActivity.class),Defaults.REQUEST_CODE);// Defaults
         // .REQUEST_LOGIN_CODE);
 

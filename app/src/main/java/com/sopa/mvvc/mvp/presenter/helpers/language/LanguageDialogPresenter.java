@@ -76,13 +76,13 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
             public void handleResponse( BackendlessCollection<Dictionary> foundDictionary )
             {
              //  Log.d("TEST", "handleResponse: " + foundDictionary.getCurrentPage().get(0).language);
-                UserConfig.dictionary = foundDictionary.getCurrentPage().get(0);
-/*                realm.executeTransaction(realm1 -> {
+            //    UserConfig.dictionary = foundDictionary.getCurrentPage().get(0);
+                realm.executeTransaction(realm1 -> {
 
                     UserConfig cfg = realm1.where (UserConfig.class).findFirst ();
-                    cfg.setDictionary( foundDictionary.getCurrentPage().get(0) );
+                    cfg.dictionaryTest = ( foundDictionary.getCurrentPage().get(0) );
                     realm1.copyToRealmOrUpdate(cfg);
-                });*/
+                });
             }
             @Override
             public void handleFault( BackendlessFault fault )

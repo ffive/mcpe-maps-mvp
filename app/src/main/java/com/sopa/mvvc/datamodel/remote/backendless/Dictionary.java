@@ -1,10 +1,12 @@
 package com.sopa.mvvc.datamodel.remote.backendless;
 
+import io.realm.RealmObject;
+
 /**
  * Created by AndreiPiatosin on 09-Feb-17.
  */
 
-public class Dictionary {
+public class Dictionary extends RealmObject {
 
     public String language = "English";
     public String app_name = "MapsMinecraft";

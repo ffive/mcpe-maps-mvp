@@ -33,6 +33,7 @@ public class UserConfig extends RealmObject{
     private int lastTab;
     private float recyclerPosition;
     public static Dictionary dictionary;
+    public Dictionary dictionaryTest;
 
     public int getLastTab() {
         return lastTab;
