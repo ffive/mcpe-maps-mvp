@@ -53,7 +53,7 @@ import io.realm.RealmChangeListener;
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm
 // (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
-public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView, DictionaryView {
+public class MoxActivity extends BaseActivity implements MoxView, UserConfigView, DictionaryView {
 
     private static final String TAG = "MoxActivity : DEBUG";
 
@@ -70,7 +70,6 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     ActivityMoxBinding binding;
     String userLocale = Locale.getDefault ( ).getLanguage ( ).toLowerCase ( );
 
-    DialogFragment dialogFragment;
 
     //--------   Create fragments for tabs ------- ///
     private static Fragment getCategoryFragment ( Category category ) {
@@ -94,94 +93,18 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
     protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate (savedInstanceState);
 
-
-        //bibo nexui v activity realm dergat - vizivaet changelistener kotory obrawaetsa k adapteru etogo je act
-
-      //  userConfig = mUserConfigPresenter.getUserConfig();
-
         binding = DataBindingUtil.setContentView (MoxActivity.this, R.layout.activity_mox);
 
-/*        Realm realm = Realm.getDefaultInstance();
-
-        realm.addChangeListener(new RealmChangeListener<Realm>() {
-            @Override
-            public void onChange(Realm element) {
-                //binding = DataBindingUtil.setContentView( MoxActivity.this, R.layout.activity_mox);
-            }
-        });*/
-        // you
-        // build
-        // the project
         setSupportActionBar (binding.toolbar);
         initNavigationDrawer ( );
 
-        //binding.counterWidgetOnActivity.init(getMvpDelegate());
-        //  binding.count.
         setupViewPager ( );
-
-        if (!getIntent().getBooleanExtra("isLanguageChoosed", false)){
-            dialogFragment = new LanguageDialog ();
-            dialogFragment.show (getSupportFragmentManager (),"initial language setup");
-        }
-
-
 
     }
 
 
     //--------   Moxy View  methods implementation ------- ///
 
-    public void initNavigationDrawer ( ) {
-
-        Realm realm = Realm.getDefaultInstance();
-        Dictionary dictionary = realm.where(Dictionary.class).findFirst();
-        
-
-
-        new Drawer ( )
-                .withActivity (this)
-                .withToolbar (binding.toolbar)
-                .withActionBarDrawerToggle (true)
-                .withHeader (R.layout.drawer_header)
-                .addDrawerItems (
-                        new PrimaryDrawerItem ( ).withName (dictionary.drawer_item_home).withIcon (FontAwesome.Icon.faw_home).withBadge ("99")
-                                .withIdentifier (1),
-                        new PrimaryDrawerItem ( ).withName (dictionary.drawer_item_free_play).withIcon (FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem ( ).withName (dictionary.drawer_item_custom).withIcon (FontAwesome.Icon.faw_eye).withBadge ("6")
-                                .withIdentifier (2),
-                        new SectionDrawerItem ( ).withName (dictionary.drawer_item_settings),
-                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_language).withIcon (FontAwesome.Icon.faw_language),
-                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_help).withIcon (FontAwesome.Icon.faw_cog),
-                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_open_source).withIcon (FontAwesome.Icon.faw_question).setEnabled
-                                                                                                                                                 (false),
-                        new DividerDrawerItem ( ),
-                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_contact).withIcon (FontAwesome.Icon.faw_github).withBadge
-                                                                                                                                           ("12+")
-                                .withIdentifier (1)
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-
-                        if (drawerItem instanceof Nameable) {
-                            String language = dictionary.drawer_item_language;
-
-                            if ( ((Nameable)drawerItem).getName().equals(dictionary.drawer_item_language) ){
-                                dialogFragment.show (getSupportFragmentManager (),"settings");
-                            }
-
-/*                            switch ( ((Nameable)drawerItem).getName() ){
-                                case (language)   :
-                                  //  LanguageDialog languageChooserDialog = new LanguageDialog(MoxActivity.this);
-                                   dialogFragment.show (getSupportFragmentManager (),"settings");
-                                    break;
-                            }*/
-
-                        }
-                    }
-                })
-                .build ( );
-    }
 
     private void setupViewPager ( ) {
         binding.container.pager.setOffscreenPageLimit (1);
