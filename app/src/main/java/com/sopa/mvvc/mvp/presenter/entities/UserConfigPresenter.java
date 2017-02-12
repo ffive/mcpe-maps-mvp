@@ -28,7 +28,7 @@ public class UserConfigPresenter extends MvpPresenter<UserConfigView> {
         RealmConfiguration zRealmConfig = new RealmConfiguration.Builder()
                 .initialData(realm1 -> {
 
-                    Dictionary dictionary = realm1.createObject(Dictionary.class, "Active");
+                    Dictionary dictionary = realm1.createObject(Dictionary.class, "active");
                     initDictionary(dictionary);
                     realm1.copyToRealm(dictionary);
 

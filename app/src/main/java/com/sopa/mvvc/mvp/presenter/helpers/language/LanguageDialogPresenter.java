@@ -115,8 +115,10 @@ public class LanguageDialogPresenter extends MvpPresenter<LanguageView> {
             Dictionary newLangDictionary = realm.where(Dictionary.class)
                     .equalTo("language", newLanguage).findAll().get(0);
 
-            //Changing active dictionary
-            realm.copyToRealmOrUpdate(updateDictionary(activeDictionary, newLangDictionary));
+            realm.executeTransaction(realm1 -> {
+                //Changing active dictionary
+                realm.copyToRealmOrUpdate(updateDictionary(activeDictionary, newLangDictionary));
+            });
 
         }
 
