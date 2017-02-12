@@ -4,8 +4,8 @@
     >
     <data >
         <variable
-            name="userConfig"
-            type="com.sopa.mvvc.datamodel.local.UserConfig"
+            name="dictionary"
+            type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
             />
     </data>
 
@@ -59,14 +59,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="@{userConfig.dictionaryTest.app_name}"
+                    android:text="@{dictionary.app_name}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="@{userConfig.dictionaryTest.i_am_banner}"
+                    android:text="@{dictionary.i_am_banner}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                     android:textColor="@android:color/white"
                     />

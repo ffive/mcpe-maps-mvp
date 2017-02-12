@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.realm.Realm;
+
 /**
  * Created by AndreiPiatosin on 08-Feb-17.
  */
@@ -66,10 +68,12 @@ public class LanguageDialog extends MvpAppCompatDialogFragment implements Langua
         //now ask to load languages, or before
         languageDialogPresenter.loadAvailableLanguages ( );
 
+        Realm realm = Realm.getDefaultInstance();
+        Dictionary dictionary = realm.where(Dictionary.class).findFirst();
         //todo: de-hardcode   +
         // .setIcon(R.drawable.androidhappy)  //why not?
         return new AlertDialog.Builder (getActivity ( ))
-                       .setTitle (UserConfig.dictionary.language_chooser_dialog_title)
+                       .setTitle (dictionary.language_chooser_dialog_title)
                        .setView (recyclerView)
                        .setPositiveButton ("OK", ( dialog, which ) -> {
                            languageDialogPresenter.onLanguageSelected (mKeys.get(mAdapter.getItemClickedPosition()));

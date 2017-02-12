@@ -41,6 +41,7 @@ import com.squareup.picasso.RequestCreator;
 import java.io.File;
 import java.io.IOException;
 
+import io.realm.Realm;
 import okio.BufferedSink;
 import okio.Okio;
 import retrofit2.Response;
@@ -305,18 +306,23 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     //Launch minecraft client
     public void openApp() {
+
+        Realm realm = Realm.getDefaultInstance();
+/*        Dictionary dictionary = realm.where(Dictionary.class)
+                .equalTo("language", "active").findAll().get(0);*/
+
         // __showInterstitial
         new AlertDialog.Builder(getContext())
-                .setTitle((UserConfig.dictionary.dialog_launch_title))
-                .setMessage((UserConfig.dictionary.dialog_launch_message))
-                .setPositiveButton((UserConfig.dictionary.dialog_launch_btn_ok), (dialogInterface, i) -> {
+                .setTitle((binding.getDictionary().dialog_launch_title))
+                .setMessage((binding.getDictionary().dialog_launch_message))
+                .setPositiveButton((binding.getDictionary().dialog_launch_btn_ok), (dialogInterface, i) -> {
                             Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage("com.mojang.minecraftpe");
                             if (intent != null) {
                                 startActivity(intent.addCategory(Intent.CATEGORY_LAUNCHER));
                             }
                         }
                 )
-                .setNegativeButton((UserConfig.dictionary.dialog_launch_btn_no), null)
+                .setNegativeButton((binding.getDictionary().dialog_launch_btn_no), null)
                 .create().show();
     }
 

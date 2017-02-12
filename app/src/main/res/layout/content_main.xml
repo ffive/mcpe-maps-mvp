@@ -4,8 +4,8 @@
 
         <data >
                 <variable
-                    name="userConfig"
-                    type="com.sopa.mvvc.datamodel.local.UserConfig"
+                    name="dictionary"
+                    type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
                     />
         </data>
 
@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="#000000"
-            android:text="@{userConfig.dictionary.i_am_banner}"
+            android:text="@{dictionary.i_am_banner}"
             android:textColor="#FFF"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

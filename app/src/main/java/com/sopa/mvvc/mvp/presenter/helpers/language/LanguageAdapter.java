@@ -2,6 +2,7 @@ package com.sopa.mvvc.mvp.presenter.helpers.language;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,11 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
   //      holder.binding.radioButton.setChecked(position == itemClickedPosition);
 
         String tvText = mKeySet.get(position);
-        if ( mKeySet.get(position).contains(defaultLanguage) && itemClickedPosition == -1){
+        Log.d("KEK", "onBindViewHolder: KEYSET = " +  mKeySet.get(position));
+
+        Log.d("KEK", "onBindViewHolder: DEFAULT LANGUAGE = " +  defaultLanguage );
+
+         if ( mKeySet.get(position).contains(defaultLanguage) && itemClickedPosition == -1){
             itemClickedPosition = position;
             holder.binding.radioButton.setChecked(true);
             prevRadioButton = holder.binding.radioButton;

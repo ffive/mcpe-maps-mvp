@@ -8,8 +8,8 @@
             type="com.sopa.mvvc.datamodel.remote.backendless.Map"
             />
         <variable
-            name="userConfig"
-            type="com.sopa.mvvc.datamodel.local.UserConfig"
+            name="dictionary"
+            type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
             />
     </data>
 

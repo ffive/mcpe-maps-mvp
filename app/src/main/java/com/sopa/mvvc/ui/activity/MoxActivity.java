@@ -33,8 +33,10 @@ import com.sopa.mvvc.datamodel.local.MyDiffCallback;
 import com.sopa.mvvc.datamodel.local.UserConfig;
 import com.sopa.mvvc.datamodel.remote.backendless.Category;
 import com.sopa.mvvc.datamodel.remote.backendless.Dictionary;
+import com.sopa.mvvc.mvp.presenter.entities.DictionaryPresenter;
 import com.sopa.mvvc.mvp.presenter.entities.UserConfigPresenter;
 import com.sopa.mvvc.mvp.presenter.screens.MoxPresenter;
+import com.sopa.mvvc.mvp.view.entities.DictionaryView;
 import com.sopa.mvvc.mvp.view.entities.UserConfigView;
 import com.sopa.mvvc.mvp.view.screens.MoxView;
 import com.sopa.mvvc.ui.custom_view.dialog.LanguageDialog;
@@ -51,7 +53,7 @@ import io.realm.RealmChangeListener;
 //todo      backgroundtasksPresenter ( will show a Global spinning progress with int showing number of async calls to 1.Backenless, 2realm
 // (reads/writes) , 3 ALiveObservables oO anything)   And include
 //todo      it in global realm Log     log presenter   - write to live analytics to balance load
-public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView {
+public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserConfigView, DictionaryView {
 
     private static final String TAG = "MoxActivity : DEBUG";
 
@@ -60,6 +62,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     @InjectPresenter
     MoxPresenter mMoxPresenter;
+
+    @InjectPresenter
+    DictionaryPresenter dictionaryPresenter;
 
 
     ActivityMoxBinding binding;
@@ -128,6 +133,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
 
     public void initNavigationDrawer ( ) {
 
+        Realm realm = Realm.getDefaultInstance();
+        Dictionary dictionary = realm.where(Dictionary.class).findFirst();
+        
 
 
         new Drawer ( )
@@ -136,18 +144,18 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                 .withActionBarDrawerToggle (true)
                 .withHeader (R.layout.drawer_header)
                 .addDrawerItems (
-                        new PrimaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_home).withIcon (FontAwesome.Icon.faw_home).withBadge ("99")
+                        new PrimaryDrawerItem ( ).withName (dictionary.drawer_item_home).withIcon (FontAwesome.Icon.faw_home).withBadge ("99")
                                 .withIdentifier (1),
-                        new PrimaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_free_play).withIcon (FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_custom).withIcon (FontAwesome.Icon.faw_eye).withBadge ("6")
+                        new PrimaryDrawerItem ( ).withName (dictionary.drawer_item_free_play).withIcon (FontAwesome.Icon.faw_gamepad),
+                        new PrimaryDrawerItem ( ).withName (dictionary.drawer_item_custom).withIcon (FontAwesome.Icon.faw_eye).withBadge ("6")
                                 .withIdentifier (2),
-                        new SectionDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_settings),
-                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_language).withIcon (FontAwesome.Icon.faw_language),
-                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_help).withIcon (FontAwesome.Icon.faw_cog),
-                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_open_source).withIcon (FontAwesome.Icon.faw_question).setEnabled
+                        new SectionDrawerItem ( ).withName (dictionary.drawer_item_settings),
+                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_language).withIcon (FontAwesome.Icon.faw_language),
+                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_help).withIcon (FontAwesome.Icon.faw_cog),
+                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_open_source).withIcon (FontAwesome.Icon.faw_question).setEnabled
                                                                                                                                                  (false),
                         new DividerDrawerItem ( ),
-                        new SecondaryDrawerItem ( ).withName (UserConfig.dictionary.drawer_item_contact).withIcon (FontAwesome.Icon.faw_github).withBadge
+                        new SecondaryDrawerItem ( ).withName (dictionary.drawer_item_contact).withIcon (FontAwesome.Icon.faw_github).withBadge
                                                                                                                                            ("12+")
                                 .withIdentifier (1)
                 )
@@ -156,9 +164,9 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
 
                         if (drawerItem instanceof Nameable) {
-                            String language = UserConfig.dictionary.drawer_item_language;
+                            String language = dictionary.drawer_item_language;
 
-                            if ( ((Nameable)drawerItem).getName().equals(UserConfig.dictionary.drawer_item_language) ){
+                            if ( ((Nameable)drawerItem).getName().equals(dictionary.drawer_item_language) ){
                                 dialogFragment.show (getSupportFragmentManager (),"settings");
                             }
 
@@ -349,6 +357,13 @@ public class MoxActivity extends MvpAppCompatActivity implements MoxView, UserCo
         return super.onOptionsItemSelected (item);
     }
 
+    @Override
+    public void onUpdateDictionary( Dictionary dictionary ) {
+/*        Realm realm = Realm.getDefaultInstance();
+        Dictionary dictionary = realm.where(Dictionary.class).findFirst();*/
+        Log.d(TAG, "onUpdateDictionary: " + dictionary.language);
+        binding.setDictionary(dictionary);
+    }
 
 
     static public class MyAdapter extends FragmentPagerAdapter {

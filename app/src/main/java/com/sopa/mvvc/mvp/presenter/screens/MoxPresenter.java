@@ -29,6 +29,7 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 
 /**
@@ -138,9 +139,26 @@ public class MoxPresenter extends MvpPresenter<MoxView> {
                 .subscribeOn (AndroidSchedulers.mainThread ( ))
                 .observeOn (AndroidSchedulers.mainThread ( ))
                 .subscribe (cats -> {
-                    getViewState ( ).updateTabs (cats, 0);  //getLastTab() if not same, else - reset position after apply
+                    getViewState ( ).updateTabs (cats, userConfig.getLastTab ());  //getLastTab() if not same, else - reset position after apply
+                });
+
+        realm.where (Dictionary.class)
+                .findAllAsync ( )
+                .asObservable ( )
+                .filter (RealmResults:: isLoaded)
+                .filter (RealmResults:: isValid)
+                .subscribeOn (AndroidSchedulers.mainThread ( ))
+                .observeOn (AndroidSchedulers.mainThread ( ))
+                .subscribe (new Action1<RealmResults<Dictionary>>() {
+                    @Override
+                    public void call(RealmResults<Dictionary> dictionary) {
+
+
+                        //     getViewState ( ).updateTabs (cats, userConfig.getLastTab ());  //getLastTab() if not same, else - reset position after apply
+                    }
                 });
     }
+
 
     private void loadAllCategories ( ) {
 

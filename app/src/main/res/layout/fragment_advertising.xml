@@ -7,8 +7,8 @@
         name="ad"
         type="com.sopa.mvvc.datamodel.remote.backendless.HouseAd" />
     <variable
-        name="userConfig"
-        type="com.sopa.mvvc.datamodel.local.UserConfig"
+        name="dictionary"
+        type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
         />
 </data>
 
@@ -23,7 +23,7 @@
             android:id="@+id/adImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@{userConfig.dictionary.advertising}"
+            android:contentDescription="@{dictionary.advertising}"
             app:srcCompat="@color/brand_primary"
             i_url:url="@{ad.link}"/>
     </android.support.constraint.ConstraintLayout>

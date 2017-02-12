@@ -31,7 +31,7 @@ public class Migration_v1 implements RealmMigration {
 
     @Override
     public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-        DynamicRealmObject userConfig = realm.where("UserConfig").findFirst ( );
+       // DynamicRealmObject userConfig = realm.where("UserConfig").findFirst ( );
 
         // DynamicRealm exposes an editable schema
         RealmSchema schema = realm.getSchema();

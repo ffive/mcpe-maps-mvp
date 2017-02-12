@@ -6,8 +6,8 @@
 
     <data >
         <variable
-            name="userConfig"
-            type="com.sopa.mvvc.datamodel.local.UserConfig"
+            name="dictionary"
+            type="com.sopa.mvvc.datamodel.remote.backendless.Dictionary"
             />
     </data>
 
@@ -70,7 +70,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:hint="@{userConfig.dictionary.upload_map_name_hint}"
+        android:hint="@{dictionary.upload_map_name_hint}"
         android:inputType="textPersonName"
         android:singleLine="true"
         android:text="Name"
